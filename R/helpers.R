@@ -13,17 +13,25 @@ AQHI_formula <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   )
 }
 
+# TODO: export this
 AQHI_risk_category <- function(AQHI) {
   aqhi_levels <- list(
-    Low = 1:3, Moderate = 4:6,
-    High = 7:10, "Very High" = "+"
+    Low = 1:3, 
+    Moderate = 4:6,
+    High = 7:10, 
+    "Very High" = "+"
   )
   aqhi_labels <- aqhi_levels |>
     seq_along() |>
-    sapply(\(i) names(aqhi_levels)[i] |>
-      rep(length(aqhi_levels[[i]])))
+    sapply(
+      \(i) names(aqhi_levels)[i] |>
+        rep(length(aqhi_levels[[i]]))
+    )
   AQHI |>
-    factor(unlist(aqhi_levels), unlist(aqhi_labels))
+    factor(
+      levels = unlist(aqhi_levels), 
+      labels = unlist(aqhi_labels)
+    )
 }
 
 AQHI_health_messaging <- function(risk_categories) {
@@ -76,4 +84,19 @@ AQHI_replace_w_AQHI_plus <- function(obs, aqhi_plus) {
       aqhi_plus$general_pop_message, .data$general_pop_message
     )
   )
+}
+
+# Calculates rolling mean if enough non-na provided
+# TODO: code without zoo (use dplyr::lag/lead)
+# TODO: document, test, and export
+roll_mean <- function(x, width, direction = "backward", fill = NA, min_n = 0, digits = 0) {
+  align <- ifelse(direction == "backward", "right",
+    ifelse(direction == "forward", "left", "center")
+  )
+  x |>
+    zoo::rollapply(
+      width = width, align = align, fill = fill,
+      FUN = mean_if_enough, min_n = min_n
+    ) |>
+    round(digits = digits)
 }
