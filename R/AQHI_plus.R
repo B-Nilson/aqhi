@@ -12,8 +12,8 @@
 #'
 #' AQHI+ splits hourly PM2.5 concentrations into bins of 10 ug/m^3 from 0 to 100 ug/m^3 (AQHI+ 1 - 10),
 #' and assigns "+" to values greater than 100 ug/m^3.
-#' The risk categories match the AQHI (Low [1-3, or 0-30 ug/m^3], Moderate [4-6, or 30.1-60 ug/m^3],
-#' High [7-10, or 60.1-100 ug/m^3], and Very High [+, or >100 ug/m^3]) and share the same health messaging.
+#' The risk categories match the AQHI (Low \[1-3, or 0-30 ug/m^3\], Moderate \[4-6, or 30.1-60 ug/m^3\],
+#' High \[7-10, or 60.1-100 ug/m^3\], and Very High \[+, or >100 ug/m^3\]) and share the same health messaging.
 #'
 #' The AQHI+ was originally published by Yao et. al in 2019,
 #' and has been adopted by all Canadian provinces/territories as of 2024
