@@ -47,7 +47,7 @@
 #' )
 #'
 #' AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25) # Returns AQHI+
-AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbose = TRUE) {
+AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbose = TRUE, language = "en") {
   obs <- dplyr::bind_cols(
     date = dates,
     pm25 = pm25_1hr_ugm3,
@@ -84,7 +84,7 @@ AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbos
       risk = AQHI_risk_category(.data$AQHI)
     )
     obs |>
-      dplyr::bind_cols(AQHI_health_messaging(obs$risk)) |>
+      dplyr::bind_cols(AQHI_health_messaging(obs$risk, language = language)) |>
       AQHI_replace_w_AQHI_plus(aqhi_plus)
   } else {
     if (verbose) warning("Returning AQHI+ (PM2.5 only) as no non-missing NO2 / O3 provided.")
