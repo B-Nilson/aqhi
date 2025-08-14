@@ -80,7 +80,7 @@ AQHI_health_messaging <- function(risk_categories, language = "en") {
       )
     )
   } else {
-    stop("Language not supported.")
+    stop("Language must be 'en' or 'fr'")
   }
   # TODO: is this necessary?
   aqhi_messaging[risk_categories] |> 
