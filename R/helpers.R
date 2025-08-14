@@ -66,11 +66,11 @@ AQHI_health_messaging <- function(risk_categories, language = "en") {
         high_risk_pop_message = "Profiter des activités extérieures habituelles.",
         general_pop_message = "Qualité de l'air idéale pour les activités en plein air."
       ),
-      Modéré = data.frame(
+      "Modéré" = data.frame(
         high_risk_pop_message = "Envisagez de réduire ou de reporter les activités exténuantes en plein air si vous éprouvez des symptômes.",
         general_pop_message = "Aucun besoin de modifier vos activités habituelles en plein air à moins d'éprouver des symptômes comme la toux ou une irritation de la gorge."
       ),
-      Elevé = data.frame(
+      "Elevé" = data.frame(
         high_risk_pop_message = "Réduisez ou réorganisez les activités exténuantes en plein air. Les enfants et les aînés doivent également modérer leurs activités.",
         general_pop_message = "Envisagez de réduire ou de réorganiser les activités exténuantes en plein air si vous éprouvez des symptômes comme la toux ou une irritation de la gorge."
       ),
