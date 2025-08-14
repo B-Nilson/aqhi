@@ -60,7 +60,7 @@ AQHI_health_messaging <- function(risk_categories, language = "en") {
         general_pop_message = "Reduce or reschedule activities outdoors, especially if you experience symptoms."
       )
     )
-  } else if (language == "FR") {
+  } else if (language == "fr") {
     aqhi_messaging <- list(
       Faible = data.frame(
         high_risk_pop_message = "Profiter des activités extérieures habituelles.",
