@@ -58,7 +58,7 @@ AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbos
     dplyr::arrange(date)
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
-  aqhi_plus <- AQHI_plus(obs$pm25) |>
+  aqhi_plus <- AQHI_plus(obs$pm25, language = language) |>
     dplyr::mutate(AQHI = .data$AQHI_plus, AQHI_plus_exceeds_AQHI = NA) |>
     dplyr::relocate("AQHI", .before = "AQHI_plus")
   # Calculate AQHI (if all 3 pollutants provided)
