@@ -81,7 +81,7 @@ AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbos
         o3_rolling_3hr   = .data$o3_rolling_3hr
       ),
       AQHI_plus = aqhi_plus$AQHI_plus,
-      risk = AQHI_risk_category(.data$AQHI)
+      risk = AQHI_risk_category(.data$AQHI, language = language)
     )
     obs |>
       dplyr::bind_cols(AQHI_health_messaging(obs$risk, language = language)) |>

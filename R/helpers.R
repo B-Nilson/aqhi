@@ -14,13 +14,19 @@ AQHI_formula <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
 }
 
 # TODO: export this
-AQHI_risk_category <- function(AQHI) {
+AQHI_risk_category <- function(AQHI, language = "en") {
   aqhi_levels <- list(
     Low = 1:3, 
     Moderate = 4:6,
     High = 7:10, 
     "Very High" = "+"
   )
+  if (language == "fr") {
+    names(aqhi_levels) <- c("Faible", "Modéré", "Elevé", "Très Elevé")
+  } else if (language != "en") {
+    stop("Language must be 'en' or 'fr'")
+  }
+
   aqhi_labels <- aqhi_levels |>
     seq_along() |>
     sapply(
@@ -56,19 +62,19 @@ AQHI_health_messaging <- function(risk_categories, language = "en") {
     )
   } else if (language == "FR") {
     aqhi_messaging <- list(
-      Low = data.frame(
+      Faible = data.frame(
         high_risk_pop_message = "Profiter des activités extérieures habituelles.",
         general_pop_message = "Qualité de l'air idéale pour les activités en plein air."
       ),
-      Moderate = data.frame(
+      Modéré = data.frame(
         high_risk_pop_message = "Envisagez de réduire ou de reporter les activités exténuantes en plein air si vous éprouvez des symptômes.",
         general_pop_message = "Aucun besoin de modifier vos activités habituelles en plein air à moins d'éprouver des symptômes comme la toux ou une irritation de la gorge."
       ),
-      High = data.frame(
+      Elevé = data.frame(
         high_risk_pop_message = "Réduisez ou réorganisez les activités exténuantes en plein air. Les enfants et les aînés doivent également modérer leurs activités.",
         general_pop_message = "Envisagez de réduire ou de réorganiser les activités exténuantes en plein air si vous éprouvez des symptômes comme la toux ou une irritation de la gorge."
       ),
-      "Very High" = data.frame(
+      "Très Elevé" = data.frame(
         high_risk_pop_message = "Évitez les activités exténuantes en plein air.",
         general_pop_message = "Réduisez ou reportez les activités exténuantes en plein air, particulièrement si vous éprouvez des symptômes comme la toux ou une irritation de la gorge."
       )

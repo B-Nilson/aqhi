@@ -62,7 +62,7 @@ AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
     breaks = aqhi_breakpoints,
     labels = names(aqhi_breakpoints)[-1]
   )
-  risk <- AQHI_risk_category(aqhi_p)
+  risk <- AQHI_risk_category(aqhi_p, language = language)
   health_messages <- AQHI_health_messaging(risk, language = language)
   # Combine and return
   dplyr::tibble(
