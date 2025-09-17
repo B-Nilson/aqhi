@@ -52,19 +52,18 @@
 #' # Calculate the AQHI+ for each hour, except for hours where pm2.5 is < -0.5
 #' AQHI_plus(obs$pm25, min_allowed_pm25 = -0.5)
 #' @importFrom rlang .data
-AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0) {
+AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
   # Remove values below the provided minimum
   pm25_1hr_ugm3[pm25_1hr_ugm3 < min_allowed_pm25] <- NA
   # Calculate AQHI+, and get the associated risk and health messaging
   aqhi_breakpoints <- c(-Inf, 1:10 * 10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
-  aqhi_p <- pm25_1hr_ugm3 |>
-    cut(
-      breaks = aqhi_breakpoints,
-      labels = names(aqhi_breakpoints)[-1]
-    )
-  risk <- AQHI_risk_category(aqhi_p)
-  health_messages <- AQHI_health_messaging(risk)
+  aqhi_p <- pm25_1hr_ugm3 |> cut(
+    breaks = aqhi_breakpoints,
+    labels = names(aqhi_breakpoints)[-1]
+  )
+  risk <- AQHI_risk_category(aqhi_p, language = language)
+  health_messages <- AQHI_health_messaging(risk, language = language)
   # Combine and return
   dplyr::tibble(
     pm25_1hr_ugm3 = pm25_1hr_ugm3,
