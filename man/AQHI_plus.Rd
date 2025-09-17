@@ -4,7 +4,7 @@
 \alias{AQHI_plus}
 \title{Calculate the Canadian AQHI+ from hourly PM2.5 observations}
 \usage{
-AQHI_plus(pm25_1hr_ugm3, min_allowed_pm25 = 0)
+AQHI_plus(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en")
 }
 \arguments{
 \item{pm25_1hr_ugm3}{A numeric/integer vector with hourly mean PM2.5 concentrations (ug/m^3).}

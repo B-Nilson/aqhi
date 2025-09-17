@@ -4,6 +4,9 @@
 #' @param pm25_1hr_ugm3 Numeric vector of hourly mean fine particulate matter (PM2.5) concentrations (ug/m^3).
 #' @param no2_1hr_ppb (Optional). Numeric vector of hourly mean nitrogen dioxide (NO2) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.
 #' @param o3_1hr_ppb (Optional). Numeric vector of hourly mean ozone (O3) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.
+#' @param language (Optional). A single string value indicating the language to use for health messaging.
+#'   Must be "en" or "fr". 
+#'   Default is "en".
 #' @param verbose (Optional). A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed. Default is TRUE
 #'
 #' @description
@@ -47,7 +50,7 @@
 #' )
 #'
 #' AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25) # Returns AQHI+
-AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbose = TRUE) {
+AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, language = "en", verbose = TRUE) {
   obs <- dplyr::bind_cols(
     date = dates,
     pm25 = pm25_1hr_ugm3,
@@ -58,9 +61,9 @@ AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbos
     dplyr::arrange(date)
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
-  aqhi_plus <- AQHI_plus(obs$pm25) |>
-    dplyr::mutate(AQHI = .data$AQHI_plus, AQHI_plus_exceeds_AQHI = NA) |>
-    dplyr::relocate("AQHI", .before = "AQHI_plus")
+  aqhi_plus <- AQHI_plus(pm25_1hr_ugm3 = obs$pm25, language = language) |>
+    dplyr::mutate(AQHI = NA, AQHI_plus = .data$level, AQHI_plus_exceeds_AQHI = !is.na(level)) |>
+    dplyr::relocate(c("AQHI", "AQHI_plus"), .before = "risk")
   # Calculate AQHI (if all 3 pollutants provided)
   has_all_3_pol <- any(
     !is.na(pm25_1hr_ugm3) & !is.na(no2_1hr_ppb) & !is.na(o3_1hr_ppb)

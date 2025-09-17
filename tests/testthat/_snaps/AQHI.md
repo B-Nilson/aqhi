@@ -28,18 +28,60 @@
       AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25, verbose = FALSE)
     Output
       # A tibble: 24 x 9
-         pm25_1hr_ugm3 level AQHI  AQHI_plus colour  risk  high_risk_pop_message      
-                 <int> <fct> <lgl> <fct>     <chr>   <fct> <chr>                      
-       1             1 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-       2             2 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-       3             3 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-       4             4 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-       5             5 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-       6             6 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-       7             7 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-       8             8 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-       9             9 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
-      10            10 1     NA    1         #21C6F5 Low   Enjoy your usual activitie~
+         pm25_1hr_ugm3 level colour  AQHI  AQHI_plus risk  high_risk_pop_message      
+                 <int> <fct> <chr>   <lgl> <fct>     <fct> <chr>                      
+       1             1 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       2             2 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       3             3 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       4             4 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       5             5 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       6             6 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       7             7 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       8             8 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       9             9 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+      10            10 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+      # i 14 more rows
+      # i 2 more variables: general_pop_message <chr>, AQHI_plus_exceeds_AQHI <lgl>
+
+# language arg works
+
+    Code
+      en_version
+    Output
+      # A tibble: 24 x 9
+         pm25_1hr_ugm3 level colour  AQHI  AQHI_plus risk  high_risk_pop_message      
+                 <int> <fct> <chr>   <lgl> <fct>     <fct> <chr>                      
+       1             1 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       2             2 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       3             3 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       4             4 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       5             5 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       6             6 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       7             7 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       8             8 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+       9             9 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+      10            10 1     #21C6F5 NA    1         Low   Enjoy your usual activitie~
+      # i 14 more rows
+      # i 2 more variables: general_pop_message <chr>, AQHI_plus_exceeds_AQHI <lgl>
+
+---
+
+    Code
+      fr_version
+    Output
+      # A tibble: 24 x 9
+         pm25_1hr_ugm3 level colour  AQHI  AQHI_plus risk   high_risk_pop_message     
+                 <int> <fct> <chr>   <lgl> <fct>     <fct>  <chr>                     
+       1             1 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+       2             2 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+       3             3 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+       4             4 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+       5             5 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+       6             6 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+       7             7 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+       8             8 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+       9             9 1     #21C6F5 NA    1         Faible Profiter des activités ex~
+      10            10 1     #21C6F5 NA    1         Faible Profiter des activités ex~
       # i 14 more rows
       # i 2 more variables: general_pop_message <chr>, AQHI_plus_exceeds_AQHI <lgl>
 

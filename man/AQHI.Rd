@@ -4,7 +4,14 @@
 \alias{AQHI}
 \title{Calculate the Canadian AQHI from hourly PM2.5, NO2, and O3 observations}
 \usage{
-AQHI(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbose = TRUE)
+AQHI(
+  dates,
+  pm25_1hr_ugm3,
+  no2_1hr_ppb = NA,
+  o3_1hr_ppb = NA,
+  language = "en",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{dates}{Vector of hourly datetimes corresponding to observations. Date gaps will be filled automatically.}
@@ -14,6 +21,10 @@ AQHI(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbose = TRUE)
 \item{no2_1hr_ppb}{(Optional). Numeric vector of hourly mean nitrogen dioxide (NO2) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.}
 
 \item{o3_1hr_ppb}{(Optional). Numeric vector of hourly mean ozone (O3) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.}
+
+\item{language}{(Optional). A single string value indicating the language to use for health messaging.
+Must be "en" or "fr".
+Default is "en".}
 
 \item{verbose}{(Optional). A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed. Default is TRUE}
 }
