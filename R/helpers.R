@@ -1,11 +1,14 @@
 AQHI_formula <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   aqhi_breakpoints <- c(-Inf, 1:10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
-  aqhi <- round(10 / 10.4 * 100 * (
-    (exp(0.000537 * o3_rolling_3hr) - 1) +
-      (exp(0.000871 * no2_rolling_3hr) - 1) +
-      (exp(0.000487 * pm25_rolling_3hr) - 1)
-  ))
+  aqhi <- round(
+    10 /
+      10.4 *
+      100 *
+      ((exp(0.000537 * o3_rolling_3hr) - 1) +
+        (exp(0.000871 * no2_rolling_3hr) - 1) +
+        (exp(0.000487 * pm25_rolling_3hr) - 1))
+  )
   cut(
     aqhi,
     breaks = aqhi_breakpoints,
@@ -16,20 +19,22 @@ AQHI_formula <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
 # TODO: export this
 AQHI_risk_category <- function(AQHI) {
   aqhi_levels <- list(
-    Low = 1:3, 
+    Low = 1:3,
     Moderate = 4:6,
-    High = 7:10, 
+    High = 7:10,
     "Very High" = "+"
   )
   aqhi_labels <- aqhi_levels |>
     seq_along() |>
     sapply(
-      \(i) names(aqhi_levels)[i] |>
-        rep(length(aqhi_levels[[i]]))
+      \(i) {
+        names(aqhi_levels)[i] |>
+          rep(length(aqhi_levels[[i]]))
+      }
     )
   AQHI |>
     factor(
-      levels = unlist(aqhi_levels), 
+      levels = unlist(aqhi_levels),
       labels = unlist(aqhi_labels)
     )
 }
@@ -54,33 +59,42 @@ AQHI_health_messaging <- function(risk_categories) {
     )
   )
   # TODO: is this necessary?
-  aqhi_messaging[risk_categories] |> 
+  aqhi_messaging[risk_categories] |>
     handyr::for_each(
-      .as_list = TRUE, .bind = TRUE,
-      \(x) if (is.null(x)) {
-        data.frame(high_risk_pop_message = NA, general_pop_message = NA)
-      } else {
-        x
+      .as_list = TRUE,
+      .bind = TRUE,
+      \(x) {
+        if (is.null(x)) {
+          data.frame(high_risk_pop_message = NA, general_pop_message = NA)
+        } else {
+          x
+        }
       }
-  )
+    )
 }
 
 # TODO: make sure AQHI is a column in obs
 AQHI_replace_w_AQHI_plus <- function(obs, aqhi_plus) {
-  dplyr::mutate(obs,
-    AQHI_plus_exceeds_AQHI = (as.numeric(aqhi_plus$AQHI_plus) > as.numeric(.data$AQHI)) |>
+  dplyr::mutate(
+    obs,
+    AQHI_plus_exceeds_AQHI = (as.numeric(aqhi_plus$AQHI_plus) >
+      as.numeric(.data$AQHI)) |>
       handyr::swap(NA, with = TRUE),
-    AQHI = ifelse(.data$AQHI_plus_exceeds_AQHI,
-      aqhi_plus$AQHI_plus, .data$AQHI
+    AQHI = ifelse(
+      .data$AQHI_plus_exceeds_AQHI,
+      aqhi_plus$AQHI_plus,
+      .data$AQHI
     ),
-    risk = ifelse(.data$AQHI_plus_exceeds_AQHI,
-      aqhi_plus$risk, .data$risk
+    risk = ifelse(.data$AQHI_plus_exceeds_AQHI, aqhi_plus$risk, .data$risk),
+    high_risk_pop_message = ifelse(
+      .data$AQHI_plus_exceeds_AQHI,
+      aqhi_plus$high_risk_pop_message,
+      .data$high_risk_pop_message
     ),
-    high_risk_pop_message = ifelse(.data$AQHI_plus_exceeds_AQHI,
-      aqhi_plus$high_risk_pop_message, .data$high_risk_pop_message
-    ),
-    general_pop_message = ifelse(.data$AQHI_plus_exceeds_AQHI,
-      aqhi_plus$general_pop_message, .data$general_pop_message
+    general_pop_message = ifelse(
+      .data$AQHI_plus_exceeds_AQHI,
+      aqhi_plus$general_pop_message,
+      .data$general_pop_message
     )
   )
 }

@@ -7,16 +7,19 @@ test_that("There is a value for each non-NA input", {
   aqhi_p <- AQHI_plus(pm25_hourly)
   # pm25_1hr_ugm3 should match inputs
   expect_identical(
-    aqhi_p$pm25_1hr_ugm3, pm25_hourly
+    aqhi_p$pm25_1hr_ugm3,
+    pm25_hourly
   )
   # NAs for all NA inputs
   expect_true(all(is.na(
     unlist(aqhi_p[is.na(pm25_hourly), ])
   )))
   # non-NAs for all non-NA inputs
-  expect_true(all(!is.na(
-    unlist(aqhi_p[!is.na(pm25_hourly), ])
-  )))
+  expect_true(all(
+    !is.na(
+      unlist(aqhi_p[!is.na(pm25_hourly), ])
+    )
+  ))
 })
 
 test_that("Returned AQHI+ is accurate", {

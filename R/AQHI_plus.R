@@ -58,10 +58,11 @@ AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0) {
   # Calculate AQHI+, and get the associated risk and health messaging
   aqhi_breakpoints <- c(-Inf, 1:10 * 10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
-  aqhi_p <- pm25_1hr_ugm3 |> cut(
-    breaks = aqhi_breakpoints,
-    labels = names(aqhi_breakpoints)[-1]
-  )
+  aqhi_p <- pm25_1hr_ugm3 |>
+    cut(
+      breaks = aqhi_breakpoints,
+      labels = names(aqhi_breakpoints)[-1]
+    )
   risk <- AQHI_risk_category(aqhi_p)
   health_messages <- AQHI_health_messaging(risk)
   # Combine and return

@@ -47,12 +47,18 @@
 #' )
 #'
 #' AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25) # Returns AQHI+
-AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbose = TRUE) {
+AQHI <- function(
+  dates,
+  pm25_1hr_ugm3,
+  no2_1hr_ppb = NA,
+  o3_1hr_ppb = NA,
+  verbose = TRUE
+) {
   obs <- dplyr::bind_cols(
     date = dates,
     pm25 = pm25_1hr_ugm3,
-    o3   = o3_1hr_ppb,
-    no2  = no2_1hr_ppb
+    o3 = o3_1hr_ppb,
+    no2 = no2_1hr_ppb
   ) |>
     tidyr::complete(date = seq(min(date), max(date), "1 hours")) |>
     dplyr::arrange(date)
@@ -68,26 +74,33 @@ AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, verbos
   if (has_all_3_pol) {
     rolling_cols <- c("pm25", "no2", "o3")
     names(rolling_cols) <- paste0(rolling_cols, "_rolling_3hr")
-    obs <- obs |> dplyr::mutate(
-      dplyr::across(
-        dplyr::all_of(rolling_cols),
-        \(x) x |> 
-          handyr::rolling(mean, .width = 3, .min_non_na = 2) |>
-          round(digits = 1)
-      ),
-      AQHI = AQHI_formula(
-        pm25_rolling_3hr = .data$pm25_rolling_3hr,
-        no2_rolling_3hr  = .data$no2_rolling_3hr,
-        o3_rolling_3hr   = .data$o3_rolling_3hr
-      ),
-      AQHI_plus = aqhi_plus$AQHI_plus,
-      risk = AQHI_risk_category(.data$AQHI)
-    )
+    obs <- obs |>
+      dplyr::mutate(
+        dplyr::across(
+          dplyr::all_of(rolling_cols),
+          \(x) {
+            x |>
+              handyr::rolling(mean, .width = 3, .min_non_na = 2) |>
+              round(digits = 1)
+          }
+        ),
+        AQHI = AQHI_formula(
+          pm25_rolling_3hr = .data$pm25_rolling_3hr,
+          no2_rolling_3hr = .data$no2_rolling_3hr,
+          o3_rolling_3hr = .data$o3_rolling_3hr
+        ),
+        AQHI_plus = aqhi_plus$AQHI_plus,
+        risk = AQHI_risk_category(.data$AQHI)
+      )
     obs |>
       dplyr::bind_cols(AQHI_health_messaging(obs$risk)) |>
       AQHI_replace_w_AQHI_plus(aqhi_plus)
   } else {
-    if (verbose) warning("Returning AQHI+ (PM2.5 only) as no non-missing NO2 / O3 provided.")
+    if (verbose) {
+      warning(
+        "Returning AQHI+ (PM2.5 only) as no non-missing NO2 / O3 provided."
+      )
+    }
     return(aqhi_plus)
   }
 }
