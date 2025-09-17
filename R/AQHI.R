@@ -65,8 +65,12 @@ AQHI <- function(
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
   aqhi_plus <- AQHI_plus(obs$pm25) |>
-    dplyr::mutate(AQHI = .data$AQHI_plus, AQHI_plus_exceeds_AQHI = NA) |>
-    dplyr::relocate("AQHI", .before = "AQHI_plus")
+    dplyr::mutate(
+      AQHI = NA,
+      AQHI_plus = .data$level,
+      AQHI_plus_exceeds_AQHI = NA
+    ) |>
+    dplyr::relocate(c("AQHI", "AQHI_plus"), .after = "level")
   # Calculate AQHI (if all 3 pollutants provided)
   has_all_3_pol <- any(
     !is.na(pm25_1hr_ugm3) & !is.na(no2_1hr_ppb) & !is.na(o3_1hr_ppb)
@@ -89,12 +93,14 @@ AQHI <- function(
           no2_rolling_3hr = .data$no2_rolling_3hr,
           o3_rolling_3hr = .data$o3_rolling_3hr
         ),
-        AQHI_plus = aqhi_plus$AQHI_plus,
-        risk = AQHI_risk_category(.data$AQHI)
+        AQHI_plus = aqhi_plus$level,
+        risk = AQHI_risk_category(.data$AQHI),
+        colour = AQHI_colours[as.numeric(.data$AQHI)]
       )
     obs |>
       dplyr::bind_cols(AQHI_health_messaging(obs$risk)) |>
-      AQHI_replace_w_AQHI_plus(aqhi_plus)
+      AQHI_replace_w_AQHI_plus(aqhi_plus = aqhi_plus) |>
+      dplyr::relocate(c("level", "AQHI", "AQHI_plus"), .before = "risk")
   } else {
     if (verbose) {
       warning(

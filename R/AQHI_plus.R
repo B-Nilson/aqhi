@@ -68,7 +68,8 @@ AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0) {
   # Combine and return
   dplyr::tibble(
     pm25_1hr_ugm3 = pm25_1hr_ugm3,
-    AQHI_plus = aqhi_p,
+    level = aqhi_p,
+    colour = AQHI_colours[as.numeric(aqhi_p)],
     risk = risk,
     health_messages
   )

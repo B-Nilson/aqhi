@@ -1,3 +1,23 @@
+AQHI_colours <- c(
+  #Low [1 - 3]
+  "#21C6F5",
+  '#189ACA',
+  "#0D6797",
+  # Moderate [4 - 6]
+  "#FFFD37",
+  '#FFCC2E',
+  "#FE9A3F",
+  # High [7 - 10]
+  "#FD6769",
+  "#FF3B3B",
+  "#FF0101",
+  "#CB0713",
+  # Very High [+]
+  "#650205",
+  # Missing
+  "#bbbbbb"
+)
+
 AQHI_formula <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   aqhi_breakpoints <- c(-Inf, 1:10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
@@ -75,26 +95,27 @@ AQHI_health_messaging <- function(risk_categories) {
 
 # TODO: make sure AQHI is a column in obs
 AQHI_replace_w_AQHI_plus <- function(obs, aqhi_plus) {
-  dplyr::mutate(
-    obs,
-    AQHI_plus_exceeds_AQHI = (as.numeric(aqhi_plus$AQHI_plus) >
-      as.numeric(.data$AQHI)) |>
-      handyr::swap(NA, with = TRUE),
-    AQHI = ifelse(
-      .data$AQHI_plus_exceeds_AQHI,
-      aqhi_plus$AQHI_plus,
-      .data$AQHI
-    ),
-    risk = ifelse(.data$AQHI_plus_exceeds_AQHI, aqhi_plus$risk, .data$risk),
-    high_risk_pop_message = ifelse(
-      .data$AQHI_plus_exceeds_AQHI,
-      aqhi_plus$high_risk_pop_message,
-      .data$high_risk_pop_message
-    ),
-    general_pop_message = ifelse(
-      .data$AQHI_plus_exceeds_AQHI,
-      aqhi_plus$general_pop_message,
-      .data$general_pop_message
+  obs |>
+    dplyr::mutate(
+      AQHI_plus_exceeds_AQHI = (as.numeric(.data$AQHI_plus) >
+        as.numeric(.data$AQHI)) |>
+        handyr::swap(NA, with = TRUE),
+      level = ifelse(
+        .data$AQHI_plus_exceeds_AQHI,
+        .data$AQHI_plus,
+        .data$AQHI
+      ),
+      risk = ifelse(.data$AQHI_plus_exceeds_AQHI, aqhi_plus$risk, .data$risk),
+      colour = ifelse(.data$AQHI_plus_exceeds_AQHI, aqhi_plus$colour, .data$colour),
+      high_risk_pop_message = ifelse(
+        .data$AQHI_plus_exceeds_AQHI,
+        aqhi_plus$high_risk_pop_message,
+        .data$high_risk_pop_message
+      ),
+      general_pop_message = ifelse(
+        .data$AQHI_plus_exceeds_AQHI,
+        aqhi_plus$general_pop_message,
+        .data$general_pop_message
+      )
     )
-  )
 }
