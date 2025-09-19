@@ -39,8 +39,8 @@
 #' @examples
 #' obs <- data.frame(
 #'   date = seq(
-#'     lubridate::ymd_h("2024-01-01 00"),
-#'     lubridate::ymd_h("2024-01-01 23"), "1 hours"
+#'     as.POSIXct("2024-01-01 00:00:00"),
+#'     as.POSIXct("2024-01-01 23:00:00"), "1 hours"
 #'   ),
 #'   pm25 = sample(1:150, 24), o3 = sample(1:150, 24), no2 = sample(1:150, 24)
 #' )
