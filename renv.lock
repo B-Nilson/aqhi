@@ -1198,7 +1198,6 @@
         "lubridate",
         "prettyunits",
         "rlang",
-        "stringr",
         "tidyr"
       ],
       "Suggests": [
@@ -1228,7 +1227,7 @@
       "RemoteUsername": "B-Nilson",
       "RemoteRepo": "handyr",
       "RemoteRef": "HEAD",
-      "RemoteSha": "be9d28800401c5d11c6e286304ec9c493e3fde9c",
+      "RemoteSha": "4d58b5d68469a6c75129e8921a2e23db97696b92",
       "RemoteHost": "api.github.com"
     },
     "highr": {
