@@ -77,7 +77,7 @@ AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, langua
           dplyr::all_of(rolling_cols),
           \(x) {
             x |>
-              handyr::rolling(mean, .width = 3, .min_non_na = 2) |>
+              handyr::rolling("mean", .width = 3, .direction = "backward", .min_non_na = 2) |>
               round(digits = 1)
           }
         ),
