@@ -2,6 +2,9 @@
 #'
 #' @param pm25_1hr_ugm3 A numeric/integer vector with hourly mean PM2.5 concentrations (ug/m^3).
 #' @param min_allowed_pm25 A single numeric value indicating the minimum allowed concentration (Defaults to 0 ug/m^3). All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
+#' @param language (Optional). A single string value indicating the language to use for health messaging.
+#'   Must be "en" or "fr". 
+#'   Default is "en".
 #'
 #' @description
 #' The Canadian AQHI+ is a modification of the Canadian Air Quality Health Index (AQHI).
