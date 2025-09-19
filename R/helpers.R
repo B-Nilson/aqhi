@@ -112,6 +112,7 @@ AQHI_health_messaging <- function(risk_categories, language = "en") {
     handyr::for_each(
       .as_list = TRUE,
       .bind = TRUE,
+      .show_progress = FALSE,
       \(x) {
         if (is.null(x)) {
           data.frame(high_risk_pop_message = NA, general_pop_message = NA)
