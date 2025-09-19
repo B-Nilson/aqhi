@@ -45,7 +45,7 @@ AQHI_risk_category <- function(AQHI, language = "en") {
     "Very High" = "+"
   )
   if (language == "fr") {
-    names(aqhi_levels) <- c("Faible", "Modéré", "Elevé", "Très Elevé")
+    names(aqhi_levels) <- c("Faible", "Mod\u00e9r\u00e9", "Elev\u00e9", "Tr\u00e8s Elev\u00e9")
   } else if (language != "en") {
     stop("Language must be 'en' or 'fr'")
   }
@@ -88,20 +88,20 @@ AQHI_health_messaging <- function(risk_categories, language = "en") {
   } else if (language == "fr") {
     aqhi_messaging <- list(
       Faible = data.frame(
-        high_risk_pop_message = "Profiter des activités extérieures habituelles.",
-        general_pop_message = "Qualité de l'air idéale pour les activités en plein air."
+        high_risk_pop_message = "Profiter des activit\u00e9s ext\u00e9rieures habituelles.",
+        general_pop_message = "Qualit\u00e9 de l'air id\u00e9ale pour les activit\u00e9s en plein air."
       ),
-      "Modéré" = data.frame(
-        high_risk_pop_message = "Envisagez de réduire ou de reporter les activités exténuantes en plein air si vous éprouvez des symptômes.",
-        general_pop_message = "Aucun besoin de modifier vos activités habituelles en plein air à moins d'éprouver des symptômes comme la toux ou une irritation de la gorge."
+      "Mod\u00e9r\u00e9" = data.frame(
+        high_risk_pop_message = "Envisagez de r\u00e9duire ou de reporter les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes.",
+        general_pop_message = "Aucun besoin de modifier vos activit\u00e9s habituelles en plein air \u00e0 moins d'\u00e9prouver des sympt\u00f4mes comme la toux ou une irritation de la gorge."
       ),
-      "Elevé" = data.frame(
-        high_risk_pop_message = "Réduisez ou réorganisez les activités exténuantes en plein air. Les enfants et les aînés doivent également modérer leurs activités.",
-        general_pop_message = "Envisagez de réduire ou de réorganiser les activités exténuantes en plein air si vous éprouvez des symptômes comme la toux ou une irritation de la gorge."
+      "Elev\u00e9" = data.frame(
+        high_risk_pop_message = "R\u00e9duisez ou r\u00e9organisez les activit\u00e9s ext\u00e9rieures en plein air. Les enfants et les a\u00ce7n\u00e9s doivent \u00e9galement mod\u00e9rer leurs activit\u00e9s.",
+        general_pop_message = "Envisagez de r\u00e9duire ou de r\u00e9organiser les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes comme la toux ou une irritation de la gorge."
       ),
-      "Très Elevé" = data.frame(
-        high_risk_pop_message = "Évitez les activités exténuantes en plein air.",
-        general_pop_message = "Réduisez ou reportez les activités exténuantes en plein air, particulièrement si vous éprouvez des symptômes comme la toux ou une irritation de la gorge."
+      "Tr\u00e8s \u00c9lev\u00e9" = data.frame(
+        high_risk_pop_message = "\u00c9vitez les activit\u00e9s ext\u00e9rieures en plein air.",
+        general_pop_message = "R\u00e9duisez ou reportez les activit\u00e9s ext\u00e9rieures en plein air, particuli\u00e8rement si vous \u00e9prouvez des sympt\u00f4mes comme la toux ou une irritation de la gorge."
       )
     )
   } else {
