@@ -71,64 +71,78 @@ AQHI <- function(
 
   # Ensure lowercase language
   language <- tolower(language)
-  obs <- dplyr::bind_cols(
+
+  # Combine inputs
+  obs <- dplyr::tibble(
     date = dates,
     pm25 = pm25_1hr_ugm3,
     o3 = o3_1hr_ppb,
     no2 = no2_1hr_ppb
   ) |>
+    # Fill in missing hours
     tidyr::complete(date = seq(min(date), max(date), "1 hours")) |>
     dplyr::arrange(date)
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
-  aqhi_plus <- AQHI_plus(pm25_1hr_ugm3 = obs$pm25, language = language) |>
+  aqhi_plus <- obs$pm25 |>
+    AQHI_plus(language = language) |>
+    # Include expected AQHI columns in case only returning AQHI+
     dplyr::mutate(
       AQHI = NA,
       AQHI_plus = .data$level,
       AQHI_plus_exceeds_AQHI = !is.na(.data$level)
     ) |>
     dplyr::relocate(c("AQHI", "AQHI_plus"), .before = "risk")
-  # Calculate AQHI (if all 3 pollutants provided)
-  has_all_3_pol <- any(
-    !is.na(pm25_1hr_ugm3) & !is.na(no2_1hr_ppb) & !is.na(o3_1hr_ppb)
-  )
-  if (has_all_3_pol) {
-    rolling_cols <- c("pm25", "no2", "o3")
-    names(rolling_cols) <- paste0(rolling_cols, "_rolling_3hr")
-    obs <- obs |>
-      dplyr::mutate(
-        dplyr::across(
-          dplyr::all_of(rolling_cols),
-          \(x) {
-            x |>
-              handyr::rolling(
-                "mean",
-                .width = 3,
-                .direction = "backward",
-                .min_non_na = 2
-              ) |>
-              round(digits = 1)
-          }
-        ),
-        AQHI = AQHI_formula(
-          pm25_rolling_3hr = .data$pm25_rolling_3hr,
-          no2_rolling_3hr = .data$no2_rolling_3hr,
-          o3_rolling_3hr = .data$o3_rolling_3hr
-        ),
-        AQHI_plus = aqhi_plus$level,
-        risk = AQHI_risk_category(.data$AQHI, language = language),
-        colour = AQHI_colours[as.numeric(.data$AQHI)]
-      )
-    obs |>
-      dplyr::bind_cols(AQHI_health_messaging(obs$risk, language = language)) |>
-      AQHI_replace_w_AQHI_plus(aqhi_plus = aqhi_plus) |>
-      dplyr::relocate(c("level", "AQHI", "AQHI_plus"), .before = "risk")
-  } else {
+
+  # If no non-missing NO2 / O3 provided, return AQHI+
+  has_all_3_pol <- any(complete.cases(obs$pm25, obs$no2, obs$o3))
+  if (!has_all_3_pol) {
     if (verbose) {
       warning(
-        "Returning AQHI+ (PM2.5 only) as no non-missing NO2 / O3 provided."
+        "No non-missing NO2 / O3 data provided. Returning AQHI+ (PM2.5 only) instead of AQHI."
       )
     }
     return(aqhi_plus)
   }
+
+  # Calculate rolling 3 hour averages
+  rolling_cols <- c("pm25", "no2", "o3")
+  names(rolling_cols) <- paste0(rolling_cols, "_rolling_3hr")
+  obs <- obs |>
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::all_of(rolling_cols),
+        \(x) {
+          x |>
+            handyr::rolling(
+              "mean",
+              .width = 3,
+              .direction = "backward",
+              .min_non_na = 2
+            ) |>
+            round(digits = 1)
+        }
+      )
+    )
+
+  # Calculate AQHI
+  obs <- obs |>
+    dplyr::mutate(
+      AQHI = AQHI_formula(
+        pm25_rolling_3hr = .data$pm25_rolling_3hr,
+        no2_rolling_3hr = .data$no2_rolling_3hr,
+        o3_rolling_3hr = .data$o3_rolling_3hr
+      ),
+      AQHI_plus = aqhi_plus$level,
+      risk = AQHI_risk_category(.data$AQHI, language = language),
+      colour = AQHI_colours[as.numeric(.data$AQHI)]
+    )
+  
+  # Add health messaging and handle AQHI+ overrides
+  obs |>
+    dplyr::bind_cols(
+      obs$risk |> AQHI_health_messaging(language = language)
+    ) |>
+    AQHI_replace_w_AQHI_plus(aqhi_plus = aqhi_plus) |>
+    dplyr::relocate(c("level", "AQHI", "AQHI_plus"), .before = "risk")
 }
