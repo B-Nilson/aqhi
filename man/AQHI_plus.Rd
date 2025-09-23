@@ -62,6 +62,29 @@ The risk categories match the Canadian AQHI and share the same health messaging:
 The AQHI+ was originally published by \href{https://doi.org/10.17269/s41997-019-00237-w}{Yao et al (2019)},
 and has been adopted by all Canadian provinces/territories as of 2024.
 (except Québec where they use the AQI instead of the AQHI/AQHI+).
+
+Quote from Yao et al (2019):
+
+\emph{This algorithm is a linear extrapolation based on two anchor points:
+\enumerate{
+\item the AQHI-Plus value should reach 7 (high risk category),
+when 1-h PM2.5 concentrations are over 60 μg/m3.
+This is consistent with [...] the analyses of the likelihood of exceeding the 25 μg/m3 24-h threshold value; and
+\item the AQHI-Plus value should reach 4 (moderate risk category)
+when the 1-h PM2.5 concentrations are over 30 μg/m3,
+which is the threshold for odour perception of burning softwood
+\href{https://doi.org/10.1016/j.atmosenv.2012.01.044}{(Kistler et al. 2012)},
+the major type of forest species in BC.
+}
+
+[...]
+
+These conclusions suggest that the AQHI is most indicative of the mortality and
+circulatory risks during periods affected by wildfire smoke.
+However, the [...] AQHI-Plus is most indicative of the respiratory risks
+during high-intensity fire periods, particularly for people with asthma.
+This is consistent with the rationale behind the AQHI formulation
+and with existing health evidence related to the effects of wildfire smoke.}
 }
 \examples{
 # Hourly pm2.5 concentrations
