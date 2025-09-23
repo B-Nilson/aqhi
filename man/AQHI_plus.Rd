@@ -12,7 +12,7 @@ AQHI_plus(
 )
 }
 \arguments{
-\item{pm25_1hr_ugm3}{A numeric vector with hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}).}
+\item{pm25_1hr_ugm3}{A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}).}
 
 \item{min_allowed_pm25}{(Optional).
 A single numeric value indicating the minimum allowed concentration.
@@ -20,8 +20,8 @@ All values in \code{pm25_1hr_ugm3} less than this will be replaced with NA.
 Default is 0 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}.}
 
 \item{detailed}{(Optional).
-A single logical value indicating if a tibble with AQHI+, risk levels, health messages, etc should be returned.
-If FALSE only the AQHI+ will be returned.
+A single logical value indicating if a tibble with levels, risk categories, health messages, etc should be returned.
+If FALSE only the levels will be returned.
 Default is TRUE.}
 
 \item{language}{(Optional).

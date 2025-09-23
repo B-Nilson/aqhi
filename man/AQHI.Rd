@@ -2,53 +2,68 @@
 % Please edit documentation in R/AQHI.R
 \name{AQHI}
 \alias{AQHI}
-\title{Calculate the Canadian AQHI from hourly PM2.5, NO2, and O3 observations}
+\title{Calculate the Canadian AQHI from hourly \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, \ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}, and \ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}} concentrations}
 \usage{
 AQHI(
   dates,
   pm25_1hr_ugm3,
-  no2_1hr_ppb = NA,
-  o3_1hr_ppb = NA,
+  o3_1hr_ppb = NA_real_,
+  no2_1hr_ppb = NA_real_,
+  detailed = TRUE,
   language = "en",
   verbose = TRUE
 )
 }
 \arguments{
-\item{dates}{Vector of hourly datetimes corresponding to observations. Date gaps will be filled automatically.}
+\item{dates}{A POSIXct (date-time) vector of corresponding to hourly observations.
+Date gaps will be filled with NA's automatically as needed when calculating 3-hour averages.}
 
-\item{pm25_1hr_ugm3}{Numeric vector of hourly mean fine particulate matter (PM2.5) concentrations (ug/m^3).}
+\item{pm25_1hr_ugm3}{A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}).}
 
-\item{no2_1hr_ppb}{(Optional). Numeric vector of hourly mean nitrogen dioxide (NO2) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.}
+\item{o3_1hr_ppb}{(Optional).
+A numeric vector of hourly mean ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}) concentrations (units = ppb).
+If all are NA (the default) AQHI won't be calculated and instead AQHI+ (see \code{\link{AQHI_plus}}) will be used.}
 
-\item{o3_1hr_ppb}{(Optional). Numeric vector of hourly mean ozone (O3) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.}
+\item{no2_1hr_ppb}{(Optional).
+A numeric vector of hourly mean nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) concentrations (units = ppb).
+If all are NA (the default) AQHI won't be calculated and instead AQHI+ (see \code{\link{AQHI_plus}}) will used.}
 
-\item{language}{(Optional). A single string value indicating the language to use for health messaging.
-Must be "en" or "fr".
+\item{detailed}{(Optional).
+A single logical value indicating if a tibble with levels, risk categories, health messages, etc should be returned.
+If FALSE only the levels will be returned.
+Default is TRUE.}
+
+\item{language}{(Optional).
+A single character value indicating the language to use for risk levels and health messaging.
+Must be either "en" (English) or "fr" (French). Not case sensitive.
 Default is "en".}
 
-\item{verbose}{(Optional). A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed. Default is TRUE}
+\item{verbose}{(Optional).
+A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed.
+Default is TRUE}
 }
 \value{
-A tibble (data.frame) with columns (\emph{if all 3 pollutants provided):
-date, pm25, o3}, no2*, pm25_rolling_3hr*, o3_rolling_3hr*, o3_rolling_3hr*,
-AQHI, AQHI_plus, risk, high_risk_pop_message, general_pop_message, AQHI_plus_exceeds_AQHI*
-and potentially more rows than \code{length(dates)} (due to any missing hours being filled with NA values).
+If \code{detailed = TRUE}:
+\itemize{
+\item A tibble (data.frame) with a detailed summary of the AQHI, risk levels, health messages, etc and the same number of rows as \code{length(dates)}
+}
+
+If \code{detailed = FALSE}:
+\itemize{
+\item a factor vector of AQHI levels with \code{length(dates)} elements
+}
 }
 \description{
-The Canadian Air Quality Health Index (AQHI) combines the health risk of
-fine particulate matter (PM2.5), ozone (O3), and nitrogen dioxide (NO2) on a scale from 1-10 (+).
-The AQHI is "the sum of excess mortality risk associated with individual pollutants
-from a time-series analysis of air pollution and mortality in Canadian cities,
-adjusted to a 0–10 scale, and calculated hourly on the basis of trailing 3-hr average pollutant concentrations."
+The Canadian Air Quality Health Index (AQHI) is a measure of the health risk associated with exposure to ambient air pollution.
+It combines the impacts of fine particulate matter (\ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}),
+ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}),
+and nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) on a scale from 1-10 (+).
 
-The AQHI is overriden by the Canadian AQHI+ if the AQHI+ exceeds the AQHI for a particular hour.
-The AQHI+ is a modification of the Canadian Air Quality Health Index (AQHI).
-AQHI+ only uses fine particulate matter (PM2.5) instead of the combination of PM2.5, ozone (O3), and nitrogen dioxide (NO2).
-Unlike the AQHI which uses 3-hour mean averages, AQHI+ is calculated using hourly means.
-
-The AQHI was originally published by Steib et. al in 2008,
-and has been adopted by all Canadian provinces/territories
-(except Quebec where they use the AQI instead of the AQHI/AQHI+).
+The AQHI was originally published by \href{https://doi.org/10.3155/1047-3289.58.3.435}{Stieb et al. (2008)}
+and is used by all Canadian provinces and territories except for Québec, which uses the AQI instead.
+The AQHI is calculated for each hour using 3-hour rolling mean concentrations of \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, \ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}, and \ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}.
+However, the AQHI is overriden by the AQHI+ for a given hour if that AQHI+ level is higher.
+The AQHI+ is a modification of the AQHI that only uses \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} and is calculated using hourly means (see \code{\link{AQHI_plus}}).
 }
 \examples{
 obs <- data.frame(
@@ -66,7 +81,5 @@ AQHI(
 AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25) # Returns AQHI+
 }
 \references{
-\url{https://doi.org/10.3155/1047-3289.58.3.435}
+Stieb et al. (2008): \url{https://doi.org/10.3155/1047-3289.58.3.435}
 }
-\concept{Air Quality Standards}
-\concept{Canadian Air Quality}
