@@ -3,7 +3,7 @@
 #' @param pm25_1hr_ugm3 A numeric/integer vector with hourly mean PM2.5 concentrations (ug/m^3).
 #' @param min_allowed_pm25 A single numeric value indicating the minimum allowed concentration (Defaults to 0 ug/m^3). All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
 #' @param language (Optional). A single string value indicating the language to use for health messaging.
-#'   Must be "en" or "fr". 
+#'   Must be "en" or "fr".
 #'   Default is "en".
 #'
 #' @description
@@ -46,8 +46,12 @@
 AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
   stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
   stopifnot(is.numeric(min_allowed_pm25), length(min_allowed_pm25) == 1)
-  stopifnot(is.character(language), length(language) == 1, tolower(language) %in% c("en", "fr"))
-  
+  stopifnot(
+    is.character(language),
+    length(language) == 1,
+    tolower(language) %in% c("en", "fr")
+  )
+
   # Ensure lowercase language
   language <- tolower(language)
 
@@ -57,12 +61,13 @@ AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
   # Calculate AQHI+, and get the associated risk level (low, moderate, high, very high))
   aqhi_breakpoints <- c(-Inf, 1:10 * 10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
-  aqhi_p <- pm25_1hr_ugm3 |> cut(
-    breaks = aqhi_breakpoints,
-    labels = names(aqhi_breakpoints)[-1]
-  )
+  aqhi_p <- pm25_1hr_ugm3 |>
+    cut(
+      breaks = aqhi_breakpoints,
+      labels = names(aqhi_breakpoints)[-1]
+    )
   risk <- aqhi_p |> AQHI_risk_category(language = language)
-  
+
   # Combine and return
   dplyr::tibble(
     pm25_1hr_ugm3 = pm25_1hr_ugm3,
