@@ -53,11 +53,24 @@
 AQHI <- function(
   dates,
   pm25_1hr_ugm3,
-  no2_1hr_ppb = NA,
-  o3_1hr_ppb = NA,
+  no2_1hr_ppb = NA_real_,
+  o3_1hr_ppb = NA_real_,
   language = "en",
   verbose = TRUE
 ) {
+  stopifnot(class(dates) == "POSIXct", length(dates) > 0)
+  stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
+  stopifnot(is.numeric(no2_1hr_ppb) & length(no2_1hr_ppb) > 0)
+  stopifnot(is.numeric(o3_1hr_ppb), length(o3_1hr_ppb) > 0)
+  stopifnot(
+    is.character(language),
+    length(language) == 1,
+    tolower(language) %in% c("en", "fr")
+  )
+  stopifnot(is.logical(verbose), length(verbose) == 1)
+
+  # Ensure lowercase language
+  language <- tolower(language)
   obs <- dplyr::bind_cols(
     date = dates,
     pm25 = pm25_1hr_ugm3,
