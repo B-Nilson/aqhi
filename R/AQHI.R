@@ -121,7 +121,11 @@ AQHI <- function(
     dplyr::relocate(dplyr::all_of(initial_cols), .after = "date")
 
   # If no non-missing NO2 / O3 provided, return AQHI+
-  has_all_3_pol <- any(complete.cases(obs$pm25_1hr_ugm3, obs$no2_1hr_ppb, obs$o3_1hr_ppb))
+  has_all_3_pol <- any(complete.cases(
+    obs$pm25_1hr_ugm3,
+    obs$no2_1hr_ppb,
+    obs$o3_1hr_ppb
+  ))
   if (!has_all_3_pol) {
     if (verbose) {
       warning(
@@ -172,7 +176,7 @@ AQHI <- function(
   # Return level early if desired
   if (!detailed) {
     return(AQHI_obs$level)
-  } 
+  }
 
   # Add risk + level colour
   AQHI_obs <- AQHI_obs |>
@@ -180,7 +184,7 @@ AQHI <- function(
       risk = .data$level |> AQHI_risk_category(language = language),
       colour = AQHI_colours[as.numeric(.data$level)]
     )
-  
+
   # Add health messaging, sort columns, return
   AQHI_obs |>
     dplyr::bind_cols(

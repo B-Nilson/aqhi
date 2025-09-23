@@ -139,7 +139,7 @@ AQHI_replace_w_AQHI_plus <- function(AQHI_obs) {
         .data$AQHI_plus_exceeds_AQHI,
         .data$AQHI_plus,
         .data$AQHI
-      ) |> 
+      ) |>
         factor(levels = 1:11, labels = c(1:10, "+"))
     )
 }

@@ -11,7 +11,7 @@ test_that("AQHI returns expected output", {
   )
 
   # All 3 pollutants (AQHI and AQHI+)
-  aqhi_en <- obs$date |> 
+  aqhi_en <- obs$date |>
     AQHI(
       pm25_1hr_ugm3 = obs$pm25,
       o3_1hr_ppb = obs$o3,
@@ -21,7 +21,7 @@ test_that("AQHI returns expected output", {
   expect_snapshot(aqhi_en)
 
   # French version
-  aqhi_fr <- obs$date |> 
+  aqhi_fr <- obs$date |>
     AQHI(
       pm25_1hr_ugm3 = obs$pm25,
       o3_1hr_ppb = obs$o3,
@@ -51,4 +51,3 @@ test_that("AQHI returns expected output", {
   expect_snapshot(aqhi_plus_fr)
   expect_equal(names(aqhi_fr), names(aqhi_plus_fr))
 })
-
