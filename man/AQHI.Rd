@@ -64,6 +64,12 @@ It combines the impacts of fine particulate matter (\ifelse{html}{\out{PM<sub>2.
 ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}),
 and nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) on a scale from 1-10 (+).
 
+AQHI formula:
+\if{html}{\out{<sup>}}10\if{html}{\out{</sup>}}⁄\if{html}{\out{<sub>}}10.4\if{html}{\out{</sub>}} × 100 ×
+(e\if{html}{\out{<sup>}}0.000537 * O\if{html}{\out{<sub>}}3\if{html}{\out{</sub>}}\if{html}{\out{</sup>}} - 1) +
+(e\if{html}{\out{<sup>}}0.000871 * NO\if{html}{\out{<sub>}}2\if{html}{\out{</sub>}}\if{html}{\out{</sup>}} - 1) +
+(e\if{html}{\out{<sup>}}0.000487 * PM\if{html}{\out{<sub>}}2.5\if{html}{\out{</sub>}}\if{html}{\out{</sup>}} - 1))
+
 The AQHI was originally published by \href{https://doi.org/10.3155/1047-3289.58.3.435}{Stieb et al. (2008)}
 and is used by all Canadian provinces and territories except for Québec, which uses the AQI instead.
 The AQHI is calculated for each hour using 3-hour rolling mean concentrations of \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, \ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}, and \ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}.

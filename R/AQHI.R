@@ -31,6 +31,12 @@
 #' ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}),
 #' and nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) on a scale from 1-10 (+).
 #'
+#' AQHI formula:
+#'   <sup>10</sup>&frasl;<sub>10.4</sub> &times; 100 &times; 
+#'   (e<sup>0.000537 * O<sub>3</sub></sup> - 1) + 
+#'   (e<sup>0.000871 * NO<sub>2</sub></sup> - 1) + 
+#'   (e<sup>0.000487 * PM<sub>2.5</sub></sup> - 1))
+#' 
 #' The AQHI was originally published by \href{https://doi.org/10.3155/1047-3289.58.3.435}{Stieb et al. (2008)}
 #' and is used by all Canadian provinces and territories except for Québec, which uses the AQI instead.
 #' The AQHI is calculated for each hour using 3-hour rolling mean concentrations of \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, \ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}, and \ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}.
