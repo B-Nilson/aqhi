@@ -4,6 +4,9 @@
 #' @param pm25_1hr_ugm3 Numeric vector of hourly mean fine particulate matter (PM2.5) concentrations (ug/m^3).
 #' @param no2_1hr_ppb (Optional). Numeric vector of hourly mean nitrogen dioxide (NO2) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.
 #' @param o3_1hr_ppb (Optional). Numeric vector of hourly mean ozone (O3) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.
+#' @param detailed (Optional). A single logical (TRUE/FALSE) value indicating if a tibble with AQHI, risk levels, health messages, etc should be returned.
+#'   If FALSE only the AQHI (as a factor) will be returned.
+#'   Default is TRUE.
 #' @param language (Optional). A single string value indicating the language to use for health messaging.
 #'   Must be "en" or "fr".
 #'   Default is "en".
@@ -30,10 +33,15 @@
 #' @family Canadian Air Quality
 #' @family Air Quality Standards
 #'
-#' @return A tibble (data.frame) with columns (*if all 3 pollutants provided):
+#' @return If `detailed = TRUE`:
+#' - A tibble (data.frame) with columns (*if all 3 pollutants provided):
 #' date, pm25, o3*, no2*, pm25_rolling_3hr*, o3_rolling_3hr*, o3_rolling_3hr*,
 #'  AQHI, AQHI_plus, risk, high_risk_pop_message, general_pop_message, AQHI_plus_exceeds_AQHI*
 #'  and potentially more rows than `length(dates)` (due to any missing hours being filled with NA values).
+#' 
+#' If `detailed = FALSE`:
+#' - a factor vector of AQHI levels with `length(dates)` elements
+#' 
 #' @export
 #'
 #' @examples
@@ -55,6 +63,7 @@ AQHI <- function(
   pm25_1hr_ugm3,
   no2_1hr_ppb = NA_real_,
   o3_1hr_ppb = NA_real_,
+  detailed = TRUE,
   language = "en",
   verbose = TRUE
 ) {
@@ -62,6 +71,7 @@ AQHI <- function(
   stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
   stopifnot(is.numeric(no2_1hr_ppb) & length(no2_1hr_ppb) > 0)
   stopifnot(is.numeric(o3_1hr_ppb), length(o3_1hr_ppb) > 0)
+  stopifnot(is.logical(detailed), length(detailed) == 1)
   stopifnot(
     is.character(language),
     length(language) == 1,
@@ -102,6 +112,9 @@ AQHI <- function(
         "No non-missing NO2 / O3 data provided. Returning AQHI+ (PM2.5 only) instead of AQHI."
       )
     }
+    if (!detailed) {
+      return(aqhi_plus$level)
+    }
     return(aqhi_plus)
   }
 
@@ -126,7 +139,7 @@ AQHI <- function(
     )
 
   # Calculate AQHI
-  obs <- obs |>
+  AQHI_obs <- obs |>
     dplyr::mutate(
       AQHI = AQHI_formula(
         pm25_rolling_3hr = .data$pm25_rolling_3hr,
@@ -139,10 +152,17 @@ AQHI <- function(
     )
   
   # Add health messaging and handle AQHI+ overrides
-  obs |>
+  AQHI_obs <- AQHI_obs |>
     dplyr::bind_cols(
       obs$risk |> AQHI_health_messaging(language = language)
     ) |>
     AQHI_replace_w_AQHI_plus(aqhi_plus = aqhi_plus) |>
     dplyr::relocate(c("level", "AQHI", "AQHI_plus"), .before = "risk")
+
+  # Return
+  if (!detailed) {
+    return(AQHI_obs$AQHI)
+  }else {
+    return(AQHI_obs)
+  }
 }
