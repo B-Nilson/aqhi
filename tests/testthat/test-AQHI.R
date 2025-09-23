@@ -9,67 +9,46 @@ test_that("AQHI returns expected output", {
     o3 = 1:24,
     no2 = 1:24
   )
+
   # All 3 pollutants (AQHI and AQHI+)
-  expect_snapshot(
+  aqhi_en <- obs$date |> 
     AQHI(
-      dates = obs$date,
       pm25_1hr_ugm3 = obs$pm25,
       o3_1hr_ppb = obs$o3,
       no2_1hr_ppb = obs$no2,
       verbose = FALSE
     )
-  )
+  expect_snapshot(aqhi_en)
+
+  # French version
+  aqhi_fr <- obs$date |> 
+    AQHI(
+      pm25_1hr_ugm3 = obs$pm25,
+      o3_1hr_ppb = obs$o3,
+      no2_1hr_ppb = obs$no2,
+      verbose = FALSE,
+      language = "fr"
+    )
+  expect_snapshot(aqhi_fr)
+  expect_equal(names(aqhi_fr), names(aqhi_en))
 
   # PM2.5 only (AQHI+)
-  expect_snapshot(
-    AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25, verbose = FALSE)
-  )
+  aqhi_plus_en <- obs$date |>
+    AQHI(
+      pm25_1hr_ugm3 = obs$pm25,
+      verbose = FALSE
+    )
+  expect_snapshot(aqhi_plus_en)
+  expect_equal(names(aqhi_en), names(aqhi_plus_en))
+
+  # French version
+  aqhi_plus_fr <- obs$date |>
+    AQHI(
+      pm25_1hr_ugm3 = obs$pm25,
+      verbose = FALSE,
+      language = "fr"
+    )
+  expect_snapshot(aqhi_plus_fr)
+  expect_equal(names(aqhi_fr), names(aqhi_plus_fr))
 })
 
-test_that("language arg works", {
-  obs <- data.frame(
-    date = seq(
-      as.POSIXct("2024-01-01 00:00:00"),
-      as.POSIXct("2024-01-01 23:00:00"),
-      "1 hours"
-    ),
-    pm25 = 1:24,
-    o3 = 1:24,
-    no2 = 1:24
-  )
-  en_version <- AQHI(
-    dates = obs$date,
-    pm25_1hr_ugm3 = obs$pm25,
-    verbose = FALSE
-  )
-  expect_snapshot(en_version)
-  fr_version <- AQHI(
-    dates = obs$date,
-    pm25_1hr_ugm3 = obs$pm25,
-    verbose = FALSE,
-    language = "fr"
-  )
-  expect_true(!all(is.na(fr_version$high_risk_pop_message)))
-  expect_true(!all(is.na(fr_version$general_pop_message)))
-  expect_snapshot(fr_version)
-  expect_true(!any(unique(fr_version$risk) %in% unique(en_version$risk)))
-  expect_true(
-    !any(
-      unique(fr_version$high_risk_pop_message) %in%
-        unique(en_version$high_risk_pop_message)
-    )
-  )
-  expect_true(
-    !any(
-      unique(fr_version$general_pop_message) %in%
-        unique(en_version$general_pop_message)
-    )
-  )
-})
-
-# TODO: Not sure how to implement since AQHI changes size...
-# test_that("There is a value for each non-NA input", {
-#   output = AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25,
-#                 o3_1hr_ppb = obs$o3, no2_1hr_ppb = obs$no2)
-#
-# })
