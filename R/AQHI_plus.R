@@ -44,7 +44,14 @@
 #' AQHI_plus(pm25, min_allowed_pm25 = -0.5)
 #' @importFrom rlang .data
 AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
-  # Remove values below the provided minimum
+  stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
+  stopifnot(is.numeric(min_allowed_pm25), length(min_allowed_pm25) == 1)
+  stopifnot(is.character(language), length(language) == 1, tolower(language) %in% c("en", "fr"))
+  
+  # Ensure lowercase language
+  language <- tolower(language)
+
+  # Censor values below the provided minimum
   pm25_1hr_ugm3[pm25_1hr_ugm3 < min_allowed_pm25] <- NA
   # Calculate AQHI+, and get the associated risk and health messaging
   aqhi_breakpoints <- c(-Inf, 1:10 * 10, Inf) |>
