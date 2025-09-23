@@ -53,21 +53,24 @@ AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
 
   # Censor values below the provided minimum
   pm25_1hr_ugm3[pm25_1hr_ugm3 < min_allowed_pm25] <- NA
-  # Calculate AQHI+, and get the associated risk and health messaging
+
+  # Calculate AQHI+, and get the associated risk level (low, moderate, high, very high))
   aqhi_breakpoints <- c(-Inf, 1:10 * 10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
   aqhi_p <- pm25_1hr_ugm3 |> cut(
     breaks = aqhi_breakpoints,
     labels = names(aqhi_breakpoints)[-1]
   )
-  risk <- AQHI_risk_category(aqhi_p, language = language)
-  health_messages <- AQHI_health_messaging(risk, language = language)
+  risk <- aqhi_p |> AQHI_risk_category(language = language)
+  
   # Combine and return
   dplyr::tibble(
     pm25_1hr_ugm3 = pm25_1hr_ugm3,
     level = aqhi_p,
     colour = AQHI_colours[as.numeric(aqhi_p)],
     risk = risk,
-    health_messages
+    # High risk pop + general pop health warnings
+    # TODO: do these differ for AQHI / AQHI+?
+    risk |> AQHI_health_messaging(language = language)
   )
 }
