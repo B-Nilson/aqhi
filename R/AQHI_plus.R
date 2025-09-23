@@ -2,6 +2,9 @@
 #'
 #' @param pm25_1hr_ugm3 A numeric/integer vector with hourly mean PM2.5 concentrations (ug/m^3).
 #' @param min_allowed_pm25 A single numeric value indicating the minimum allowed concentration (Defaults to 0 ug/m^3). All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
+#' @param detailed (Optional). A single logical (TRUE/FALSE) value indicating if a tibble with AQHI+, risk levels, health messages, etc should be returned. 
+#'   If FALSE only the AQHI+ will be returned.
+#'   Default is TRUE.
 #' @param language (Optional). A single string value indicating the language to use for health messaging.
 #'   Must be "en" or "fr".
 #'   Default is "en".
@@ -27,9 +30,15 @@
 #' @family Canadian Air Quality
 #' @family Air Quality Standards
 #'
-#' @return A tibble (data.frame) with columns:
-#' hourly_pm25, AQHI_plus, risk, high_risk_pop_message, general_pop_message
+#' @return If `detailed` is TRUE:
+#' 
+#' - A tibble (data.frame) with columns 
+#' hourly_pm25, AQHI_plus, risk, high_risk_pop_message, general_pop_message, AQHI_plus_exceeds_AQHI
 #' and `length(pm25_1hr_ugm3)` rows
+#'
+#' If `detailed` is FALSE:
+#' - A factor vector of AQHI+ levels with `length(pm25_1hr_ugm3)` elements
+#' 
 #' @export
 #'
 #' @examples
@@ -43,9 +52,15 @@
 #' # Calculate the AQHI+ for each hour, except for hours where pm2.5 is < -0.5
 #' AQHI_plus(pm25, min_allowed_pm25 = -0.5)
 #' @importFrom rlang .data
-AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
+AQHI_plus <- function(
+  pm25_1hr_ugm3,
+  min_allowed_pm25 = 0,
+  detailed = TRUE,
+  language = "en"
+) {
   stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
   stopifnot(is.numeric(min_allowed_pm25), length(min_allowed_pm25) == 1)
+  stopifnot(is.logical(detailed), length(detailed) == 1)
   stopifnot(
     is.character(language),
     length(language) == 1,
@@ -58,7 +73,7 @@ AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
   # Censor values below the provided minimum
   pm25_1hr_ugm3[pm25_1hr_ugm3 < min_allowed_pm25] <- NA
 
-  # Calculate AQHI+, and get the associated risk level (low, moderate, high, very high))
+  # Calculate AQHI+, and 
   aqhi_breakpoints <- c(-Inf, 1:10 * 10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
   aqhi_p <- pm25_1hr_ugm3 |>
@@ -66,6 +81,13 @@ AQHI_plus <- function(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en") {
       breaks = aqhi_breakpoints,
       labels = names(aqhi_breakpoints)[-1]
     )
+  
+  # Early return if AQHI+ is all thats desired
+  if (!detailed) {
+    return(aqhi_p)
+  }
+  
+  # Get the associated risk level (low, moderate, high, very high))
   risk <- aqhi_p |> AQHI_risk_category(language = language)
 
   # Combine and return

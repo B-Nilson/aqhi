@@ -4,21 +4,38 @@
 \alias{AQHI_plus}
 \title{Calculate the Canadian AQHI+ from hourly PM2.5 observations}
 \usage{
-AQHI_plus(pm25_1hr_ugm3, min_allowed_pm25 = 0, language = "en")
+AQHI_plus(
+  pm25_1hr_ugm3,
+  min_allowed_pm25 = 0,
+  detailed = TRUE,
+  language = "en"
+)
 }
 \arguments{
 \item{pm25_1hr_ugm3}{A numeric/integer vector with hourly mean PM2.5 concentrations (ug/m^3).}
 
 \item{min_allowed_pm25}{A single numeric value indicating the minimum allowed concentration (Defaults to 0 ug/m^3). All values in \code{pm25_1hr_ugm3} less than this will be replaced with NA.}
 
+\item{detailed}{(Optional). A single logical (TRUE/FALSE) value indicating if a tibble with AQHI+, risk levels, health messages, etc should be returned.
+If FALSE only the AQHI+ will be returned.
+Default is TRUE.}
+
 \item{language}{(Optional). A single string value indicating the language to use for health messaging.
 Must be "en" or "fr".
 Default is "en".}
 }
 \value{
-A tibble (data.frame) with columns:
-hourly_pm25, AQHI_plus, risk, high_risk_pop_message, general_pop_message
+If \code{detailed} is TRUE:
+\itemize{
+\item A tibble (data.frame) with columns
+hourly_pm25, AQHI_plus, risk, high_risk_pop_message, general_pop_message, AQHI_plus_exceeds_AQHI
 and \code{length(pm25_1hr_ugm3)} rows
+}
+
+If \code{detailed} is FALSE:
+\itemize{
+\item A factor vector of AQHI+ levels with \code{length(pm25_1hr_ugm3)} elements
+}
 }
 \description{
 The Canadian AQHI+ is a modification of the Canadian Air Quality Health Index (AQHI).
