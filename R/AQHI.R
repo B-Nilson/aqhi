@@ -124,7 +124,7 @@ AQHI <- function(
     dplyr::relocate(dplyr::all_of(initial_cols), .after = "date")
 
   # If no non-missing NO2 / O3 provided, return AQHI+
-  has_all_3_pol <- any(complete.cases(
+  has_all_3_pol <- any(stats::complete.cases(
     obs$pm25_1hr_ugm3,
     obs$no2_1hr_ppb,
     obs$o3_1hr_ppb
