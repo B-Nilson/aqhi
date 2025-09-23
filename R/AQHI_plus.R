@@ -1,40 +1,44 @@
-#' Calculate the Canadian AQHI+ from hourly PM2.5 observations
+#' Calculate the Canadian AQHI+ from hourly \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations
 #'
-#' @param pm25_1hr_ugm3 A numeric/integer vector with hourly mean PM2.5 concentrations (ug/m^3).
-#' @param min_allowed_pm25 A single numeric value indicating the minimum allowed concentration (Defaults to 0 ug/m^3). All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
-#' @param detailed (Optional). A single logical (TRUE/FALSE) value indicating if a tibble with AQHI+, risk levels, health messages, etc should be returned. 
+#' @param pm25_1hr_ugm3 A numeric vector with hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}).
+#' @param min_allowed_pm25 (Optional).
+#'   A single numeric value indicating the minimum allowed concentration.
+#'   All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
+#'   Default is 0 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}.
+#' @param detailed (Optional). 
+#'   A single logical value indicating if a tibble with AQHI+, risk levels, health messages, etc should be returned. 
 #'   If FALSE only the AQHI+ will be returned.
 #'   Default is TRUE.
-#' @param language (Optional). A single string value indicating the language to use for health messaging.
-#'   Must be "en" or "fr".
+#' @param language (Optional). 
+#'   A single character value indicating the language to use for risk levels and health messaging.
+#'   Must be either "en" (English) or "fr" (French). Not case sensitive.
 #'   Default is "en".
 #'
 #' @description
 #' The Canadian AQHI+ is a modification of the Canadian Air Quality Health Index (AQHI).
-#' AQHI+ is meant for augmenting the AQHI to provide a more responsive health index during wildfire smoke events.
-#' AQHI+ only uses fine particulate matter (PM2.5) instead of the combination of PM2.5, ozone (O3), and nitrogen dioxide (NO2).
-#' In addition, AQHI+ is calculated using hourly mean averages instead of 3-hourly mean averages used by the AQHI.
+#' AQHI+ only uses fine particulate matter (\ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}) instead of the combination of 
+#' \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}), and nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}).
+#' Unlike the AQHI which uses 3-hourly mean averages, 
+#' AQHI+ is calculated using hourly mean averages.
 #' The AQHI+ overrides the AQHI if it exceeds the AQHI for a particular hour.
 #'
-#' AQHI+ splits hourly PM2.5 concentrations into bins of 10 ug/m^3 from 0 to 100 ug/m^3 (AQHI+ 1 - 10),
-#' and assigns "+" to values greater than 100 ug/m^3.
-#' The risk categories match the AQHI (Low \[1-3, or 0-30 ug/m^3\], Moderate \[4-6, or 30.1-60 ug/m^3\],
-#' High \[7-10, or 60.1-100 ug/m^3\], and Very High \[+, or >100 ug/m^3\]) and share the same health messaging.
+#' AQHI+ categorizes hourly \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations into 
+#' 10 equal bins from 0 to 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}} (AQHI+ 1-10),
+#' and assigns "+" to values greater than 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}.
+#' The risk categories match the Canadian AQHI and share the same health messaging: 
+#' - Low:  AQHI+ of 1-3, or a concentration of 0-30 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
+#' - Moderate: AQHI+ of 4-6, or a concentration of 30.1-60 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
+#' - High: AQHI+ of 7-10, or a concentration of 60.1-100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
+#' - Very High: AQHI+ of +, or a concentration above 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
+#' 
+#' The AQHI+ was originally published by \href{https://doi.org/10.17269/s41997-019-00237-w}{Yao et al (2019)},
+#' and has been adopted by all Canadian provinces/territories as of 2024.
+#' (except Québec where they use the AQI instead of the AQHI/AQHI+).
 #'
-#' The AQHI+ was originally published by Yao et. al in 2019,
-#' and has been adopted by all Canadian provinces/territories as of 2024
-#' (except Quebec where they use the AQI instead of the AQHI and AQHI+).
-#'
-#' @references \url{https://doi.org/10.17269/s41997-019-00237-w}
-#'
-#' @family Canadian Air Quality
-#' @family Air Quality Standards
+#' @references Yao et al (2019): \url{https://doi.org/10.17269/s41997-019-00237-w}
 #'
 #' @return If `detailed` is TRUE:
-#' 
-#' - A tibble (data.frame) with columns 
-#' hourly_pm25, AQHI_plus, risk, high_risk_pop_message, general_pop_message, AQHI_plus_exceeds_AQHI
-#' and `length(pm25_1hr_ugm3)` rows
+#' - A tibble (data.frame) with columns detailing the AQHI+, risk level, health messages, etc
 #'
 #' If `detailed` is FALSE:
 #' - A factor vector of AQHI+ levels with `length(pm25_1hr_ugm3)` elements
@@ -44,13 +48,16 @@
 #' @examples
 #' # Hourly pm2.5 concentrations
 #' pm25 <- sample(1:150, 24)
-#' # Calculate the AQHI+
+#' # Calculate the detailed AQHI+ (tibble with risk levels etc)
 #' AQHI_plus(pm25)
-#'
+#' # Or just the AQHI+ (returned as a factor)
+#' AQHI_plus(pm25, detailed = FALSE)
+#' 
 #' # Hourly pm2.5 concentrations (with negative values)
 #' pm25 <- c(-2, -0.1, sample(1:150, 22))
 #' # Calculate the AQHI+ for each hour, except for hours where pm2.5 is < -0.5
 #' AQHI_plus(pm25, min_allowed_pm25 = -0.5)
+#' 
 #' @importFrom rlang .data
 AQHI_plus <- function(
   pm25_1hr_ugm3,

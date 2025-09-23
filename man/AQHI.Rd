@@ -68,12 +68,5 @@ AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25) # Returns AQHI+
 \references{
 \url{https://doi.org/10.3155/1047-3289.58.3.435}
 }
-\seealso{
-Other Canadian Air Quality: 
-\code{\link{AQHI_plus}()}
-
-Other Air Quality Standards: 
-\code{\link{AQHI_plus}()}
-}
 \concept{Air Quality Standards}
 \concept{Canadian Air Quality}
