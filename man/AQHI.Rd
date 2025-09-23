@@ -9,6 +9,7 @@ AQHI(
   pm25_1hr_ugm3,
   o3_1hr_ppb = NA_real_,
   no2_1hr_ppb = NA_real_,
+  allow_aqhi_plus_override = TRUE,
   detailed = TRUE,
   language = "en",
   verbose = TRUE
@@ -27,6 +28,10 @@ If all are NA (the default) AQHI won't be calculated and instead AQHI+ (see \cod
 \item{no2_1hr_ppb}{(Optional).
 A numeric vector of hourly mean nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) concentrations (units = ppb).
 If all are NA (the default) AQHI won't be calculated and instead AQHI+ (see \code{\link{AQHI_plus}}) will used.}
+
+\item{allow_aqhi_plus_override}{(Optional).
+A single logical value indicating if the AQHI+ should be allowed to override the AQHI if it exceeds the AQHI for a particular hour.
+Default is TRUE.}
 
 \item{detailed}{(Optional).
 A single logical value indicating if a tibble with levels, risk categories, health messages, etc should be returned.

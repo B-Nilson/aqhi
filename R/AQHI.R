@@ -14,6 +14,9 @@
 #'   A single logical value indicating if a tibble with levels, risk categories, health messages, etc should be returned.
 #'   If FALSE only the levels will be returned.
 #'   Default is TRUE.
+#' @param allow_aqhi_plus_override (Optional).
+#'   A single logical value indicating if the AQHI+ should be allowed to override the AQHI if it exceeds the AQHI for a particular hour.
+#'   Default is TRUE.
 #' @param language (Optional).
 #'   A single character value indicating the language to use for risk levels and health messaging.
 #'   Must be either "en" (English) or "fr" (French). Not case sensitive.
@@ -63,6 +66,7 @@ AQHI <- function(
   pm25_1hr_ugm3,
   o3_1hr_ppb = NA_real_,
   no2_1hr_ppb = NA_real_,
+  allow_aqhi_plus_override = TRUE,
   detailed = TRUE,
   language = "en",
   verbose = TRUE
@@ -94,34 +98,25 @@ AQHI <- function(
     dplyr::arrange(date)
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
-  initial_cols <- c(
-    "pm25_1hr_ugm3",
-    "o3_1hr_ppb",
-    "no2_1hr_ppb",
-    "pm25_3hr_ugm3",
-    "o3_3hr_ppb",
-    "no2_3hr_ppb",
-    "level",
-    "AQHI",
-    "AQHI_plus",
-    "AQHI_plus_exceeds_AQHI"
-  )
-  aqhi_plus <- obs$pm25_1hr_ugm3 |>
-    AQHI_plus(language = language) |>
-    # Include expected AQHI columns in case only returning AQHI+
-    dplyr::mutate(
-      date = obs$date,
-      o3_1hr_ppb = NA_real_,
-      no2_1hr_ppb = NA_real_,
-      pm25_3hr_ugm3 = NA_real_,
-      o3_3hr_ppb = NA_real_,
-      no2_3hr_ppb = NA_real_,
-      AQHI = NA_real_ |> factor(levels = c(1:10, "+")),
-      AQHI_plus = .data$level,
-      AQHI_plus_exceeds_AQHI = !is.na(.data$level)
-    ) |>
-    dplyr::relocate("date", .before = 1) |>
-    dplyr::relocate(dplyr::all_of(initial_cols), .after = "date")
+  if (allow_aqhi_plus_override) {    
+    aqhi_plus <- obs$pm25_1hr_ugm3 |>
+      AQHI_plus(language = language) |>
+      # Include expected AQHI columns in case only returning AQHI+
+      dplyr::mutate(
+        date = obs$date,
+        o3_1hr_ppb = NA_real_,
+        no2_1hr_ppb = NA_real_,
+        pm25_3hr_ugm3 = NA_real_,
+        o3_3hr_ppb = NA_real_,
+        no2_3hr_ppb = NA_real_,
+        AQHI = NA_real_ |> factor(levels = c(1:10, "+")),
+        AQHI_plus = .data$level,
+        AQHI_plus_exceeds_AQHI = !is.na(.data$level)
+      ) |>
+      dplyr::select(dplyr::all_of(.aqhi_columns))
+  }else{
+    aqhi_plus <- data.frame(level = NA_real_ |> factor(levels = c(1:10, "+")))
+  }
 
   # If no non-missing NO2 / O3 provided, return AQHI+
   has_all_3_pol <- any(stats::complete.cases(
@@ -129,7 +124,7 @@ AQHI <- function(
     obs$no2_1hr_ppb,
     obs$o3_1hr_ppb
   ))
-  if (!has_all_3_pol) {
+  if (!has_all_3_pol & allow_aqhi_plus_override) {
     if (verbose) {
       warning(
         "No non-missing NO2 / O3 data provided. Returning AQHI+ (PM2.5 only) instead of AQHI."
@@ -163,7 +158,7 @@ AQHI <- function(
       )
     )
 
-  # Calculate AQHI and the combined AQHI/AQHI+
+  # Calculate AQHI
   AQHI_obs <- obs |>
     dplyr::mutate(
       AQHI = AQHI_formula(
@@ -173,8 +168,17 @@ AQHI <- function(
       ),
       AQHI_plus = aqhi_plus$level
     ) |>
-    dplyr::filter(.data$date %in% dates) |> # drop infilled dates
-    AQHI_replace_w_AQHI_plus()
+    # drop infilled dates
+    dplyr::filter(.data$date %in% dates) 
+
+  # Override AQHI with AQHI+ where AQHI+ is higher
+  if (allow_aqhi_plus_override) {
+    AQHI_obs <- AQHI_obs |> AQHI_replace_w_AQHI_plus()
+  }else {
+    AQHI_obs$AQHI_plus <- NA_real_ |> factor(levels = c(1:10, "+"))
+    AQHI_obs$AQHI_plus_exceeds_AQHI <- FALSE
+    AQHI_obs$level <- AQHI_obs$AQHI
+  }
 
   # Return level early if desired
   if (!detailed) {
@@ -193,6 +197,23 @@ AQHI <- function(
     dplyr::bind_cols(
       AQHI_obs$risk |> AQHI_health_messaging(language = language)
     ) |>
-    # Ensure column order is consistent
-    dplyr::select(names(aqhi_plus))
+    dplyr::select(dplyr::all_of(.aqhi_columns))
 }
+
+.aqhi_columns <- c(
+  "date",
+  "pm25_1hr_ugm3",
+  "o3_1hr_ppb",
+  "no2_1hr_ppb",
+  "pm25_3hr_ugm3",
+  "o3_3hr_ppb",
+  "no2_3hr_ppb",
+  "level",
+  "AQHI",
+  "AQHI_plus",
+  "AQHI_plus_exceeds_AQHI",
+  "colour",
+  "risk",
+  "high_risk_pop_message",
+  "general_pop_message"
+)

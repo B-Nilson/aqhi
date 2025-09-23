@@ -35,6 +35,19 @@ test_that("AQHI returns expected output", {
   expect_snapshot(aqhi_fr)
   expect_equal(names(aqhi_fr), names(aqhi_en))
 
+  # All 3 pollutants, no AQHI+ override
+  aqhi_en_no_override <- obs$date |>
+    AQHI(
+      pm25_1hr_ugm3 = obs$pm25,
+      o3_1hr_ppb = obs$o3,
+      no2_1hr_ppb = obs$no2,
+      verbose = FALSE,
+      allow_aqhi_plus_override = FALSE
+    )
+  expect_snapshot(aqhi_en_no_override)
+  expect_equal(names(aqhi_en_no_override), names(aqhi_en))
+  expect_true(all(is.na(aqhi_en_no_override$AQHI_plus)))
+
   # PM2.5 only (AQHI+)
   aqhi_plus_en <- obs$date |>
     AQHI(
