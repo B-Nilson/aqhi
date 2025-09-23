@@ -1,11 +1,11 @@
 #' Calculate the Canadian AQHI from hourly \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, \ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}, and \ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}} concentrations
 #'
-#' @param dates A POSIXct (date-time) vector of corresponding to hourly observations. 
+#' @param dates A POSIXct (date-time) vector of corresponding to hourly observations.
 #'   Date gaps will be filled with NA's automatically as needed when calculating 3-hour averages.
-#' @param pm25_1hr_ugm3 
+#' @param pm25_1hr_ugm3
 #'   A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}).
-#' @param no2_1hr_ppb (Optional). 
-#'   A numeric vector of hourly mean nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) concentrations (units = ppb). 
+#' @param no2_1hr_ppb (Optional).
+#'   A numeric vector of hourly mean nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) concentrations (units = ppb).
 #'   If all are NA (the default) AQHI won't be calculated and instead AQHI+ (see \code{\link{AQHI_plus}}) will used.
 #' @param o3_1hr_ppb (Optional).
 #'   A numeric vector of hourly mean ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}) concentrations (units = ppb).
@@ -18,17 +18,17 @@
 #'   A single character value indicating the language to use for risk levels and health messaging.
 #'   Must be either "en" (English) or "fr" (French). Not case sensitive.
 #'   Default is "en".
-#' @param verbose (Optional). 
-#'   A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed. 
+#' @param verbose (Optional).
+#'   A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed.
 #'   Default is TRUE
 #'
 #' @description
 #' The Canadian Air Quality Health Index (AQHI) is a measure of the health risk associated with exposure to ambient air pollution.
-#' It combines the impacts of fine particulate matter (\ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}), 
-#' ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}), 
+#' It combines the impacts of fine particulate matter (\ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}),
+#' ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}),
 #' and nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) on a scale from 1-10 (+).
-#' 
-#' The AQHI was originally published by \href{https://doi.org/10.3155/1047-3289.58.3.435}{Stieb et al. (2008)} 
+#'
+#' The AQHI was originally published by \href{https://doi.org/10.3155/1047-3289.58.3.435}{Stieb et al. (2008)}
 #' and is used by all Canadian provinces and territories except for Québec, which uses the AQI instead.
 #' The AQHI is calculated for each hour using 3-hour rolling mean concentrations of \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, \ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}, and \ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}.
 #' However, the AQHI is overriden by the AQHI+ for a given hour if that AQHI+ level is higher.
