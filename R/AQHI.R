@@ -1,6 +1,6 @@
 #' Calculate the Canadian AQHI from hourly PM2.5, NO2, and O3 observations
 #'
-#' @param dates Vector of hourly datetimes corresponding to observations. Date gaps will be filled automatically.
+#' @param dates Vector of hourly datetimes corresponding to observations. Date gaps will be filled automatically as needed.
 #' @param pm25_1hr_ugm3 Numeric vector of hourly mean fine particulate matter (PM2.5) concentrations (ug/m^3).
 #' @param no2_1hr_ppb (Optional). Numeric vector of hourly mean nitrogen dioxide (NO2) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.
 #' @param o3_1hr_ppb (Optional). Numeric vector of hourly mean ozone (O3) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.
@@ -34,14 +34,11 @@
 #' @family Air Quality Standards
 #'
 #' @return If `detailed = TRUE`:
-#' - A tibble (data.frame) with columns (*if all 3 pollutants provided):
-#' date, pm25, o3*, no2*, pm25_rolling_3hr*, o3_rolling_3hr*, o3_rolling_3hr*,
-#'  AQHI, AQHI_plus, risk, high_risk_pop_message, general_pop_message, AQHI_plus_exceeds_AQHI*
-#'  and potentially more rows than `length(dates)` (due to any missing hours being filled with NA values).
-#' 
+#' - A tibble (data.frame) with a detailed summary of the AQHI, risk levels, health messages, etc and the same number of rows as `length(dates)`
+#'
 #' If `detailed = FALSE`:
 #' - a factor vector of AQHI levels with `length(dates)` elements
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -61,16 +58,16 @@
 AQHI <- function(
   dates,
   pm25_1hr_ugm3,
-  no2_1hr_ppb = NA_real_,
   o3_1hr_ppb = NA_real_,
+  no2_1hr_ppb = NA_real_,
   detailed = TRUE,
   language = "en",
   verbose = TRUE
 ) {
   stopifnot("POSIXct" %in% class(dates), length(dates) > 0)
   stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
-  stopifnot(is.numeric(no2_1hr_ppb) & length(no2_1hr_ppb) > 0)
   stopifnot(is.numeric(o3_1hr_ppb), length(o3_1hr_ppb) > 0)
+  stopifnot(is.numeric(no2_1hr_ppb) & length(no2_1hr_ppb) > 0)
   stopifnot(is.logical(detailed), length(detailed) == 1)
   stopifnot(
     is.character(language),
@@ -85,27 +82,46 @@ AQHI <- function(
   # Combine inputs
   obs <- dplyr::tibble(
     date = dates,
-    pm25 = pm25_1hr_ugm3,
-    o3 = o3_1hr_ppb,
-    no2 = no2_1hr_ppb
+    pm25_1hr_ugm3,
+    o3_1hr_ppb,
+    no2_1hr_ppb
   ) |>
     # Fill in missing hours
     tidyr::complete(date = seq(min(date), max(date), "1 hours")) |>
     dplyr::arrange(date)
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
-  aqhi_plus <- obs$pm25 |>
+  initial_cols <- c(
+    "pm25_1hr_ugm3",
+    "o3_1hr_ppb",
+    "no2_1hr_ppb",
+    "pm25_3hr_ugm3",
+    "o3_3hr_ppb",
+    "no2_3hr_ppb",
+    "level",
+    "AQHI",
+    "AQHI_plus",
+    "AQHI_plus_exceeds_AQHI"
+  )
+  aqhi_plus <- obs$pm25_1hr_ugm3 |>
     AQHI_plus(language = language) |>
     # Include expected AQHI columns in case only returning AQHI+
     dplyr::mutate(
-      AQHI = NA,
+      date = obs$date,
+      o3_1hr_ppb = NA_real_,
+      no2_1hr_ppb = NA_real_,
+      pm25_3hr_ugm3 = NA_real_,
+      o3_3hr_ppb = NA_real_,
+      no2_3hr_ppb = NA_real_,
+      AQHI = NA_real_ |> factor(levels = c(1:10, "+")),
       AQHI_plus = .data$level,
       AQHI_plus_exceeds_AQHI = !is.na(.data$level)
     ) |>
-    dplyr::relocate(c("AQHI", "AQHI_plus"), .before = "risk")
+    dplyr::relocate("date", .before = 1) |>
+    dplyr::relocate(dplyr::all_of(initial_cols), .after = "date")
 
   # If no non-missing NO2 / O3 provided, return AQHI+
-  has_all_3_pol <- any(complete.cases(obs$pm25, obs$no2, obs$o3))
+  has_all_3_pol <- any(complete.cases(obs$pm25_1hr_ugm3, obs$no2_1hr_ppb, obs$o3_1hr_ppb))
   if (!has_all_3_pol) {
     if (verbose) {
       warning(
@@ -119,8 +135,10 @@ AQHI <- function(
   }
 
   # Calculate rolling 3 hour averages
-  rolling_cols <- c("pm25", "no2", "o3")
-  names(rolling_cols) <- paste0(rolling_cols, "_rolling_3hr")
+  rolling_cols <- names(obs)[2:4] |>
+    stats::setNames(
+      names(obs)[2:4] |> sub(pattern = "_1hr_", replacement = "_3hr_")
+    )
   obs <- obs |>
     dplyr::mutate(
       dplyr::across(
@@ -128,7 +146,7 @@ AQHI <- function(
         \(x) {
           x |>
             handyr::rolling(
-              "mean",
+              FUN = "mean",
               .width = 3,
               .direction = "backward",
               .min_non_na = 2
@@ -138,31 +156,36 @@ AQHI <- function(
       )
     )
 
-  # Calculate AQHI
+  # Calculate AQHI and the combined AQHI/AQHI+
   AQHI_obs <- obs |>
     dplyr::mutate(
       AQHI = AQHI_formula(
-        pm25_rolling_3hr = .data$pm25_rolling_3hr,
-        no2_rolling_3hr = .data$no2_rolling_3hr,
-        o3_rolling_3hr = .data$o3_rolling_3hr
+        pm25_rolling_3hr = .data$pm25_3hr_ugm3,
+        o3_rolling_3hr = .data$o3_3hr_ppb,
+        no2_rolling_3hr = .data$no2_3hr_ppb
       ),
-      AQHI_plus = aqhi_plus$level,
-      risk = AQHI_risk_category(.data$AQHI, language = language),
-      colour = AQHI_colours[as.numeric(.data$AQHI)]
+      AQHI_plus = aqhi_plus$level
+    ) |>
+    dplyr::filter(.data$date %in% dates) |> # drop infilled dates
+    AQHI_replace_w_AQHI_plus()
+
+  # Return level early if desired
+  if (!detailed) {
+    return(AQHI_obs$level)
+  } 
+
+  # Add risk + level colour
+  AQHI_obs <- AQHI_obs |>
+    dplyr::mutate(
+      risk = .data$level |> AQHI_risk_category(language = language),
+      colour = AQHI_colours[as.numeric(.data$level)]
     )
   
-  # Add health messaging and handle AQHI+ overrides
-  AQHI_obs <- AQHI_obs |>
+  # Add health messaging, sort columns, return
+  AQHI_obs |>
     dplyr::bind_cols(
-      obs$risk |> AQHI_health_messaging(language = language)
+      AQHI_obs$risk |> AQHI_health_messaging(language = language)
     ) |>
-    AQHI_replace_w_AQHI_plus(aqhi_plus = aqhi_plus) |>
-    dplyr::relocate(c("level", "AQHI", "AQHI_plus"), .before = "risk")
-
-  # Return
-  if (!detailed) {
-    return(AQHI_obs$AQHI)
-  }else {
-    return(AQHI_obs)
-  }
+    # Ensure column order is consistent
+    dplyr::select(names(aqhi_plus))
 }

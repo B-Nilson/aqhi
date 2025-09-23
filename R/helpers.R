@@ -129,8 +129,8 @@ AQHI_health_messaging <- function(risk_categories, language = "en") {
 }
 
 # TODO: make sure AQHI is a column in obs
-AQHI_replace_w_AQHI_plus <- function(obs, aqhi_plus) {
-  obs |>
+AQHI_replace_w_AQHI_plus <- function(AQHI_obs) {
+  AQHI_obs |>
     dplyr::mutate(
       AQHI_plus_exceeds_AQHI = (as.numeric(.data$AQHI_plus) >
         as.numeric(.data$AQHI)) |>
@@ -139,22 +139,7 @@ AQHI_replace_w_AQHI_plus <- function(obs, aqhi_plus) {
         .data$AQHI_plus_exceeds_AQHI,
         .data$AQHI_plus,
         .data$AQHI
-      ),
-      risk = ifelse(.data$AQHI_plus_exceeds_AQHI, aqhi_plus$risk, .data$risk),
-      colour = ifelse(
-        .data$AQHI_plus_exceeds_AQHI,
-        aqhi_plus$colour,
-        .data$colour
-      ),
-      high_risk_pop_message = ifelse(
-        .data$AQHI_plus_exceeds_AQHI,
-        aqhi_plus$high_risk_pop_message,
-        .data$high_risk_pop_message
-      ),
-      general_pop_message = ifelse(
-        .data$AQHI_plus_exceeds_AQHI,
-        aqhi_plus$general_pop_message,
-        .data$general_pop_message
-      )
+      ) |> 
+        factor(levels = 1:11, labels = c(1:10, "+"))
     )
 }
