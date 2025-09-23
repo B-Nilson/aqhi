@@ -33,17 +33,38 @@ test_that("language arg works", {
       as.POSIXct("2024-01-01 23:00:00"),
       "1 hours"
     ),
-    pm25 = 1:24, o3 = 1:24, no2 = 1:24
+    pm25 = 1:24,
+    o3 = 1:24,
+    no2 = 1:24
   )
-  en_version <- AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25, verbose = FALSE)
+  en_version <- AQHI(
+    dates = obs$date,
+    pm25_1hr_ugm3 = obs$pm25,
+    verbose = FALSE
+  )
   expect_snapshot(en_version)
-  fr_version <- AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25, verbose = FALSE, language = "fr")
+  fr_version <- AQHI(
+    dates = obs$date,
+    pm25_1hr_ugm3 = obs$pm25,
+    verbose = FALSE,
+    language = "fr"
+  )
   expect_true(!all(is.na(fr_version$high_risk_pop_message)))
   expect_true(!all(is.na(fr_version$general_pop_message)))
   expect_snapshot(fr_version)
   expect_true(!any(unique(fr_version$risk) %in% unique(en_version$risk)))
-  expect_true(!any(unique(fr_version$high_risk_pop_message) %in% unique(en_version$high_risk_pop_message)))
-  expect_true(!any(unique(fr_version$general_pop_message) %in% unique(en_version$general_pop_message)))
+  expect_true(
+    !any(
+      unique(fr_version$high_risk_pop_message) %in%
+        unique(en_version$high_risk_pop_message)
+    )
+  )
+  expect_true(
+    !any(
+      unique(fr_version$general_pop_message) %in%
+        unique(en_version$general_pop_message)
+    )
+  )
 })
 
 # TODO: Not sure how to implement since AQHI changes size...

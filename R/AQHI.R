@@ -5,7 +5,7 @@
 #' @param no2_1hr_ppb (Optional). Numeric vector of hourly mean nitrogen dioxide (NO2) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.
 #' @param o3_1hr_ppb (Optional). Numeric vector of hourly mean ozone (O3) concentrations (ppb). If not provided AQHI+ will be calculated from PM2.5 only.
 #' @param language (Optional). A single string value indicating the language to use for health messaging.
-#'   Must be "en" or "fr". 
+#'   Must be "en" or "fr".
 #'   Default is "en".
 #' @param verbose (Optional). A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed. Default is TRUE
 #'
@@ -50,7 +50,14 @@
 #' )
 #'
 #' AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25) # Returns AQHI+
-AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, language = "en", verbose = TRUE) {
+AQHI <- function(
+  dates,
+  pm25_1hr_ugm3,
+  no2_1hr_ppb = NA,
+  o3_1hr_ppb = NA,
+  language = "en",
+  verbose = TRUE
+) {
   obs <- dplyr::bind_cols(
     date = dates,
     pm25 = pm25_1hr_ugm3,
@@ -62,7 +69,11 @@ AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, langua
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
   aqhi_plus <- AQHI_plus(pm25_1hr_ugm3 = obs$pm25, language = language) |>
-    dplyr::mutate(AQHI = NA, AQHI_plus = .data$level, AQHI_plus_exceeds_AQHI = !is.na(.data$level)) |>
+    dplyr::mutate(
+      AQHI = NA,
+      AQHI_plus = .data$level,
+      AQHI_plus_exceeds_AQHI = !is.na(.data$level)
+    ) |>
     dplyr::relocate(c("AQHI", "AQHI_plus"), .before = "risk")
   # Calculate AQHI (if all 3 pollutants provided)
   has_all_3_pol <- any(
@@ -77,7 +88,12 @@ AQHI <- function(dates, pm25_1hr_ugm3, no2_1hr_ppb = NA, o3_1hr_ppb = NA, langua
           dplyr::all_of(rolling_cols),
           \(x) {
             x |>
-              handyr::rolling("mean", .width = 3, .direction = "backward", .min_non_na = 2) |>
+              handyr::rolling(
+                "mean",
+                .width = 3,
+                .direction = "backward",
+                .min_non_na = 2
+              ) |>
               round(digits = 1)
           }
         ),

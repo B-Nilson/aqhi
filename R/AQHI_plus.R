@@ -5,55 +5,55 @@
 #'   A single numeric value indicating the minimum allowed concentration.
 #'   All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
 #'   Default is 0 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}.
-#' @param detailed (Optional). 
-#'   A single logical value indicating if a tibble with AQHI+, risk levels, health messages, etc should be returned. 
+#' @param detailed (Optional).
+#'   A single logical value indicating if a tibble with AQHI+, risk levels, health messages, etc should be returned.
 #'   If FALSE only the AQHI+ will be returned.
 #'   Default is TRUE.
-#' @param language (Optional). 
+#' @param language (Optional).
 #'   A single character value indicating the language to use for risk levels and health messaging.
 #'   Must be either "en" (English) or "fr" (French). Not case sensitive.
 #'   Default is "en".
 #'
 #' @description
 #' The Canadian AQHI+ is a modification of the Canadian Air Quality Health Index (AQHI).
-#' AQHI+ only uses fine particulate matter (\ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}) instead of the combination of 
+#' AQHI+ only uses fine particulate matter (\ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}) instead of the combination of
 #' \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}), and nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}).
-#' Unlike the AQHI which uses 3-hourly mean averages, 
+#' Unlike the AQHI which uses 3-hourly mean averages,
 #' AQHI+ is calculated using hourly mean averages.
 #' The AQHI+ overrides the AQHI if it exceeds the AQHI for a particular hour.
 #'
-#' AQHI+ categorizes hourly \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations into 
+#' AQHI+ categorizes hourly \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations into
 #' 10 equal bins from 0 to 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}} (AQHI+ 1-10),
 #' and assigns "+" to values greater than 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}.
-#' The risk categories match the Canadian AQHI and share the same health messaging: 
+#' The risk categories match the Canadian AQHI and share the same health messaging:
 #' - Low:  AQHI+ of 1-3, or a concentration of 0-30 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
 #' - Moderate: AQHI+ of 4-6, or a concentration of 30.1-60 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
 #' - High: AQHI+ of 7-10, or a concentration of 60.1-100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
 #' - Very High: AQHI+ of +, or a concentration above 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
-#' 
+#'
 #' The AQHI+ was originally published by \href{https://doi.org/10.17269/s41997-019-00237-w}{Yao et al (2019)},
 #' and has been adopted by all Canadian provinces/territories as of 2024.
 #' (except Québec where they use the AQI instead of the AQHI/AQHI+).
-#' 
+#'
 #' Quote from Yao et al (2019):
-#' 
-#' \emph{This algorithm is a linear extrapolation based on two anchor points: 
-#'  1. the AQHI-Plus value should reach 7 (high risk category), 
-#' when 1-h PM2.5 concentrations are over 60 μg/m3. 
-#' This is consistent with \[...\] the analyses of the likelihood of exceeding the 25 μg/m3 24-h threshold value; and 
-#'  2. the AQHI-Plus value should reach 4 (moderate risk category) 
-#' when the 1-h PM2.5 concentrations are over 30 μg/m3, 
-#' which is the threshold for odour perception of burning softwood 
-#' \href{https://doi.org/10.1016/j.atmosenv.2012.01.044}{(Kistler et al. 2012)}, 
+#'
+#' \emph{This algorithm is a linear extrapolation based on two anchor points:
+#'  1. the AQHI-Plus value should reach 7 (high risk category),
+#' when 1-h PM2.5 concentrations are over 60 μg/m3.
+#' This is consistent with \[...\] the analyses of the likelihood of exceeding the 25 μg/m3 24-h threshold value; and
+#'  2. the AQHI-Plus value should reach 4 (moderate risk category)
+#' when the 1-h PM2.5 concentrations are over 30 μg/m3,
+#' which is the threshold for odour perception of burning softwood
+#' \href{https://doi.org/10.1016/j.atmosenv.2012.01.044}{(Kistler et al. 2012)},
 #' the major type of forest species in BC.
-#' 
+#'
 #' \[...\]
-#' 
-#' These conclusions suggest that the AQHI is most indicative of the mortality and 
-#' circulatory risks during periods affected by wildfire smoke. 
-#' However, the \[...\] AQHI-Plus is most indicative of the respiratory risks 
-#' during high-intensity fire periods, particularly for people with asthma. 
-#' This is consistent with the rationale behind the AQHI formulation 
+#'
+#' These conclusions suggest that the AQHI is most indicative of the mortality and
+#' circulatory risks during periods affected by wildfire smoke.
+#' However, the \[...\] AQHI-Plus is most indicative of the respiratory risks
+#' during high-intensity fire periods, particularly for people with asthma.
+#' This is consistent with the rationale behind the AQHI formulation
 #' and with existing health evidence related to the effects of wildfire smoke.}
 #'
 #' @references Yao et al (2019): \url{https://doi.org/10.17269/s41997-019-00237-w}
@@ -63,7 +63,7 @@
 #'
 #' If `detailed` is FALSE:
 #' - A factor vector of AQHI+ levels with `length(pm25_1hr_ugm3)` elements
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -73,12 +73,12 @@
 #' AQHI_plus(pm25)
 #' # Or just the AQHI+ (returned as a factor)
 #' AQHI_plus(pm25, detailed = FALSE)
-#' 
+#'
 #' # Hourly pm2.5 concentrations (with negative values)
 #' pm25 <- c(-2, -0.1, sample(1:150, 22))
 #' # Calculate the AQHI+ for each hour, except for hours where pm2.5 is < -0.5
 #' AQHI_plus(pm25, min_allowed_pm25 = -0.5)
-#' 
+#'
 #' @importFrom rlang .data
 AQHI_plus <- function(
   pm25_1hr_ugm3,
@@ -101,7 +101,7 @@ AQHI_plus <- function(
   # Censor values below the provided minimum
   pm25_1hr_ugm3[pm25_1hr_ugm3 < min_allowed_pm25] <- NA
 
-  # Calculate AQHI+, and 
+  # Calculate AQHI+, and
   aqhi_breakpoints <- c(-Inf, 1:10 * 10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
   aqhi_p <- pm25_1hr_ugm3 |>
@@ -109,12 +109,12 @@ AQHI_plus <- function(
       breaks = aqhi_breakpoints,
       labels = names(aqhi_breakpoints)[-1]
     )
-  
+
   # Early return if AQHI+ is all thats desired
   if (!detailed) {
     return(aqhi_p)
   }
-  
+
   # Get the associated risk level (low, moderate, high, very high))
   risk <- aqhi_p |> AQHI_risk_category(language = language)
 

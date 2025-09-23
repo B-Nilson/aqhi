@@ -45,7 +45,12 @@ AQHI_risk_category <- function(AQHI, language = "en") {
     "Very High" = "+"
   )
   if (language == "fr") {
-    names(aqhi_levels) <- c("Faible", "Mod\u00e9r\u00e9", "Elev\u00e9", "Tr\u00e8s Elev\u00e9")
+    names(aqhi_levels) <- c(
+      "Faible",
+      "Mod\u00e9r\u00e9",
+      "Elev\u00e9",
+      "Tr\u00e8s Elev\u00e9"
+    )
   } else if (language != "en") {
     stop("Language must be 'en' or 'fr'")
   }
@@ -136,7 +141,11 @@ AQHI_replace_w_AQHI_plus <- function(obs, aqhi_plus) {
         .data$AQHI
       ),
       risk = ifelse(.data$AQHI_plus_exceeds_AQHI, aqhi_plus$risk, .data$risk),
-      colour = ifelse(.data$AQHI_plus_exceeds_AQHI, aqhi_plus$colour, .data$colour),
+      colour = ifelse(
+        .data$AQHI_plus_exceeds_AQHI,
+        aqhi_plus$colour,
+        .data$colour
+      ),
       high_risk_pop_message = ifelse(
         .data$AQHI_plus_exceeds_AQHI,
         aqhi_plus$high_risk_pop_message,
