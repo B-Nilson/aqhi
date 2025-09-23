@@ -1,4 +1,7 @@
 test_that("AQHI returns expected output", {
+  # TODO: need to ensure AQHI levels are accurate
+  # - this includes when AQHI+ should/shouldnt override AQHI
+
   obs <- data.frame(
     date = seq(
       as.POSIXct("2024-01-01 00:00:00"),
