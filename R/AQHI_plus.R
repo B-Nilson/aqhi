@@ -118,6 +118,8 @@ AQHI_plus <- function(
     risk = risk,
     # High risk pop + general pop health warnings
     # TODO: do these differ for AQHI / AQHI+?
-    risk |> get_health_messages(language = language) |> dplyr::select(-"risk_category")
+    risk |>
+      get_health_messages(language = language) |>
+      dplyr::select(-"risk_category")
   )
 }

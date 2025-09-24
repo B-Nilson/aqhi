@@ -15,7 +15,8 @@ get_health_messages <- function(risk_categories, language = "en") {
       all(is.na(risk_categories)),
     length(risk_categories) > 0,
     all(
-      as.character(risk_categories) %in% c(dplyr::bind_rows(AQHI_health_messages)$risk_category, NA)
+      as.character(risk_categories) %in%
+        c(dplyr::bind_rows(AQHI_health_messages)$risk_category, NA)
     )
   )
   stopifnot(tolower(language) %in% c("en", "fr"), length(language) == 1)

@@ -40,7 +40,7 @@ AQHI_risk_categories <- list(
   fr = list(
     Faible = 1:3,
     "Mod\u00e9r\u00e9" = 4:6,
-    "Elev\u00e9"= 7:10,
+    "Elev\u00e9" = 7:10,
     "Tr\u00e8s Elev\u00e9" = "+"
   )
 )
