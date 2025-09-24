@@ -21,14 +21,6 @@ get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   )
 }
 
-get_health_messages <- function(risk_categories, language = "en") {
-  stopifnot(tolower(language) %in% c("en", "fr"), length(language) == 1)
-
-  aqhi_messaging <- AQHI_health_messages[[language]]
-  aqhi_messaging[match(risk_categories, aqhi_messaging$risk_category), ] |>
-    dplyr::select(-"risk_category")
-}
-
 override_AQHI_with_AQHI_plus <- function(AQHI_obs) {
   stopifnot(all(c("AQHI_plus", "AQHI") %in% colnames(AQHI_obs)))
 
