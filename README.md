@@ -80,7 +80,4 @@ risk_fr |> get_health_messages(language = "fr")
 get_aqhi_colours()
 obs$pm25 |> AQHI_plus(detailed = FALSE) |> get_aqhi_colours()
 
-# Get risk categories, and health messages
-AQHI_risk_category
-AQHI_health_messages
 ```

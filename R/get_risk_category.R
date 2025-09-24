@@ -37,3 +37,18 @@ get_risk_category <- function(aqhi_levels, language = "en") {
       labels = unlist(aqhi_labels)
     )
 }
+
+AQHI_risk_categories <- list(
+  en = list(
+    Low = 1:3,
+    Moderate = 4:6,
+    High = 7:10,
+    "Very High" = "+"
+  ),
+  fr = list(
+    Faible = 1:3,
+    "Mod\u00e9r\u00e9" = 4:6,
+    "Elev\u00e9" = 7:10,
+    "Tr\u00e8s Elev\u00e9" = "+"
+  )
+)
