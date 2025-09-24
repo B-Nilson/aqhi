@@ -3,8 +3,8 @@ Type: Package
 Title: Canadian Air Quality Health Index
 Version: 0.9.0
 Authors@R: person("Brayden", "Nilson", email = "nilson.brayden@gmail.com", role = c("aut", "cre", "cph"))
-Description: Calculate the Canadian Air Quality Health Index (AQHI) and the 'AQHI+' modification in both English and French. 
-    AQHI is formulated from 3-hour rolling mean PM2.5, NO2, and O3, while AQHI+ uses only 1-hour mean PM2.5.  
+Description: Calculate the Canadian Air Quality Health Index (AQHI) and the AQHI+ modification in both English and French. 
+    AQHI is formulated from 3-hour rolling mean fine particulate matter (PM2.5), nitrogen dioxide (NO2), and ozone (O3), while AQHI+ uses only 1-hour mean PM2.5.  
     AQHI+ overrides AQHI by default if higher for a given hour.
     AQHI colours, associated risk levels, and health messaging can be produced individually.
 License: MIT + file LICENSE
