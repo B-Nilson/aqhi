@@ -53,7 +53,7 @@ get_health_messages <- function(risk_categories, language = "en") {
 
   aqhi_messaging <- AQHI_health_messages[[language]]
   aqhi_messaging[match(risk_categories, aqhi_messaging$risk_category), ] |>
-    dplyr::select(-risk_category)
+    dplyr::select(-"risk_category")
 }
 
 override_AQHI_with_AQHI_plus <- function(AQHI_obs) {
