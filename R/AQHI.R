@@ -32,11 +32,11 @@
 #' and nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) on a scale from 1-10 (+).
 #'
 #' AQHI formula:
-#'   <sup>10</sup>&frasl;<sub>10.4</sub> &times; 100 &times; 
-#'   (e<sup>0.000537 * O<sub>3</sub></sup> - 1) + 
-#'   (e<sup>0.000871 * NO<sub>2</sub></sup> - 1) + 
+#'   <sup>10</sup>&frasl;<sub>10.4</sub> &times; 100 &times;
+#'   (e<sup>0.000537 * O<sub>3</sub></sup> - 1) +
+#'   (e<sup>0.000871 * NO<sub>2</sub></sup> - 1) +
 #'   (e<sup>0.000487 * PM<sub>2.5</sub></sup> - 1))
-#' 
+#'
 #' The AQHI was originally published by \href{https://doi.org/10.3155/1047-3289.58.3.435}{Stieb et al. (2008)}
 #' and is used by all Canadian provinces and territories except for Québec, which uses the AQI instead.
 #' The AQHI is calculated for each hour using 3-hour rolling mean concentrations of \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, \ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}, and \ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}.
@@ -104,7 +104,7 @@ AQHI <- function(
     dplyr::arrange(date)
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
-  if (allow_aqhi_plus_override) {    
+  if (allow_aqhi_plus_override) {
     aqhi_plus <- obs$pm25_1hr_ugm3 |>
       AQHI_plus(language = language) |>
       # Include expected AQHI columns in case only returning AQHI+
@@ -123,7 +123,7 @@ AQHI <- function(
         AQHI_no2_ratio = NA_real_
       ) |>
       dplyr::select(dplyr::all_of(.aqhi_columns))
-  }else{
+  } else {
     aqhi_plus <- data.frame(level = NA_real_ |> factor(levels = c(1:10, "+")))
   }
 
@@ -178,12 +178,12 @@ AQHI <- function(
       AQHI_plus = aqhi_plus$level
     ) |>
     # drop infilled dates
-    dplyr::filter(.data$date %in% dates) 
+    dplyr::filter(.data$date %in% dates)
 
   # Override AQHI with AQHI+ where AQHI+ is higher
   if (allow_aqhi_plus_override) {
     AQHI_obs <- AQHI_obs |> AQHI_replace_w_AQHI_plus()
-  }else {
+  } else {
     AQHI_obs$AQHI_plus <- NA_real_ |> factor(levels = c(1:10, "+"))
     AQHI_obs$AQHI_plus_exceeds_AQHI <- FALSE
     AQHI_obs$level <- AQHI_obs$AQHI
@@ -194,17 +194,12 @@ AQHI <- function(
     return(AQHI_obs$level)
   }
 
-  # Add risk + level colour
-  AQHI_obs <- AQHI_obs |>
+  # Add risk + level colour + health messaging
+  AQHI_obs |>
     dplyr::mutate(
       risk = .data$level |> AQHI_risk_category(language = language),
-      colour = AQHI_colours[as.numeric(.data$level)]
-    )
-
-  # Add health messaging, sort columns, return
-  AQHI_obs |>
-    dplyr::bind_cols(
-      AQHI_obs$risk |> AQHI_health_messaging(language = language)
+      colour = AQHI_colours[as.numeric(.data$level)],
+      .data$risk |> AQHI_health_messaging(language = language)
     ) |>
     dplyr::select(dplyr::all_of(.aqhi_columns))
 }

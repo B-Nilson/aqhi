@@ -32,7 +32,7 @@ get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
       breaks = aqhi_breakpoints,
       labels = names(aqhi_breakpoints[-1])
     )
-  
+
   dplyr::tibble(
     AQHI = aqhi,
     AQHI_pm25_ratio = pm25_fraction / combined_fractions,
