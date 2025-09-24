@@ -17,15 +17,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
     dplyr,
-    handyr,
     rlang,
     stats,
     tidyr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Remotes: 
-    github::B-Nilson/handyr
 URL: https://github.com/B-Nilson/aqhi
 BugReports: https://github.com/B-Nilson/aqhi/issues
 Depends: 

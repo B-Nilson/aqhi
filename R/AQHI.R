@@ -197,11 +197,11 @@ AQHI <- function(
         dplyr::all_of(rolling_cols),
         \(x) {
           x |>
-            handyr::rolling(
-              FUN = "mean",
-              .width = 3,
-              .direction = "backward",
-              .min_non_na = 2
+            roll_mean(
+              width = 3,
+              direction = "backward",
+              fill = NA,
+              min_non_na = 2
             ) |>
             round(digits = 1)
         }
@@ -298,7 +298,7 @@ override_AQHI_with_AQHI_plus <- function(AQHI_obs) {
     dplyr::mutate(
       AQHI_plus_exceeds_AQHI = (as.numeric(.data$AQHI_plus) >
         as.numeric(.data$AQHI)) |>
-        handyr::swap(NA, with = TRUE),
+        swap(what = NA, with = TRUE),
       level = .data$AQHI_plus_exceeds_AQHI |>
         ifelse(
           yes = .data$AQHI_plus,
@@ -306,4 +306,82 @@ override_AQHI_with_AQHI_plus <- function(AQHI_obs) {
         ) |>
         factor(levels = 1:11, labels = c(1:10, "+"))
     )
+}
+
+swap <- function(x, what, with) {
+  x[x %in% what] <- with
+  return(x)
+}
+
+# Vectorized rolling mean
+roll_mean <- function(
+  x,
+  width = 3,
+  direction = "backward",
+  fill = NULL,
+  min_non_na = 0
+) {
+  rolling_sum <- x |>
+    roll_sum(
+      width = width,
+      direction = direction,
+      fill = fill,
+      min_non_na = min_non_na,
+      .include_counts = TRUE
+    )
+  n_non_missing <- swap(attr(rolling_sum, "n_non_missing"), what = 0, with = NA)
+  as.numeric(rolling_sum) / n_non_missing
+}
+
+# Vectorized rolling sum
+roll_sum <- function(
+  x,
+  width = 3,
+  direction = "backward",
+  fill = NULL,
+  min_non_na = 0,
+  .include_counts = FALSE
+) {
+  value_matrix <- x |>
+    build_roll_matrix(
+      width = width,
+      direction = direction,
+      fill = fill
+    )
+  n_non_missing <- width - rowSums(is.na(value_matrix))
+  rolling_sum <- rowSums(value_matrix, na.rm = TRUE)
+  rolling_sum[n_non_missing < min_non_na] <- NA
+
+  if (.include_counts) {
+    n_possible <- rep(width, length(x))
+    n_possible[1:width] <- 1:width
+    attr(rolling_sum, "n") <- n_possible
+    attr(rolling_sum, "n_non_missing") <- n_non_missing
+  }
+
+  if (!is.null(fill)) {
+    if (direction == "backward") {
+      rolling_sum[1:(width - 1)] <- fill
+    } else if (direction == "forward") {
+      rolling_sum[(length(x) - width + 1):length(x)] <- fill
+    }
+  }
+
+  return(rolling_sum)
+}
+
+build_roll_matrix <- function(x, width = 3, direction = "backward", fill = NA) {
+  fill <- ifelse(is.null(fill), NA, fill)
+  value_matrix <- matrix(fill, nrow = length(x), ncol = width)
+  for (i in 0:(width - 1)) {
+    if (direction == "backward") {
+      value_matrix[(i + 1):length(x), i + 1] <- x[1:(length(x) - i)]
+    } else if (direction == "forward") {
+      value_matrix[1:(length(x) - i), i + 1] <- x[(i + 1):length(x)]
+    } else {
+      # TODO: implement center
+      stop("direction must be 'backward' or 'forward'")
+    }
+  }
+  return(value_matrix)
 }
