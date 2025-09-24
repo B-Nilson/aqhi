@@ -24,6 +24,19 @@ AQHI_colours <- c(
   missing = "#bbbbbb"
 )
 
+#' AQHI_risk_categories
+#'
+#' A named list of the risk categories and their respective AQHI levels.
+#'
+#' @format A named list of integer (or character for "Very High") vectors
+#' @source \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Health Canada}.
+AQHI_risk_categories <- list(
+  Low = 1:3,
+  Moderate = 4:6,
+  High = 7:10,
+  "Very High" = "+"
+)
+
 get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   aqhi_breakpoints <- c(-Inf, 1:10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
@@ -56,7 +69,7 @@ AQHI_risk_category <- function(AQHI, language = "en") {
     "Very High" = "+"
   )
   if (language == "fr") {
-    names(aqhi_levels) <- c(
+    names(AQHI_risk_categories) <- c(
       "Faible",
       "Mod\u00e9r\u00e9",
       "Elev\u00e9",
@@ -66,17 +79,17 @@ AQHI_risk_category <- function(AQHI, language = "en") {
     stop("Language must be 'en' or 'fr'")
   }
 
-  aqhi_labels <- aqhi_levels |>
+  aqhi_labels <- AQHI_risk_categories |>
     seq_along() |>
     sapply(
       \(i) {
-        names(aqhi_levels)[i] |>
-          rep(length(aqhi_levels[[i]]))
+        names(AQHI_risk_categories)[i] |>
+          rep(length(AQHI_risk_categories[[i]]))
       }
     )
   AQHI |>
     factor(
-      levels = unlist(aqhi_levels),
+      levels = unlist(AQHI_risk_categories),
       labels = unlist(aqhi_labels)
     )
 }
