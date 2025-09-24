@@ -29,7 +29,7 @@
 #'
 #' Quote from Yao et al (2019):
 #'
-#' \emph{This algorithm is a linear extrapolation based on two anchor points:
+#' This algorithm is a linear extrapolation based on two anchor points:
 #'  1. the AQHI-Plus value should reach 7 (high risk category),
 #' when 1-h PM2.5 concentrations are over 60 μg/m3.
 #' This is consistent with \[...\] the analyses of the likelihood of exceeding the 25 μg/m3 24-h threshold value; and
@@ -46,7 +46,7 @@
 #' However, the \[...\] AQHI-Plus is most indicative of the respiratory risks
 #' during high-intensity fire periods, particularly for people with asthma.
 #' This is consistent with the rationale behind the AQHI formulation
-#' and with existing health evidence related to the effects of wildfire smoke.}
+#' and with existing health evidence related to the effects of wildfire smoke.
 #'
 #' @references Yao et al (2019): \doi{doi:10.17269/s41997-019-00237-w}
 #' 

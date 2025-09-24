@@ -65,7 +65,7 @@ and has been adopted by all Canadian provinces/territories as of 2024.
 
 Quote from Yao et al (2019):
 
-\emph{This algorithm is a linear extrapolation based on two anchor points:
+This algorithm is a linear extrapolation based on two anchor points:
 \enumerate{
 \item the AQHI-Plus value should reach 7 (high risk category),
 when 1-h PM2.5 concentrations are over 60 μg/m3.
@@ -84,7 +84,7 @@ circulatory risks during periods affected by wildfire smoke.
 However, the [...] AQHI-Plus is most indicative of the respiratory risks
 during high-intensity fire periods, particularly for people with asthma.
 This is consistent with the rationale behind the AQHI formulation
-and with existing health evidence related to the effects of wildfire smoke.}
+and with existing health evidence related to the effects of wildfire smoke.
 }
 \examples{
 # Hourly pm2.5 concentrations
