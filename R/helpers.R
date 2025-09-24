@@ -60,19 +60,19 @@ AQHI_health_messages <- list(
     )
   ),
   fr = dplyr::tibble(
-    risk_category_fr = c(
+    risk_category = c(
       "Faible",
       "Mod\u00e9r\u00e9",
       "Elev\u00e9",
       "Tr\u00e8s Elev\u00e9"
     ),
-    high_risk_pop_message_fr = c(
+    high_risk_pop_message = c(
       "Profiter des activit\u00e9s ext\u00e9rieures habituelles.",
       "Envisagez de r\u00e9duire ou de reporter les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes.",
       "R\u00e9duisez ou r\u00e9organisez les activit\u00e9s ext\u00e9rieures en plein air.",
       "\u00c9vitez les activit\u00e9s ext\u00e9rieures en plein air."
     ),
-    general_pop_message_fr = c(
+    general_pop_message = c(
       "Qualit\u00e9 de l'air id\u00e9ale pour les activit\u00e9s en plein air.",
       "Aucun besoin de modifier vos activit\u00e9s habituelles en plein air \u00e0 moins d'\u00e9prouver des sympt\u00f4mes comme la toux ou une irritation de la gorge.",
       "Envisagez de r\u00e9duire ou de reporter les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes.",
