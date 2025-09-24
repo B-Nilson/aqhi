@@ -5,7 +5,7 @@
 \alias{AQHI_risk_categories}
 \title{AQHI_risk_categories}
 \format{
-A named list of integer (or character for "Very High") vectors
+A named list of lists of integer (or character for "Very High") vectors
 }
 \source{
 \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate ChangeD Canada}.
@@ -14,6 +14,6 @@ A named list of integer (or character for "Very High") vectors
 AQHI_risk_categories
 }
 \description{
-A named list of the risk categories and their respective AQHI levels.
+A named list of lists of the risk categories and their respective AQHI levels (one list for each language - "en" and "fr").
 }
 \keyword{datasets}

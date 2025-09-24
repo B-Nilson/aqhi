@@ -22,28 +22,21 @@ get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
 }
 
 get_risk_category <- function(AQHI, language = "en") {
-  if (language == "fr") {
-    names(AQHI_risk_categories) <- c(
-      "Faible",
-      "Mod\u00e9r\u00e9",
-      "Elev\u00e9",
-      "Tr\u00e8s Elev\u00e9"
-    )
-  } else if (language != "en") {
-    stop("Language must be 'en' or 'fr'")
-  }
+  stopifnot(tolower(language) %in% c("en", "fr"), length(language) == 1)
 
-  aqhi_labels <- AQHI_risk_categories |>
+  risk_categories <- AQHI_risk_categories[[language]]
+
+  aqhi_labels <- risk_categories |>
     seq_along() |>
     sapply(
       \(i) {
-        names(AQHI_risk_categories)[i] |>
-          rep(length(AQHI_risk_categories[[i]]))
+        names(risk_categories)[i] |>
+          rep(length(risk_categories[[i]]))
       }
     )
   AQHI |>
     factor(
-      levels = unlist(AQHI_risk_categories),
+      levels = unlist(risk_categories),
       labels = unlist(aqhi_labels)
     )
 }

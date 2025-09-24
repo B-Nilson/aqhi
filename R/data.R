@@ -26,15 +26,23 @@ AQHI_colours <- c(
 
 #' AQHI_risk_categories
 #'
-#' A named list of the risk categories and their respective AQHI levels.
+#' A named list of lists of the risk categories and their respective AQHI levels (one list for each language - "en" and "fr").
 #'
-#' @format A named list of integer (or character for "Very High") vectors
+#' @format A named list of lists of integer (or character for "Very High") vectors
 #' @source \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate ChangeD Canada}.
 AQHI_risk_categories <- list(
-  Low = 1:3,
-  Moderate = 4:6,
-  High = 7:10,
-  "Very High" = "+"
+  en = list(
+    Low = 1:3,
+    Moderate = 4:6,
+    High = 7:10,
+    "Very High" = "+"
+  ),
+  fr = list(
+    Faible = 1:3,
+    "Mod\u00e9r\u00e9" = 4:6,
+    "Elev\u00e9"= 7:10,
+    "Tr\u00e8s Elev\u00e9" = "+"
+  )
 )
 
 #' AQHI_health_messages
