@@ -182,7 +182,7 @@ AQHI <- function(
 
   # Override AQHI with AQHI+ where AQHI+ is higher
   if (allow_aqhi_plus_override) {
-    AQHI_obs <- AQHI_obs |> AQHI_replace_w_AQHI_plus()
+    AQHI_obs <- AQHI_obs |> override_AQHI_with_AQHI_plus()
   } else {
     AQHI_obs$AQHI_plus <- NA_real_ |> factor(levels = c(1:10, "+"))
     AQHI_obs$AQHI_plus_exceeds_AQHI <- FALSE
