@@ -3,7 +3,7 @@
 #' @param dates A POSIXct (date-time) vector of corresponding to hourly observations.
 #'   Date gaps will be filled with NA's automatically as needed when calculating 3-hour averages.
 #' @param pm25_1hr_ugm3
-#'   A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}).
+#'   A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}).
 #' @param no2_1hr_ppb (Optional).
 #'   A numeric vector of hourly mean nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) concentrations (units = ppb).
 #'   If all are NA (the default) AQHI won't be calculated and instead AQHI+ (see \code{\link{AQHI_plus}}) will used.

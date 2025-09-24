@@ -4,7 +4,7 @@
 #' @param min_allowed_pm25 (Optional).
 #'   A single numeric value indicating the minimum allowed concentration.
 #'   All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
-#'   Default is 0 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}.
+#'   Default is 0 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}.
 #'
 #' @description
 #' The Canadian AQHI+ is a modification of the Canadian Air Quality Health Index (AQHI).
@@ -15,13 +15,13 @@
 #' The AQHI+ overrides the AQHI if it exceeds the AQHI for a particular hour.
 #'
 #' AQHI+ categorizes hourly \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations into
-#' 10 equal bins from 0 to 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}} (AQHI+ 1-10),
-#' and assigns "+" to values greater than 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}.
+#' 10 equal bins from 0 to 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}} (AQHI+ 1-10),
+#' and assigns "+" to values greater than 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}.
 #' The risk categories match the Canadian AQHI and share the same health messaging:
-#' - Low:  AQHI+ of 1-3, or a concentration of 0-30 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
-#' - Moderate: AQHI+ of 4-6, or a concentration of 30.1-60 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
-#' - High: AQHI+ of 7-10, or a concentration of 60.1-100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
-#' - Very High: AQHI+ of +, or a concentration above 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
+#' - Low:  AQHI+ of 1-3, or a concentration of 0-30 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}
+#' - Moderate: AQHI+ of 4-6, or a concentration of 30.1-60 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}
+#' - High: AQHI+ of 7-10, or a concentration of 60.1-100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}
+#' - Very High: AQHI+ of +, or a concentration above 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}
 #'
 #' The AQHI+ was originally published by Yao et al (2019): \doi{doi:10.17269/s41997-019-00237-w},
 #' and has been adopted by all Canadian provinces/territories as of 2024.
