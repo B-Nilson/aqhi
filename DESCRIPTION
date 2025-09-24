@@ -2,8 +2,7 @@ Package: aqhi
 Type: Package
 Title: Canadian Air Quality Health Index
 Version: 0.9.0
-Author: Brayden Nilson
-Maintainer: Brayden Nilson <nilson.brayden@gmail.com>
+Authors@R: person("Brayden", "Nilson", email = "nilson.brayden@gmail.com", role = c("aut", "cre", "cph"))
 Description: Calculate the Canadian Air Quality Health Index (AQHI) and AQHI+ and associated risk levels + health messaging.
 License: MIT + file LICENSE
 Encoding: UTF-8
