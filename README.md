@@ -69,8 +69,8 @@ obs$pm25 |> AQHI_plus(language = "fr")
 obs$pm25 |> AQHI_plus(detailed = FALSE)
 
 # Get risk categories for AQHI levels
-risk <- c(NA, 1:10, "+") |> get_risk_categories()
-risk_fr <- c(NA, 1:10, "+") |> get_risk_categories(language = "fr")
+risk <- c(NA, 1:10, "+") |> get_risk_category()
+risk_fr <- c(NA, 1:10, "+") |> get_risk_category(language = "fr")
 
 # Get health messages for risk levels
 risk |> get_health_messages()
