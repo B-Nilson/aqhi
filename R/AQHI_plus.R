@@ -116,7 +116,7 @@ AQHI_plus <- function(
   dplyr::tibble(
     pm25_1hr_ugm3 = pm25_1hr_ugm3,
     level = aqhi_p,
-    colour = unname(AQHI_colours)[as.numeric(aqhi_p)],
+    colour = aqhi_p |> get_aqhi_colours(),
     risk = risk,
     # High risk pop + general pop health warnings
     # TODO: do these differ for AQHI / AQHI+?

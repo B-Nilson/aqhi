@@ -2,6 +2,7 @@
 
 export(AQHI)
 export(AQHI_plus)
+export(get_aqhi_colours)
 export(get_health_messages)
 export(get_risk_category)
 importFrom(rlang,.data)

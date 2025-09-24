@@ -239,7 +239,7 @@ AQHI <- function(
   AQHI_obs |>
     dplyr::mutate(
       risk = .data$level |> get_risk_category(language = language),
-      colour = unname(AQHI_colours)[as.numeric(.data$level)],
+      colour = .data$level |> get_aqhi_colours(),
       .data$risk |>
         get_health_messages(language = language) |>
         dplyr::select(-"risk_category")

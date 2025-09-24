@@ -6,8 +6,8 @@
       # A tibble: 24 x 6
          pm25_1hr_ugm3 level colour  risk    high_risk_pop_message general_pop_message
                  <dbl> <fct> <chr>   <fct>   <chr>                 <chr>              
-       1          NA   <NA>  <NA>    <NA>    <NA>                  <NA>               
-       2          NA   <NA>  <NA>    <NA>    <NA>                  <NA>               
+       1          NA   <NA>  #bbbbbb <NA>    <NA>                  <NA>               
+       2          NA   <NA>  #bbbbbb <NA>    <NA>                  <NA>               
        3           0   1     #21C6F5 Low     Enjoy your usual act~ Ideal air quality ~
        4           0.1 1     #21C6F5 Low     Enjoy your usual act~ Ideal air quality ~
        5          10   1     #21C6F5 Low     Enjoy your usual act~ Ideal air quality ~
@@ -26,8 +26,8 @@
       # A tibble: 24 x 6
          pm25_1hr_ugm3 level colour  risk   high_risk_pop_message  general_pop_message
                  <dbl> <fct> <chr>   <fct>  <chr>                  <chr>              
-       1          NA   <NA>  <NA>    <NA>   <NA>                   <NA>               
-       2          NA   <NA>  <NA>    <NA>   <NA>                   <NA>               
+       1          NA   <NA>  #bbbbbb <NA>   <NA>                   <NA>               
+       2          NA   <NA>  #bbbbbb <NA>   <NA>                   <NA>               
        3           0   1     #21C6F5 Faible Profiter des activité~ Qualité de l'air i~
        4           0.1 1     #21C6F5 Faible Profiter des activité~ Qualité de l'air i~
        5          10   1     #21C6F5 Faible Profiter des activité~ Qualité de l'air i~

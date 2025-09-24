@@ -76,8 +76,11 @@ risk_fr <- c(NA, 1:10, "+") |> get_risk_category(language = "fr")
 risk |> get_health_messages()
 risk_fr |> get_health_messages(language = "fr")
 
-# View AQHI colours, risk categories, and health messages
-AQHI_colours
+# Get AQHI colours
+get_aqhi_colours()
+obs$pm25 |> AQHI_plus(detailed = FALSE) |> get_aqhi_colours()
+
+# Get risk categories, and health messages
 AQHI_risk_category
 AQHI_health_messages
 ```
