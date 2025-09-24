@@ -37,6 +37,50 @@ AQHI_risk_categories <- list(
   "Very High" = "+"
 )
 
+#' AQHI_health_messages
+#'
+#' A named list of the health messages for the AQHI risk categories for both English ("en") and French ("fr").
+#'
+#' @format A namedad list of tibbles, 1 tibble per language.
+#' @source \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/understanding-messages.html}{Environment and Climate Change Canada}.
+AQHI_health_messages <- list(
+  en = dplyr::tibble(
+    risk_category = c("Low", "Moderate", "High", "Very High"),
+    high_risk_pop_message = c(
+      "Enjoy your usual activities.",
+      "Consider reducing or rescheduling activities outdoors if you experience symptoms.",
+      "Reduce or reschedule activities outdoors.",
+      "Avoid strenuous activity outdoors."
+    ),
+    general_pop_message = c(
+      "Ideal air quality for outdoor activities.",
+      "No need to modify your usual activities unless you experience symptoms.",
+      "Consider reducing or rescheduling activities outdoors if you experience symptoms.",
+      "Reduce or reschedule activities outdoors, especially if you experience symptoms."
+    )
+  ),
+  fr = dplyr::tibble(
+    risk_category_fr = c(
+      "Faible",
+      "Mod\u00e9r\u00e9",
+      "Elev\u00e9",
+      "Tr\u00e8s Elev\u00e9"
+    ),
+    high_risk_pop_message_fr = c(
+      "Profiter des activit\u00e9s ext\u00e9rieures habituelles.",
+      "Envisagez de r\u00e9duire ou de reporter les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes.",
+      "R\u00e9duisez ou r\u00e9organisez les activit\u00e9s ext\u00e9rieures en plein air.",
+      "\u00c9vitez les activit\u00e9s ext\u00e9rieures en plein air."
+    ),
+    general_pop_message_fr = c(
+      "Qualit\u00e9 de l'air id\u00e9ale pour les activit\u00e9s en plein air.",
+      "Aucun besoin de modifier vos activit\u00e9s habituelles en plein air \u00e0 moins d'\u00e9prouver des sympt\u00f4mes comme la toux ou une irritation de la gorge.",
+      "Envisagez de r\u00e9duire ou de reporter les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes.",
+      "R\u00e9duisez ou r\u00e9organisez les activit\u00e9s ext\u00e9rieures en plein air, surtout si vous \u00e9prouvez des sympt\u00f4mes comme la toux ou une irritation de la gorge."
+    )
+  )
+)
+
 get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   aqhi_breakpoints <- c(-Inf, 1:10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
@@ -95,47 +139,9 @@ AQHI_risk_category <- function(AQHI, language = "en") {
 }
 
 AQHI_health_messaging <- function(risk_categories, language = "en") {
-  if (language == "en") {
-    aqhi_messaging <- list(
-      Low = data.frame(
-        high_risk_pop_message = "Enjoy your usual activities.",
-        general_pop_message = "Ideal air quality for outdoor activities."
-      ),
-      Moderate = data.frame(
-        high_risk_pop_message = "Consider reducing or rescheduling activities outdoors if you experience symptoms.",
-        general_pop_message = "No need to modify your usual activities unless you experience symptoms."
-      ),
-      High = data.frame(
-        high_risk_pop_message = "Reduce or reschedule activities outdoors.",
-        general_pop_message = "Consider reducing or rescheduling activities outdoors if you experience symptoms."
-      ),
-      "Very High" = data.frame(
-        high_risk_pop_message = "Avoid strenuous activity outdoors.",
-        general_pop_message = "Reduce or reschedule activities outdoors, especially if you experience symptoms."
-      )
-    )
-  } else if (language == "fr") {
-    aqhi_messaging <- list(
-      Faible = data.frame(
-        high_risk_pop_message = "Profiter des activit\u00e9s ext\u00e9rieures habituelles.",
-        general_pop_message = "Qualit\u00e9 de l'air id\u00e9ale pour les activit\u00e9s en plein air."
-      ),
-      "Mod\u00e9r\u00e9" = data.frame(
-        high_risk_pop_message = "Envisagez de r\u00e9duire ou de reporter les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes.",
-        general_pop_message = "Aucun besoin de modifier vos activit\u00e9s habituelles en plein air \u00e0 moins d'\u00e9prouver des sympt\u00f4mes comme la toux ou une irritation de la gorge."
-      ),
-      "Elev\u00e9" = data.frame(
-        high_risk_pop_message = "R\u00e9duisez ou r\u00e9organisez les activit\u00e9s ext\u00e9rieures en plein air. Les enfants et les a\u00ce7n\u00e9s doivent \u00e9galement mod\u00e9rer leurs activit\u00e9s.",
-        general_pop_message = "Envisagez de r\u00e9duire ou de r\u00e9organiser les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes comme la toux ou une irritation de la gorge."
-      ),
-      "Tr\u00e8s \u00c9lev\u00e9" = data.frame(
-        high_risk_pop_message = "\u00c9vitez les activit\u00e9s ext\u00e9rieures en plein air.",
-        general_pop_message = "R\u00e9duisez ou reportez les activit\u00e9s ext\u00e9rieures en plein air, particuli\u00e8rement si vous \u00e9prouvez des sympt\u00f4mes comme la toux ou une irritation de la gorge."
-      )
-    )
-  } else {
-    stop("Language must be 'en' or 'fr'")
-  }
+  stopifnot(tolower(language) %in% c("en", "fr"), length(language) == 1)
+
+  aqhi_messaging <- AQHI_health_messages[[language]]
   # TODO: is this necessary?
   aqhi_messaging[risk_categories] |>
     handyr::for_each(
