@@ -52,7 +52,7 @@ get_health_messages <- function(risk_categories, language = "en") {
   stopifnot(tolower(language) %in% c("en", "fr"), length(language) == 1)
 
   aqhi_messaging <- AQHI_health_messages[[language]]
-  aqhi_messaging[match(risk_categories, aqhi_messaging$risk_category), ] |> 
+  aqhi_messaging[match(risk_categories, aqhi_messaging$risk_category), ] |>
     dplyr::select(-risk_category)
 }
 
