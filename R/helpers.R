@@ -21,26 +21,6 @@ get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   )
 }
 
-get_risk_category <- function(AQHI, language = "en") {
-  stopifnot(tolower(language) %in% c("en", "fr"), length(language) == 1)
-
-  risk_categories <- AQHI_risk_categories[[language]]
-
-  aqhi_labels <- risk_categories |>
-    seq_along() |>
-    sapply(
-      \(i) {
-        names(risk_categories)[i] |>
-          rep(length(risk_categories[[i]]))
-      }
-    )
-  AQHI |>
-    factor(
-      levels = unlist(risk_categories),
-      labels = unlist(aqhi_labels)
-    )
-}
-
 get_health_messages <- function(risk_categories, language = "en") {
   stopifnot(tolower(language) %in% c("en", "fr"), length(language) == 1)
 

@@ -2,4 +2,5 @@
 
 export(AQHI)
 export(AQHI_plus)
+export(get_risk_category)
 importFrom(rlang,.data)
