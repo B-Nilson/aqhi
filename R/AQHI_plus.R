@@ -31,10 +31,10 @@
 #'
 #' This algorithm is a linear extrapolation based on two anchor points:
 #'  1. the AQHI-Plus value should reach 7 (high risk category),
-#' when 1-h PM2.5 concentrations are over 60 μg/m3.
-#' This is consistent with \[...\] the analyses of the likelihood of exceeding the 25 μg/m3 24-h threshold value; and
+#' when 1-h PM2.5 concentrations are over 60 ug/m3.
+#' This is consistent with \[...\] the analyses of the likelihood of exceeding the 25 ug/m3 24-h threshold value; and
 #'  2. the AQHI-Plus value should reach 4 (moderate risk category)
-#' when the 1-h PM2.5 concentrations are over 30 μg/m3,
+#' when the 1-h PM2.5 concentrations are over 30 ug/m3,
 #' which is the threshold for odour perception of burning softwood
 #' (Kistler et al. 2012: \doi{doi:10.1016/j.atmosenv.2012.01.044}),
 #' the major type of forest species in BC.
