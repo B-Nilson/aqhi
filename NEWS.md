@@ -1,3 +1,3 @@
-# aqhi 1.0.0
+# aqhi 0.9.0
 
-* Initial CRAN submission.
+* Initial package development

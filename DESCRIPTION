@@ -1,7 +1,7 @@
 Package: aqhi
 Type: Package
 Title: Canadian Air Quality Health Index (AQHI & AQHI+)
-Version: 1.0.0
+Version: 0.9.0
 Author: Brayden Nilson
 Maintainer: Brayden Nilson <nilson.brayden@gmail.com>
 Description: Calculate the Canadian Air Quality Health Index (AQHI) and AQHI+ and associated risk levels + health messaging.
