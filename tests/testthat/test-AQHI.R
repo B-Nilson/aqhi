@@ -19,7 +19,7 @@ test_that("AQHI returns expected output", {
       pm25_1hr_ugm3 = obs$pm25,
       o3_1hr_ppb = obs$o3,
       no2_1hr_ppb = obs$no2,
-      verbose = FALSE
+      quiet = TRUE
     )
   expect_snapshot(aqhi_en)
 
@@ -29,7 +29,7 @@ test_that("AQHI returns expected output", {
       pm25_1hr_ugm3 = obs$pm25,
       o3_1hr_ppb = obs$o3,
       no2_1hr_ppb = obs$no2,
-      verbose = FALSE,
+      quiet = TRUE,
       language = "fr"
     )
   expect_snapshot(aqhi_fr)
@@ -41,7 +41,7 @@ test_that("AQHI returns expected output", {
       pm25_1hr_ugm3 = obs$pm25,
       o3_1hr_ppb = obs$o3,
       no2_1hr_ppb = obs$no2,
-      verbose = FALSE,
+      quiet = TRUE,
       allow_aqhi_plus_override = FALSE
     )
   expect_snapshot(aqhi_en_no_override)
@@ -52,7 +52,7 @@ test_that("AQHI returns expected output", {
   aqhi_plus_en <- obs$date |>
     AQHI(
       pm25_1hr_ugm3 = obs$pm25,
-      verbose = FALSE
+      quiet = TRUE
     )
   expect_snapshot(aqhi_plus_en)
   expect_equal(names(aqhi_en), names(aqhi_plus_en))
@@ -61,7 +61,7 @@ test_that("AQHI returns expected output", {
   aqhi_plus_fr <- obs$date |>
     AQHI(
       pm25_1hr_ugm3 = obs$pm25,
-      verbose = FALSE,
+      quiet = TRUE,
       language = "fr"
     )
   expect_snapshot(aqhi_plus_fr)

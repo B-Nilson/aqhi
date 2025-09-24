@@ -21,9 +21,9 @@
 #'   A single character value indicating the language to use for risk levels and health messaging.
 #'   Must be either "en" (English) or "fr" (French). Not case sensitive.
 #'   Default is "en".
-#' @param verbose (Optional).
-#'   A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed.
-#'   Default is TRUE
+#' @param quiet (Optional).
+#'   A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be hidden.
+#'   Default is FALSE.
 #'
 #' @description
 #' The Canadian Air Quality Health Index (AQHI) is a measure of the health risk associated with exposure to ambient air pollution.
@@ -44,7 +44,7 @@
 #' The AQHI+ is a modification of the AQHI that only uses \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} and is calculated using hourly means (see \code{\link{AQHI_plus}}).
 #'
 #' @references Stieb et al. (2008): \url{https://doi.org/10.3155/1047-3289.58.3.435}
-#' 
+#'
 #' Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
 #'
 #' @return If `detailed = TRUE`:
@@ -63,12 +63,46 @@
 #'   ),
 #'   pm25 = sample(1:150, 24), o3 = sample(1:150, 24), no2 = sample(1:150, 24)
 #' )
-#' AQHI(
-#'   dates = obs$date, pm25_1hr_ugm3 = obs$pm25,
-#'   o3_1hr_ppb = obs$o3, no2_1hr_ppb = obs$no2
-#' )
 #'
-#' AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25) # Returns AQHI+
+#' # Calculate the AQHI
+#' obs$date |>
+#'   AQHI(
+#'     pm25_1hr_ugm3 = obs$pm25,
+#'     o3_1hr_ppb = obs$o3,
+#'     no2_1hr_ppb = obs$no2
+#'   )
+#'
+#' # Return just the AQHI levels
+#' obs$date |> 
+#'   AQHI(
+#'     pm25_1hr_ugm3 = obs$pm25,
+#'     o3_1hr_ppb = obs$o3,
+#'     no2_1hr_ppb = obs$no2,
+#'     detailed = FALSE
+#'   )
+#'
+#' # Calculate just the AQHI+
+#' obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25)
+#' obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, quiet = TRUE) # silence warning
+#'
+#' # Return French version
+#' obs$date |> 
+#'   AQHI(
+#'     pm25_1hr_ugm3 = obs$pm25,
+#'     o3_1hr_ppb = obs$o3, 
+#'     no2_1hr_ppb = obs$no2,
+#'     language = "fr"
+#'   )
+#' obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, language = "fr")
+#'
+#' # Don't allow AQHI+ override (not recommended)
+#' obs$date |> 
+#'   AQHI(
+#'     pm25_1hr_ugm3 = obs$pm25,
+#'     o3_1hr_ppb = obs$o3,
+#'     no2_1hr_ppb = obs$no2,
+#'     allow_aqhi_plus_override = FALSE
+#'   )
 AQHI <- function(
   dates,
   pm25_1hr_ugm3,
@@ -77,7 +111,7 @@ AQHI <- function(
   allow_aqhi_plus_override = TRUE,
   detailed = TRUE,
   language = "en",
-  verbose = TRUE
+  quiet = FALSE
 ) {
   stopifnot("POSIXct" %in% class(dates), length(dates) > 0)
   stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
@@ -94,7 +128,7 @@ AQHI <- function(
     length(language) == 1,
     tolower(language) %in% c("en", "fr")
   )
-  stopifnot(is.logical(verbose), length(verbose) == 1)
+  stopifnot(is.logical(quiet), length(quiet) == 1)
 
   # Ensure lowercase language
   language <- tolower(language)
@@ -141,7 +175,7 @@ AQHI <- function(
     obs$o3_1hr_ppb
   ))
   if (!has_all_3_pol & allow_aqhi_plus_override) {
-    if (verbose) {
+    if (!quiet) {
       warning(
         "No non-missing NO2 / O3 data provided. Returning AQHI+ (PM2.5 only) instead of AQHI."
       )

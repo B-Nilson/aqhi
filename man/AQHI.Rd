@@ -12,7 +12,7 @@ AQHI(
   allow_aqhi_plus_override = TRUE,
   detailed = TRUE,
   language = "en",
-  verbose = TRUE
+  quiet = FALSE
 )
 }
 \arguments{
@@ -43,9 +43,9 @@ A single character value indicating the language to use for risk levels and heal
 Must be either "en" (English) or "fr" (French). Not case sensitive.
 Default is "en".}
 
-\item{verbose}{(Optional).
-A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be displayed.
-Default is TRUE}
+\item{quiet}{(Optional).
+A single logical (TRUE/FALSE) value indicating if non-critical warnings/messages should be hidden.
+Default is FALSE.}
 }
 \value{
 If \code{detailed = TRUE}:
@@ -84,12 +84,46 @@ obs <- data.frame(
   ),
   pm25 = sample(1:150, 24), o3 = sample(1:150, 24), no2 = sample(1:150, 24)
 )
-AQHI(
-  dates = obs$date, pm25_1hr_ugm3 = obs$pm25,
-  o3_1hr_ppb = obs$o3, no2_1hr_ppb = obs$no2
-)
 
-AQHI(dates = obs$date, pm25_1hr_ugm3 = obs$pm25) # Returns AQHI+
+# Calculate the AQHI
+obs$date |>
+  AQHI(
+    pm25_1hr_ugm3 = obs$pm25,
+    o3_1hr_ppb = obs$o3,
+    no2_1hr_ppb = obs$no2
+  )
+
+# Return just the AQHI levels
+obs$date |> 
+  AQHI(
+    pm25_1hr_ugm3 = obs$pm25,
+    o3_1hr_ppb = obs$o3,
+    no2_1hr_ppb = obs$no2,
+    detailed = FALSE
+  )
+
+# Calculate just the AQHI+
+obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25)
+obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, quiet = TRUE) # silence warning
+
+# Return French version
+obs$date |> 
+  AQHI(
+    pm25_1hr_ugm3 = obs$pm25,
+    o3_1hr_ppb = obs$o3, 
+    no2_1hr_ppb = obs$no2,
+    language = "fr"
+  )
+obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, language = "fr")
+
+# Don't allow AQHI+ override (not recommended)
+obs$date |> 
+  AQHI(
+    pm25_1hr_ugm3 = obs$pm25,
+    o3_1hr_ppb = obs$o3,
+    no2_1hr_ppb = obs$no2,
+    allow_aqhi_plus_override = FALSE
+  )
 }
 \references{
 Stieb et al. (2008): \url{https://doi.org/10.3155/1047-3289.58.3.435}
