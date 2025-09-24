@@ -49,6 +49,8 @@
 #' and with existing health evidence related to the effects of wildfire smoke.}
 #'
 #' @references Yao et al (2019): \url{https://doi.org/10.17269/s41997-019-00237-w}
+#' 
+#' Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
 #'
 #' @return If `detailed` is TRUE:
 #' - A tibble (data.frame) with columns detailing the AQHI+, risk level, health messages, etc

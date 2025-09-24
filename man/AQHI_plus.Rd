@@ -102,4 +102,6 @@ AQHI_plus(pm25, min_allowed_pm25 = -0.5)
 }
 \references{
 Yao et al (2019): \url{https://doi.org/10.17269/s41997-019-00237-w}
+
+Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
 }

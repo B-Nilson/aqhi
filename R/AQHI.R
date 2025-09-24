@@ -44,6 +44,8 @@
 #' The AQHI+ is a modification of the AQHI that only uses \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} and is calculated using hourly means (see \code{\link{AQHI_plus}}).
 #'
 #' @references Stieb et al. (2008): \url{https://doi.org/10.3155/1047-3289.58.3.435}
+#' 
+#' Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
 #'
 #' @return If `detailed = TRUE`:
 #' - A tibble (data.frame) with a detailed summary of the AQHI, risk levels, health messages, etc and the same number of rows as `length(dates)`
