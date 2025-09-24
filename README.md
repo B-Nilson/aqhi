@@ -1,10 +1,10 @@
-# aqhi: Canadian Air Quality Health Index
+# aqhi: An R package for the Canadian Air Quality Health Index
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The aqhi package provides the ability to calculate the Canadian Air Quality Health Index (both AQHI and AQHI+), with French translations where possible.
+The aqhi R package provides the ability to calculate the Canadian Air Quality Health Index (both AQHI and AQHI+), with French translations where possible.
 
 ## Installation
 
