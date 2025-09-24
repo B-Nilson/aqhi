@@ -8,6 +8,12 @@ The aqhi R package provides the ability to calculate the Canadian Air Quality He
 
 ## Installation
 
+``` r
+install.packages("aqhi")
+```
+
+### Development version 
+
 You can install the development version of aqhi from [GitHub](https://github.com/) with:
 
 ``` r
