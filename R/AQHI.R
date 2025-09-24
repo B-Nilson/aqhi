@@ -81,6 +81,11 @@ AQHI <- function(
   stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
   stopifnot(is.numeric(o3_1hr_ppb), length(o3_1hr_ppb) > 0)
   stopifnot(is.numeric(no2_1hr_ppb) & length(no2_1hr_ppb) > 0)
+  stopifnot(
+    length(dates) == length(pm25_1hr_ugm3),
+    length(dates) == length(o3_1hr_ppb) | length(o3_1hr_ppb) == 1,
+    length(dates) == length(no2_1hr_ppb) | length(no2_1hr_ppb) == 1
+  )
   stopifnot(is.logical(detailed), length(detailed) == 1)
   stopifnot(
     is.character(language),
