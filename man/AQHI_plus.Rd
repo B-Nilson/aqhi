@@ -59,7 +59,7 @@ The risk categories match the Canadian AQHI and share the same health messaging:
 \item Very High: AQHI+ of +, or a concentration above 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{\mu g m^{-3}}}
 }
 
-The AQHI+ was originally published by \href{https://doi.org/10.17269/s41997-019-00237-w}{Yao et al (2019)},
+The AQHI+ was originally published by Yao et al (2019): \doi{doi:10.17269/s41997-019-00237-w},
 and has been adopted by all Canadian provinces/territories as of 2024.
 (except Québec where they use the AQI instead of the AQHI/AQHI+).
 
@@ -73,7 +73,7 @@ This is consistent with [...] the analyses of the likelihood of exceeding the 25
 \item the AQHI-Plus value should reach 4 (moderate risk category)
 when the 1-h PM2.5 concentrations are over 30 μg/m3,
 which is the threshold for odour perception of burning softwood
-\href{https://doi.org/10.1016/j.atmosenv.2012.01.044}{(Kistler et al. 2012)},
+(Kistler et al. 2012: \doi{doi:10.1016/j.atmosenv.2012.01.044}),
 the major type of forest species in BC.
 }
 
@@ -101,7 +101,7 @@ AQHI_plus(pm25, min_allowed_pm25 = -0.5)
 
 }
 \references{
-Yao et al (2019): \url{https://doi.org/10.17269/s41997-019-00237-w}
+Yao et al (2019): \doi{doi:10.17269/s41997-019-00237-w}
 
 Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
 }

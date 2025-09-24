@@ -37,13 +37,13 @@
 #'   (e<sup>0.000871 * NO<sub>2</sub></sup> - 1) +
 #'   (e<sup>0.000487 * PM<sub>2.5</sub></sup> - 1))
 #'
-#' The AQHI was originally published by \href{https://doi.org/10.3155/1047-3289.58.3.435}{Stieb et al. (2008)}
+#' The AQHI was originally published by Stieb et al. (2008): \doi{doi:10.3155/1047-3289.58.3.435},
 #' and is used by all Canadian provinces and territories except for Québec, which uses the AQI instead.
 #' The AQHI is calculated for each hour using 3-hour rolling mean concentrations of \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}, \ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}, and \ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}.
 #' However, the AQHI is overriden by the AQHI+ for a given hour if that AQHI+ level is higher.
 #' The AQHI+ is a modification of the AQHI that only uses \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} and is calculated using hourly means (see \code{\link{AQHI_plus}}).
 #'
-#' @references Stieb et al. (2008): \url{https://doi.org/10.3155/1047-3289.58.3.435}
+#' @references Stieb et al. (2008): \doi{doi:10.3155/1047-3289.58.3.435}
 #'
 #' Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
 #'
