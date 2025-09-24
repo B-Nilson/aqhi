@@ -117,7 +117,10 @@ AQHI <- function(
         no2_3hr_ppb = NA_real_,
         AQHI = NA_real_ |> factor(levels = c(1:10, "+")),
         AQHI_plus = .data$level,
-        AQHI_plus_exceeds_AQHI = !is.na(.data$level)
+        AQHI_plus_exceeds_AQHI = !is.na(.data$level),
+        AQHI_pm25_ratio = NA_real_,
+        AQHI_o3_ratio = NA_real_,
+        AQHI_no2_ratio = NA_real_
       ) |>
       dplyr::select(dplyr::all_of(.aqhi_columns))
   }else{
@@ -167,7 +170,7 @@ AQHI <- function(
   # Calculate AQHI
   AQHI_obs <- obs |>
     dplyr::mutate(
-      AQHI = AQHI_formula(
+      get_AQHI(
         pm25_rolling_3hr = .data$pm25_3hr_ugm3,
         o3_rolling_3hr = .data$o3_3hr_ppb,
         no2_rolling_3hr = .data$no2_3hr_ppb
@@ -218,6 +221,9 @@ AQHI <- function(
   "AQHI",
   "AQHI_plus",
   "AQHI_plus_exceeds_AQHI",
+  "AQHI_pm25_ratio",
+  "AQHI_o3_ratio",
+  "AQHI_no2_ratio",
   "colour",
   "risk",
   "high_risk_pop_message",

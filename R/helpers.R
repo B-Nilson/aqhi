@@ -18,21 +18,26 @@ AQHI_colours <- c(
   "#bbbbbb"
 )
 
-AQHI_formula <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
+get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   aqhi_breakpoints <- c(-Inf, 1:10, Inf) |>
     stats::setNames(c(NA, 1:10, "+"))
-  aqhi <- round(
-    10 /
-      10.4 *
-      100 *
-      ((exp(0.000537 * o3_rolling_3hr) - 1) +
-        (exp(0.000871 * no2_rolling_3hr) - 1) +
-        (exp(0.000487 * pm25_rolling_3hr) - 1))
-  )
-  cut(
-    aqhi,
-    breaks = aqhi_breakpoints,
-    labels = names(aqhi_breakpoints[-1])
+
+  o3_fraction <- exp(0.000537 * o3_rolling_3hr) - 1
+  no2_fraction <- exp(0.000871 * no2_rolling_3hr) - 1
+  pm25_fraction <- exp(0.000487 * pm25_rolling_3hr) - 1
+  combined_fractions <- o3_fraction + no2_fraction + pm25_fraction
+
+  aqhi <- ((10 / 10.4) * (100 * (combined_fractions))) |>
+    cut(
+      breaks = aqhi_breakpoints,
+      labels = names(aqhi_breakpoints[-1])
+    )
+  
+  dplyr::tibble(
+    AQHI = aqhi,
+    AQHI_pm25_ratio = pm25_fraction / combined_fractions,
+    AQHI_o3_ratio = o3_fraction / combined_fractions,
+    AQHI_no2_ratio = no2_fraction / combined_fractions
   )
 }
 
