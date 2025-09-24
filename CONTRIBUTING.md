@@ -22,7 +22,7 @@ bug, create an associated issue and illustrate the bug with a minimal
 ### Pull request process
 
 *  We recommend that you create a Git branch for each pull request (PR).  
-*  New code should follow the tidyverse [style guide](http://style.tidyverse.org).
+*  New code should follow the tidyverse [style guide](https://style.tidyverse.org).
 You can use the [Air](https://www.tidyverse.org/blog/2025/02/air/) formatter to
 apply these styles, but please don't restyle code that has nothing to do with 
 your PR.  
