@@ -108,7 +108,7 @@ AQHI_plus <- function(
   }
 
   # Get the associated risk level (low, moderate, high, very high))
-  risk <- aqhi_p |> AQHI_risk_category(language = language)
+  risk <- aqhi_p |> get_risk_category(language = language)
 
   # Combine and return
   dplyr::tibble(
@@ -118,6 +118,6 @@ AQHI_plus <- function(
     risk = risk,
     # High risk pop + general pop health warnings
     # TODO: do these differ for AQHI / AQHI+?
-    risk |> AQHI_health_messaging(language = language)
+    risk |> get_health_messages(language = language)
   )
 }

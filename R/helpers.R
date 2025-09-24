@@ -104,14 +104,7 @@ get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   )
 }
 
-# TODO: export this
-AQHI_risk_category <- function(AQHI, language = "en") {
-  aqhi_levels <- list(
-    Low = 1:3,
-    Moderate = 4:6,
-    High = 7:10,
-    "Very High" = "+"
-  )
+get_risk_category <- function(AQHI, language = "en") {
   if (language == "fr") {
     names(AQHI_risk_categories) <- c(
       "Faible",
@@ -138,24 +131,12 @@ AQHI_risk_category <- function(AQHI, language = "en") {
     )
 }
 
-AQHI_health_messaging <- function(risk_categories, language = "en") {
+get_health_messages <- function(risk_categories, language = "en") {
   stopifnot(tolower(language) %in% c("en", "fr"), length(language) == 1)
 
   aqhi_messaging <- AQHI_health_messages[[language]]
-  # TODO: is this necessary?
-  aqhi_messaging[risk_categories] |>
-    handyr::for_each(
-      .as_list = TRUE,
-      .bind = TRUE,
-      .show_progress = FALSE,
-      \(x) {
-        if (is.null(x)) {
-          data.frame(high_risk_pop_message = NA, general_pop_message = NA)
-        } else {
-          x
-        }
-      }
-    )
+  aqhi_messaging[match(risk_categories, aqhi_messaging$risk_category), ] |> 
+    dplyr::select(-risk_category)
 }
 
 # TODO: make sure AQHI is a column in obs
