@@ -4,7 +4,7 @@
 
 <!-- badges: end -->
 
-The goal of the aqhi package is to provide reproducible calculations of the Air Quality Health Index (both AQHI and AQHI+).
+The aqhi package provides reproducible calculations of the Air Quality Health Index (both AQHI and AQHI+), with French translations where possible.
 
 ## Installation
 
