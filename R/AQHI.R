@@ -198,7 +198,7 @@ AQHI <- function(
   AQHI_obs |>
     dplyr::mutate(
       risk = .data$level |> AQHI_risk_category(language = language),
-      colour = AQHI_colours[as.numeric(.data$level)],
+      colour = unname(AQHI_colours)[as.numeric(.data$level)],
       .data$risk |> AQHI_health_messaging(language = language)
     ) |>
     dplyr::select(dplyr::all_of(.aqhi_columns))

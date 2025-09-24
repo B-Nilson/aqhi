@@ -22,3 +22,6 @@ Remotes:
     github::B-Nilson/handyr
 URL: https://github.com/B-Nilson/aqhi
 BugReports: https://github.com/B-Nilson/aqhi/issues
+Depends: 
+    R (>= 3.5)
+LazyData: true

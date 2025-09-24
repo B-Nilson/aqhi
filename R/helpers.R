@@ -1,21 +1,27 @@
+#' AQHI_colours
+#'
+#' A named character vector of hexidecimal codes used to represent the AQHI levels.
+#'
+#' @format A named character vector.
+#' @source The AQHI colours were derived from \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Health Canada}.
 AQHI_colours <- c(
   #Low [1 - 3]
-  "#21C6F5",
-  '#189ACA',
-  "#0D6797",
+  low_1 = "#21C6F5",
+  low_2 = '#189ACA',
+  low_3 = "#0D6797",
   # Moderate [4 - 6]
-  "#FFFD37",
-  '#FFCC2E',
-  "#FE9A3F",
+  mod_4 = "#FFFD37",
+  mod_5 = '#FFCC2E',
+  mod_6 = "#FE9A3F",
   # High [7 - 10]
-  "#FD6769",
-  "#FF3B3B",
-  "#FF0101",
-  "#CB0713",
+  high_7 = "#FD6769",
+  high_8 = "#FF3B3B",
+  high_9 = "#FF0101",
+  high_10 = "#CB0713",
   # Very High [+]
-  "#650205",
-  # Missing
-  "#bbbbbb"
+  very_high = "#650205",
+  # Missing [-]
+  missing = "#bbbbbb"
 )
 
 get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
