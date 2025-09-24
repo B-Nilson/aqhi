@@ -8,7 +8,7 @@
 A named list of integer (or character for "Very High") vectors
 }
 \source{
-\href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Health Canada}.
+\href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate ChangeD Canada}.
 }
 \usage{
 AQHI_risk_categories

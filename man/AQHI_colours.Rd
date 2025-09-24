@@ -8,7 +8,7 @@
 A named character vector.
 }
 \source{
-The AQHI colours were derived from \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Health Canada}.
+The AQHI colours were derived from \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada}.
 }
 \usage{
 AQHI_colours

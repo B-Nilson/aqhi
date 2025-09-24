@@ -3,7 +3,7 @@
 #' A named character vector of hexidecimal codes used to represent the AQHI levels.
 #'
 #' @format A named character vector.
-#' @source The AQHI colours were derived from \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Health Canada}.
+#' @source The AQHI colours were derived from \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada}.
 AQHI_colours <- c(
   #Low [1 - 3]
   low_1 = "#21C6F5",
@@ -29,7 +29,7 @@ AQHI_colours <- c(
 #' A named list of the risk categories and their respective AQHI levels.
 #'
 #' @format A named list of integer (or character for "Very High") vectors
-#' @source \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Health Canada}.
+#' @source \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate ChangeD Canada}.
 AQHI_risk_categories <- list(
   Low = 1:3,
   Moderate = 4:6,
