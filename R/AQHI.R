@@ -278,6 +278,8 @@ get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   combined_fractions <- o3_fraction + no2_fraction + pm25_fraction
 
   aqhi <- ((10 / 10.4) * (100 * (combined_fractions))) |>
+    round() |> # round to nearest integer
+    # convert to factor from 1-10, "+", or NA
     cut(
       breaks = aqhi_breakpoints,
       labels = names(aqhi_breakpoints[-1])
