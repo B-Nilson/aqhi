@@ -13,15 +13,6 @@
 #' | High | 7 - 10 | Reduce or reschedule strenuous activities outdoors. Children and the elderly should also take it easy. | Consider reducing or rescheduling strenuous activities outdoors if you experience symptoms such as coughing and throat irritation. |
 #' | Very High | >10 | Avoid strenuous activities outdoors. Children and the elderly should also avoid outdoor physical exertion. | Reduce or reschedule strenuous activities outdoors, especially if you experience symptoms such as coughing and throat irritation. |
 #' 
-#' Messages en français :
-#' 
-#' | Risk | AQHI | Population à risque | Population générale |
-#' | --- | --- | --- | --- |
-#' | Faible | 1 - 3 | Profitez de vos activités habituelles en plein air. | La qualité de l'air est idéale pour les activités en plein air. |
-#' | Modéré | 4 - 6 | Considérez reduire ou reporter vos activités physiques intenses en plein air si vous éprouvez des symptômes. | N'avez pas besoin de modifier vos activités habituelles en plein air à moins que vous n'éprouviez pas de symptômes tels que la toux ou l'irritation de la gorge. |
-#' | Élévé | 7 - 10 | Reduisez ou reporter vos activités physiques intenses en plein air. Les enfants et les personnes âgées devraient aussi prendre des précautions. | Considérez reduire ou reporter vos activités physiques intenses en plein air si vous éprouvez des symptômes tels que la toux ou l'irritation de la gorge. |
-#' | Très Élévé | >10 | Évitez les activités physiques intenses en plein air. Les enfants et les personnes âgées devraient aussi éviter tout effort physique en plein air. | Reduisez ou reporter vos activités physiques intenses en plein air, en particulier si vous éprouvez des symptômes tels que la toux ou l'irritation de la gorge. |
-#' 
 #' See \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada's website} for more information.
 #'
 #' @param risk_categories A factor or character vector of AQHI+ risk categories (Low, Moderate, High, Very High).

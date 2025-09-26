@@ -32,15 +32,6 @@ English messages:\tabular{llll}{
 }
 
 
-Messages en français :\tabular{llll}{
-   Risk \tab AQHI \tab Population à risque \tab Population générale \cr
-   Faible \tab 1 - 3 \tab Profitez de vos activités habituelles en plein air. \tab La qualité de l'air est idéale pour les activités en plein air. \cr
-   Modéré \tab 4 - 6 \tab Considérez reduire ou reporter vos activités physiques intenses en plein air si vous éprouvez des symptômes. \tab N'avez pas besoin de modifier vos activités habituelles en plein air à moins que vous n'éprouviez pas de symptômes tels que la toux ou l'irritation de la gorge. \cr
-   Élévé \tab 7 - 10 \tab Reduisez ou reporter vos activités physiques intenses en plein air. Les enfants et les personnes âgées devraient aussi prendre des précautions. \tab Considérez reduire ou reporter vos activités physiques intenses en plein air si vous éprouvez des symptômes tels que la toux ou l'irritation de la gorge. \cr
-   Très Élévé \tab >10 \tab Évitez les activités physiques intenses en plein air. Les enfants et les personnes âgées devraient aussi éviter tout effort physique en plein air. \tab Reduisez ou reporter vos activités physiques intenses en plein air, en particulier si vous éprouvez des symptômes tels que la toux ou l'irritation de la gorge. \cr
-}
-
-
 See \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada's website} for more information.
 }
 \examples{
