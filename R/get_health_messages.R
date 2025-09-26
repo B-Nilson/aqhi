@@ -1,4 +1,28 @@
 #' Get health messages for AQHI+ risk categories
+#' 
+#' @description
+#' 
+#' Health messages for at risk population and general population are available for each AQHI health risk category (see \code{\link{get_risk_category}}).
+#' 
+#' English messages:
+#' 
+#' | Risk | AQHI | At Risk Population | General Population |
+#' | --- | --- | --- | --- |
+#' | Low | 1 - 3 | Enjoy your usual outdoor activities. | Ideal air quality for outdoor activities. |
+#' | Moderate | 4 - 6 | Consider reducing or rescheduling strenuous activities outdoors if you are experiencing symptoms. | No need to modify your usual outdoor activities unless you experience symptoms such as coughing and throat irritation. |
+#' | High | 7 - 10 | Reduce or reschedule strenuous activities outdoors. Children and the elderly should also take it easy. | Consider reducing or rescheduling strenuous activities outdoors if you experience symptoms such as coughing and throat irritation. |
+#' | Very High | >10 | Avoid strenuous activities outdoors. Children and the elderly should also avoid outdoor physical exertion. | Reduce or reschedule strenuous activities outdoors, especially if you experience symptoms such as coughing and throat irritation. |
+#' 
+#' Messages en français :
+#' 
+#' | Risk | AQHI | Population à risque | Population générale |
+#' | --- | --- | --- | --- |
+#' | Faible | 1 - 3 | Profitez de vos activités habituelles en plein air. | La qualité de l'air est idéale pour les activités en plein air. |
+#' | Modéré | 4 - 6 | Considérez reduire ou reporter vos activités physiques intenses en plein air si vous éprouvez des symptômes. | N'avez pas besoin de modifier vos activités habituelles en plein air à moins que vous n'éprouviez pas de symptômes tels que la toux ou l'irritation de la gorge. |
+#' | Élévé | 7 - 10 | Reduisez ou reporter vos activités physiques intenses en plein air. Les enfants et les personnes âgées devraient aussi prendre des précautions. | Considérez reduire ou reporter vos activités physiques intenses en plein air si vous éprouvez des symptômes tels que la toux ou l'irritation de la gorge. |
+#' | Très Élévé | >10 | Évitez les activités physiques intenses en plein air. Les enfants et les personnes âgées devraient aussi éviter tout effort physique en plein air. | Reduisez ou reporter vos activités physiques intenses en plein air, en particulier si vous éprouvez des symptômes tels que la toux ou l'irritation de la gorge. |
+#' 
+#' See \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada's website} for more information.
 #'
 #' @param risk_categories A factor or character vector of AQHI+ risk categories (Low, Moderate, High, Very High).
 #' @inheritParams AQHI
@@ -6,9 +30,19 @@
 #' @return A data frame of health messages (for at risk population and general population) for the AQHI+ risk categories.
 #' @export
 #' @examples
-#' get_health_messages(c("Low", "Moderate", "High", "Very High"))
-#' get_health_messages(c("Low", "Moderate", "High", "Very High"), language = "fr")
-get_health_messages <- function(risk_categories, language = "en") {
+#' # Get health messages for all risk categories
+#' get_health_messages()
+#' 
+#' # The same, but en Francais
+#' get_health_messages(language = "fr")
+#' 
+#' # Get health messages for some observations
+#' hourly_pm25_ugm3 <- sample(1:100, 50, replace = TRUE)
+#' risk_categories <- hourly_pm25_ugm3 |> 
+#'   AQHI_plus(detailed = FALSE) |> 
+#'   get_risk_category()
+#' risk_categories |> get_health_messages()
+get_health_messages <- function(risk_categories = c("Low", "Moderate", "High", "Very High"), language = "en") {
   stopifnot(
     is.factor(risk_categories) |
       is.character(risk_categories) |
@@ -49,21 +83,21 @@ AQHI_health_messages <- list(
   fr = dplyr::tibble(
     risk_category = c(
       "Faible",
-      "Mod\u00e9r\u00e9",
-      "Elev\u00e9",
-      "Tr\u00e8s Elev\u00e9"
+      "Modéré",
+      "Elevé",
+      "Très Elevé"
     ),
     high_risk_pop_message = c(
-      "Profiter des activit\u00e9s ext\u00e9rieures habituelles.",
-      "Envisagez de r\u00e9duire ou de reporter les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes.",
-      "R\u00e9duisez ou r\u00e9organisez les activit\u00e9s ext\u00e9rieures en plein air.",
-      "\u00c9vitez les activit\u00e9s ext\u00e9rieures en plein air."
+      "Profiter des activités extérieures habituelles.",
+      "Envisagez de réduire ou de reporter les activités extérieures en plein air si vous éprouvez des symptômes.",
+      "Réduisez ou réorganisez les activités extérieures en plein air.",
+      "Évitez les activités extérieures en plein air."
     ),
     general_pop_message = c(
-      "Qualit\u00e9 de l'air id\u00e9ale pour les activit\u00e9s en plein air.",
-      "Aucun besoin de modifier vos activit\u00e9s habituelles en plein air \u00e0 moins d'\u00e9prouver des sympt\u00f4mes comme la toux ou une irritation de la gorge.",
-      "Envisagez de r\u00e9duire ou de reporter les activit\u00e9s ext\u00e9rieures en plein air si vous \u00e9prouvez des sympt\u00f4mes.",
-      "R\u00e9duisez ou r\u00e9organisez les activit\u00e9s ext\u00e9rieures en plein air, surtout si vous \u00e9prouvez des sympt\u00f4mes comme la toux ou une irritation de la gorge."
+      "Qualité de l'air idéale pour les activités en plein air.",
+      "Aucun besoin de modifier vos activités habituelles en plein air à moins d'éprouver des symptômes comme la toux ou une irritation de la gorge.",
+      "Envisagez de réduire ou de reporter les activités extérieures en plein air si vous éprouvez des symptômes.",
+      "Réduisez ou réorganisez les activités extérieures en plein air, surtout si vous éprouvez des symptômes comme la toux ou une irritation de la gorge."
     )
   )
 )

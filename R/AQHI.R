@@ -54,6 +54,7 @@
 #' - a factor vector of AQHI levels with `length(dates)` elements
 #'
 #' @export
+#' @importFrom rlang .data
 #'
 #' @examples
 #' obs <- data.frame(
@@ -73,7 +74,7 @@
 #'   )
 #'
 #' # Return just the AQHI levels
-#' obs$date |> 
+#' obs$date |>
 #'   AQHI(
 #'     pm25_1hr_ugm3 = obs$pm25,
 #'     o3_1hr_ppb = obs$o3,
@@ -86,17 +87,17 @@
 #' obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, quiet = TRUE) # silence warning
 #'
 #' # Return French version
-#' obs$date |> 
+#' obs$date |>
 #'   AQHI(
 #'     pm25_1hr_ugm3 = obs$pm25,
-#'     o3_1hr_ppb = obs$o3, 
+#'     o3_1hr_ppb = obs$o3,
 #'     no2_1hr_ppb = obs$no2,
 #'     language = "fr"
 #'   )
 #' obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, language = "fr")
 #'
 #' # Don't allow AQHI+ override (not recommended)
-#' obs$date |> 
+#' obs$date |>
 #'   AQHI(
 #'     pm25_1hr_ugm3 = obs$pm25,
 #'     o3_1hr_ppb = obs$o3,
@@ -139,10 +140,7 @@ AQHI <- function(
     pm25_1hr_ugm3,
     o3_1hr_ppb,
     no2_1hr_ppb
-  ) |>
-    # Fill in missing hours
-    tidyr::complete(date = seq(min(date), max(date), "1 hours")) |>
-    dplyr::arrange(date)
+  )
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
   if (allow_aqhi_plus_override) {
@@ -192,6 +190,10 @@ AQHI <- function(
       names(obs)[2:4] |> sub(pattern = "_1hr_", replacement = "_3hr_")
     )
   obs <- obs |>
+    # Fill in missing hours
+    tidyr::complete(date = seq(min(date), max(date), "1 hours")) |>
+    dplyr::arrange(date) |>
+    # get rolling averages
     dplyr::mutate(
       dplyr::across(
         dplyr::all_of(rolling_cols),
@@ -269,22 +271,26 @@ AQHI <- function(
 )
 
 get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
-  aqhi_breakpoints <- c(-Inf, 1:10, Inf) |>
-    stats::setNames(c(NA, 1:10, "+"))
-
+  # Calculate each piece of the AQHI (See Stieb et al. 2008)
   o3_fraction <- exp(0.000537 * o3_rolling_3hr) - 1
   no2_fraction <- exp(0.000871 * no2_rolling_3hr) - 1
   pm25_fraction <- exp(0.000487 * pm25_rolling_3hr) - 1
-  combined_fractions <- o3_fraction + no2_fraction + pm25_fraction
 
-  aqhi <- ((10 / 10.4) * (100 * (combined_fractions))) |>
+  # Sum, then convert to AQHI (See Stieb et al. 2008)
+  combined_fractions <- o3_fraction + no2_fraction + pm25_fraction
+  decimal_aqhi <- 10 / 10.4 * 100 * combined_fractions
+
+  # Convert to factor from 1-10, "+", or NA
+  aqhi_breakpoints <- c(-Inf, 1:10, Inf) |>
+    stats::setNames(c(NA, 1:10, "+"))
+  aqhi <- decimal_aqhi |>
     round() |> # round to nearest integer
-    # convert to factor from 1-10, "+", or NA
     cut(
       breaks = aqhi_breakpoints,
       labels = names(aqhi_breakpoints[-1])
     )
 
+  # Combine with relative contributions and return
   dplyr::tibble(
     AQHI = aqhi,
     AQHI_pm25_ratio = pm25_fraction / combined_fractions,
@@ -293,97 +299,25 @@ get_AQHI <- function(pm25_rolling_3hr, no2_rolling_3hr, o3_rolling_3hr) {
   )
 }
 
+# Check if AQHI+ is greater than AQHI, set level to highest of the two
 override_AQHI_with_AQHI_plus <- function(AQHI_obs) {
   stopifnot(all(c("AQHI_plus", "AQHI") %in% colnames(AQHI_obs)))
 
   AQHI_obs |>
     dplyr::mutate(
-      AQHI_plus_exceeds_AQHI = (as.numeric(.data$AQHI_plus) >
-        as.numeric(.data$AQHI)) |>
-        swap(what = NA, with = TRUE),
+      # Check if AQHI+ is greater than AQHI
+      AQHI_plus_exceeds_AQHI = dplyr::case_when(
+        is.na(.data$AQHI) & is.na(.data$AQHI_plus) ~ NA,
+        is.na(.data$AQHI) ~ TRUE,
+        is.na(.data$AQHI_plus) ~ FALSE,
+        TRUE ~ as.numeric(.data$AQHI_plus) > as.numeric(.data$AQHI)
+      ),
+      # Replace AQHI with AQHI+ where AQHI+ is higher
       level = .data$AQHI_plus_exceeds_AQHI |>
         ifelse(
-          yes = .data$AQHI_plus,
-          no = .data$AQHI
+          yes = as.character(.data$AQHI_plus),
+          no = as.character(.data$AQHI)
         ) |>
-        factor(levels = 1:11, labels = c(1:10, "+"))
+        factor(levels = c(1:10, "+"))
     )
-}
-
-swap <- function(x, what, with) {
-  x[x %in% what] <- with
-  return(x)
-}
-
-# Vectorized rolling mean
-roll_mean <- function(
-  x,
-  width = 3,
-  direction = "backward",
-  fill = NULL,
-  min_non_na = 0
-) {
-  rolling_sum <- x |>
-    roll_sum(
-      width = width,
-      direction = direction,
-      fill = fill,
-      min_non_na = min_non_na,
-      .include_counts = TRUE
-    )
-  n_non_missing <- swap(attr(rolling_sum, "n_non_missing"), what = 0, with = NA)
-  as.numeric(rolling_sum) / n_non_missing
-}
-
-# Vectorized rolling sum
-roll_sum <- function(
-  x,
-  width = 3,
-  direction = "backward",
-  fill = NULL,
-  min_non_na = 0,
-  .include_counts = FALSE
-) {
-  value_matrix <- x |>
-    build_roll_matrix(
-      width = width,
-      direction = direction,
-      fill = fill
-    )
-  n_non_missing <- width - rowSums(is.na(value_matrix))
-  rolling_sum <- rowSums(value_matrix, na.rm = TRUE)
-  rolling_sum[n_non_missing < min_non_na] <- NA
-
-  if (.include_counts) {
-    n_possible <- rep(width, length(x))
-    n_possible[1:width] <- 1:width
-    attr(rolling_sum, "n") <- n_possible
-    attr(rolling_sum, "n_non_missing") <- n_non_missing
-  }
-
-  if (!is.null(fill)) {
-    if (direction == "backward") {
-      rolling_sum[1:(width - 1)] <- fill
-    } else if (direction == "forward") {
-      rolling_sum[(length(x) - width + 1):length(x)] <- fill
-    }
-  }
-
-  return(rolling_sum)
-}
-
-build_roll_matrix <- function(x, width = 3, direction = "backward", fill = NA) {
-  fill <- ifelse(is.null(fill), NA, fill)
-  value_matrix <- matrix(fill, nrow = length(x), ncol = width)
-  for (i in 0:(width - 1)) {
-    if (direction == "backward") {
-      value_matrix[(i + 1):length(x), i + 1] <- x[1:(length(x) - i)]
-    } else if (direction == "forward") {
-      value_matrix[1:(length(x) - i), i + 1] <- x[(i + 1):length(x)]
-    } else {
-      # TODO: implement center
-      stop("direction must be 'backward' or 'forward'")
-    }
-  }
-  return(value_matrix)
 }

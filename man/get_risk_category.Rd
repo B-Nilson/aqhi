@@ -15,12 +15,30 @@ Must be either "en" (English) or "fr" (French). Not case sensitive.
 Default is "en".}
 }
 \value{
-A factor of risk categories (Low, Moderate, High, Very High) for each AQHI level.
+A factor of risk categories (Low, Moderate, High, Very High) representing each AQHI level.
 }
 \description{
-Get the risk category for each AQHI level
+AQHI levels are broken down into categories for easier communication of health risks:
+\itemize{
+\item Low: AQHI = 1-3
+\item Moderate: AQHI = 4-6
+\item High: AQHI = 7-10
+\item Very High: AQHI = "+" (>10)
+}
+
+Health messages for at risk population and general population are available for each risk category - see \code{\link{get_health_messages}}
 }
 \examples{
-get_risk_category(1:10)
-get_risk_category(1:10, language = "fr")
+# Get risk categories for all AQHI levels
+get_risk_category()
+
+# The same, but en Francais
+get_risk_category(language = "fr")
+
+# Get risk categories for obervations
+aqhi_levels <- sample(c(1:10, "+"), 50, replace = TRUE)
+get_risk_category(aqhi_levels)
+}
+\references{
+Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
 }

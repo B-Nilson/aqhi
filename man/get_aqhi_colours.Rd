@@ -15,10 +15,27 @@ Default is all AQHI levels (1-10, "+", and NA).}
 A character vector of hexidecimal codes correspoding to each AQHI level.
 }
 \description{
-Get AQHI colours for each AQHI level
+Every AQHI level (1-10, "+", and NA) is assigned a hexidecimal colour code for visualization.
+
+These colours are defined by \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada} such that:
+\itemize{
+\item Low AQHI (1-3) are light to dark blue
+\item Moderate AQHI (4-6) are yellow to orange
+\item High AQHI (7-10) are light to dark red
+\item Very High AQHI (+) is darker red
+\item Missing AQHI (NA) is light grey
+}
 }
 \examples{
+# Get AQHI colours for all AQHI levels
 get_aqhi_colours()
 
-1:100 |> AQHI_plus(detailed = FALSE) |> get_aqhi_colours()
+# Get AQHI colours for obervation data
+hourly_pm25_ugm3 <- sample(1:100, 50, replace = TRUE)
+aqhi_levels <- hourly_pm25_ugm3 |> 
+  AQHI_plus(detailed = FALSE)
+aqhi_levels |> get_aqhi_colours()
+}
+\references{
+Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
 }

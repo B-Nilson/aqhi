@@ -94,7 +94,7 @@ obs$date |>
   )
 
 # Return just the AQHI levels
-obs$date |> 
+obs$date |>
   AQHI(
     pm25_1hr_ugm3 = obs$pm25,
     o3_1hr_ppb = obs$o3,
@@ -107,17 +107,17 @@ obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25)
 obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, quiet = TRUE) # silence warning
 
 # Return French version
-obs$date |> 
+obs$date |>
   AQHI(
     pm25_1hr_ugm3 = obs$pm25,
-    o3_1hr_ppb = obs$o3, 
+    o3_1hr_ppb = obs$o3,
     no2_1hr_ppb = obs$no2,
     language = "fr"
   )
 obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, language = "fr")
 
 # Don't allow AQHI+ override (not recommended)
-obs$date |> 
+obs$date |>
   AQHI(
     pm25_1hr_ugm3 = obs$pm25,
     o3_1hr_ppb = obs$o3,

@@ -1,13 +1,29 @@
 #' Get the risk category for each AQHI level
+#' 
+#' @description
+#' AQHI levels are broken down into categories for easier communication of health risks:
+#'  - Low: AQHI = 1-3
+#'  - Moderate: AQHI = 4-6
+#'  - High: AQHI = 7-10
+#'  - Very High: AQHI = "+" (>10) 
+#' 
+#' Health messages for at risk population and general population are available for each risk category - see \code{\link{get_health_messages}}
 #'
 #' @param aqhi_levels A vector of AQHI levels (1-10 or "+").
 #' @inheritParams AQHI
-#'
-#' @return A factor of risk categories (Low, Moderate, High, Very High) for each AQHI level.
+#' @references Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
+#' @return A factor of risk categories (Low, Moderate, High, Very High) representing each AQHI level.
 #' @export
 #' @examples
-#' get_risk_category(1:10)
-#' get_risk_category(1:10, language = "fr")
+#' # Get risk categories for all AQHI levels
+#' get_risk_category()
+#' 
+#' # The same, but en Francais
+#' get_risk_category(language = "fr")
+#' 
+#' # Get risk categories for obervations
+#' aqhi_levels <- sample(c(1:10, "+"), 50, replace = TRUE)
+#' get_risk_category(aqhi_levels)
 get_risk_category <- function(aqhi_levels, language = "en") {
   stopifnot(
     is.factor(aqhi_levels) |
@@ -21,7 +37,7 @@ get_risk_category <- function(aqhi_levels, language = "en") {
 
   # Extract language-specific risk categories
   language <- tolower(language)
-  risk_categories <- AQHI_risk_categories[[language]]
+  risk_categories <- .risk_categories[[language]]
 
   # Repeat each risk category for each AQHI level within it
   aqhi_labels <- risk_categories |>
@@ -38,7 +54,7 @@ get_risk_category <- function(aqhi_levels, language = "en") {
     )
 }
 
-AQHI_risk_categories <- list(
+.risk_categories <- list(
   en = list(
     Low = 1:3,
     Moderate = 4:6,

@@ -4,7 +4,10 @@
 \alias{get_health_messages}
 \title{Get health messages for AQHI+ risk categories}
 \usage{
-get_health_messages(risk_categories, language = "en")
+get_health_messages(
+  risk_categories = c("Low", "Moderate", "High", "Very High"),
+  language = "en"
+)
 }
 \arguments{
 \item{risk_categories}{A factor or character vector of AQHI+ risk categories (Low, Moderate, High, Very High).}
@@ -18,9 +21,39 @@ Default is "en".}
 A data frame of health messages (for at risk population and general population) for the AQHI+ risk categories.
 }
 \description{
-Get health messages for AQHI+ risk categories
+Health messages for at risk population and general population are available for each AQHI health risk category (see \code{\link{get_risk_category}}).
+
+English messages:\tabular{llll}{
+   Risk \tab AQHI \tab At Risk Population \tab General Population \cr
+   Low \tab 1 - 3 \tab Enjoy your usual outdoor activities. \tab Ideal air quality for outdoor activities. \cr
+   Moderate \tab 4 - 6 \tab Consider reducing or rescheduling strenuous activities outdoors if you are experiencing symptoms. \tab No need to modify your usual outdoor activities unless you experience symptoms such as coughing and throat irritation. \cr
+   High \tab 7 - 10 \tab Reduce or reschedule strenuous activities outdoors. Children and the elderly should also take it easy. \tab Consider reducing or rescheduling strenuous activities outdoors if you experience symptoms such as coughing and throat irritation. \cr
+   Very High \tab >10 \tab Avoid strenuous activities outdoors. Children and the elderly should also avoid outdoor physical exertion. \tab Reduce or reschedule strenuous activities outdoors, especially if you experience symptoms such as coughing and throat irritation. \cr
+}
+
+
+Messages en français :\tabular{llll}{
+   Risk \tab AQHI \tab Population à risque \tab Population générale \cr
+   Faible \tab 1 - 3 \tab Profitez de vos activités habituelles en plein air. \tab La qualité de l'air est idéale pour les activités en plein air. \cr
+   Modéré \tab 4 - 6 \tab Considérez reduire ou reporter vos activités physiques intenses en plein air si vous éprouvez des symptômes. \tab N'avez pas besoin de modifier vos activités habituelles en plein air à moins que vous n'éprouviez pas de symptômes tels que la toux ou l'irritation de la gorge. \cr
+   Élévé \tab 7 - 10 \tab Reduisez ou reporter vos activités physiques intenses en plein air. Les enfants et les personnes âgées devraient aussi prendre des précautions. \tab Considérez reduire ou reporter vos activités physiques intenses en plein air si vous éprouvez des symptômes tels que la toux ou l'irritation de la gorge. \cr
+   Très Élévé \tab >10 \tab Évitez les activités physiques intenses en plein air. Les enfants et les personnes âgées devraient aussi éviter tout effort physique en plein air. \tab Reduisez ou reporter vos activités physiques intenses en plein air, en particulier si vous éprouvez des symptômes tels que la toux ou l'irritation de la gorge. \cr
+}
+
+
+See \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada's website} for more information.
 }
 \examples{
-get_health_messages(c("Low", "Moderate", "High", "Very High"))
-get_health_messages(c("Low", "Moderate", "High", "Very High"), language = "fr")
+# Get health messages for all risk categories
+get_health_messages()
+
+# The same, but en Francais
+get_health_messages(language = "fr")
+
+# Get health messages for some observations
+hourly_pm25_ugm3 <- sample(1:100, 50, replace = TRUE)
+risk_categories <- hourly_pm25_ugm3 |> 
+  AQHI_plus(detailed = FALSE) |> 
+  get_risk_category()
+risk_categories |> get_health_messages()
 }
