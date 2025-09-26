@@ -28,13 +28,13 @@
                  <dbl> <fct> <chr>   <fct>  <chr>                  <chr>              
        1          NA   <NA>  #bbbbbb <NA>   <NA>                   <NA>               
        2          NA   <NA>  #bbbbbb <NA>   <NA>                   <NA>               
-       3           0   1     #21C6F5 Faible Profiter des activité~ Qualité de l'air i~
-       4           0.1 1     #21C6F5 Faible Profiter des activité~ Qualité de l'air i~
-       5          10   1     #21C6F5 Faible Profiter des activité~ Qualité de l'air i~
-       6          10.1 2     #189ACA Faible Profiter des activité~ Qualité de l'air i~
-       7          20   2     #189ACA Faible Profiter des activité~ Qualité de l'air i~
-       8          20.1 3     #0D6797 Faible Profiter des activité~ Qualité de l'air i~
-       9          30   3     #0D6797 Faible Profiter des activité~ Qualité de l'air i~
+       3           0   1     #21C6F5 Faible Profitez des activité~ Qualité de l'air i~
+       4           0.1 1     #21C6F5 Faible Profitez des activité~ Qualité de l'air i~
+       5          10   1     #21C6F5 Faible Profitez des activité~ Qualité de l'air i~
+       6          10.1 2     #189ACA Faible Profitez des activité~ Qualité de l'air i~
+       7          20   2     #189ACA Faible Profitez des activité~ Qualité de l'air i~
+       8          20.1 3     #0D6797 Faible Profitez des activité~ Qualité de l'air i~
+       9          30   3     #0D6797 Faible Profitez des activité~ Qualité de l'air i~
       10          30.1 4     #FFFD37 Modéré Envisagez de réduire ~ Aucun besoin de mo~
       # i 14 more rows
 

@@ -4,7 +4,7 @@
 \alias{get_risk_category}
 \title{Get the risk category for each AQHI level}
 \usage{
-get_risk_category(aqhi_levels, language = "en")
+get_risk_category(aqhi_levels = c(1:10, "+"), language = "en")
 }
 \arguments{
 \item{aqhi_levels}{A vector of AQHI levels (1-10 or "+").}

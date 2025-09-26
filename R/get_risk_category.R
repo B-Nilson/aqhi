@@ -24,7 +24,7 @@
 #' # Get risk categories for obervations
 #' aqhi_levels <- sample(c(1:10, "+"), 50, replace = TRUE)
 #' get_risk_category(aqhi_levels)
-get_risk_category <- function(aqhi_levels, language = "en") {
+get_risk_category <- function(aqhi_levels = c(1:10, "+"), language = "en") {
   stopifnot(
     is.factor(aqhi_levels) |
       is.character(aqhi_levels) |
