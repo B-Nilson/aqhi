@@ -15,10 +15,10 @@
 #' 
 #' See \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada's website} for more information.
 #'
-#' @param risk_categories A factor or character vector of AQHI+ risk categories (Low, Moderate, High, Very High).
+#' @param risk_categories A factor or character vector of AQHI risk categories (Low, Moderate, High, Very High).
 #' @inheritParams AQHI
 #'
-#' @return A data frame of health messages (for at risk population and general population) for the AQHI+ risk categories.
+#' @return A tibble of health messages (for at risk population and general population) for the provided risk categories.
 #' @export
 #' @examples
 #' # Get health messages for all risk categories

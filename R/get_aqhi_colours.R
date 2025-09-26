@@ -10,11 +10,10 @@
 #' - Very High AQHI (+) is darker red
 #' - Missing AQHI (NA) is light grey
 #'
-#' @param aqhi_levels (Optional).
-#'   A character or factor vector of AQHI levels (1-10, "+", or NA).
-#'   Default is all AQHI levels (1-10, "+", and NA).
+#' @inheritParams get_risk_category
+#' 
 #' @references Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
-#' @return A character vector of hexidecimal codes correspoding to each AQHI level.
+#' @return A character vector of hexidecimal codes correspoding to each level of \code{aqhi_levels}.
 #' @export
 #' @examples
 #' # Get AQHI colours for all AQHI levels

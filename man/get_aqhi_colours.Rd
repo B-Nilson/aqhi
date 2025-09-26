@@ -8,11 +8,11 @@ get_aqhi_colours(aqhi_levels = c(1:10, "+", NA))
 }
 \arguments{
 \item{aqhi_levels}{(Optional).
-A character or factor vector of AQHI levels (1-10, "+", or NA).
-Default is all AQHI levels (1-10, "+", and NA).}
+A vector of AQHI levels (1-10, "+", or NA).
+Default is all unique levels.}
 }
 \value{
-A character vector of hexidecimal codes correspoding to each AQHI level.
+A character vector of hexidecimal codes correspoding to each level of \code{aqhi_levels}.
 }
 \description{
 Every AQHI level (1-10, "+", and NA) is assigned a hexidecimal colour code for visualization.

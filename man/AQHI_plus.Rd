@@ -12,7 +12,8 @@ AQHI_plus(
 )
 }
 \arguments{
-\item{pm25_1hr_ugm3}{A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}).}
+\item{pm25_1hr_ugm3}{A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}).
+Must be a single value or the same length as \code{dates} or a single value (which will be repeated).}
 
 \item{min_allowed_pm25}{(Optional).
 A single numeric value indicating the minimum allowed concentration.
@@ -60,8 +61,8 @@ The risk categories match the Canadian AQHI and share the same health messaging:
 }
 
 The AQHI+ was originally published by Yao et al (2019): \doi{doi:10.17269/s41997-019-00237-w},
-and has been adopted by all\* Canadian provinces/territories as of 2024.
-(\*except Québec where they use the AQI instead of the AQHI/AQHI+).
+and has been adopted by all* Canadian provinces/territories as of 2024.
+(*except Québec where they use the AQI instead of the AQHI/AQHI+).
 
 Quote from Yao et al (2019):
 

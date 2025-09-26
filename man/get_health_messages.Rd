@@ -10,7 +10,7 @@ get_health_messages(
 )
 }
 \arguments{
-\item{risk_categories}{A factor or character vector of AQHI+ risk categories (Low, Moderate, High, Very High).}
+\item{risk_categories}{A factor or character vector of AQHI risk categories (Low, Moderate, High, Very High).}
 
 \item{language}{(Optional).
 A single character value indicating the language to use for risk levels and health messaging.
@@ -18,7 +18,7 @@ Must be either "en" (English) or "fr" (French). Not case sensitive.
 Default is "en".}
 }
 \value{
-A data frame of health messages (for at risk population and general population) for the AQHI+ risk categories.
+A tibble of health messages (for at risk population and general population) for the provided risk categories.
 }
 \description{
 Health messages for at risk population and general population are available for each AQHI health risk category (see \code{\link{get_risk_category}}).

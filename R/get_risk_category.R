@@ -9,10 +9,13 @@
 #' 
 #' Health messages for at risk population and general population are available for each risk category - see \code{\link{get_health_messages}}
 #'
-#' @param aqhi_levels A vector of AQHI levels (1-10 or "+").
+#' @param aqhi_levels (Optional). 
+#'   A vector of AQHI levels (1-10, "+", or NA).
+#'   Default is all unique levels.
 #' @inheritParams AQHI
+#' 
 #' @references Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
-#' @return A factor of risk categories (Low, Moderate, High, Very High) representing each AQHI level.
+#' @return A factor of risk categories (Low, Moderate, High, Very High) representing each level of \code{aqhi_levels}.
 #' @export
 #' @examples
 #' # Get risk categories for all AQHI levels

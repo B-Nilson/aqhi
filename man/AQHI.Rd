@@ -16,17 +16,20 @@ AQHI(
 )
 }
 \arguments{
-\item{dates}{A POSIXct (date-time) vector of corresponding to hourly observations.
+\item{dates}{A POSIXct (date-time) vector corresponding to hourly pollutant observations.
 Date gaps will be filled with NA's automatically as needed when calculating 3-hour averages.}
 
-\item{pm25_1hr_ugm3}{A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}).}
+\item{pm25_1hr_ugm3}{A numeric vector of hourly mean \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations (units = \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}).
+Must be a single value or the same length as \code{dates} or a single value (which will be repeated).}
 
 \item{o3_1hr_ppb}{(Optional).
 A numeric vector of hourly mean ozone (\ifelse{html}{\out{O<sub>3</sub>}}{\eqn{O_3}}) concentrations (units = ppb).
+Must be a single value or the same length as \code{dates} or a single value (which will be repeated).
 If all are NA (the default) AQHI won't be calculated and instead AQHI+ (see \code{\link{AQHI_plus}}) will be used.}
 
 \item{no2_1hr_ppb}{(Optional).
 A numeric vector of hourly mean nitrogen dioxide (\ifelse{html}{\out{NO<sub>2</sub>}}{\eqn{NO_2}}) concentrations (units = ppb).
+Must be a single value or the same length as \code{dates} or a single value (which will be repeated).
 If all are NA (the default) AQHI won't be calculated and instead AQHI+ (see \code{\link{AQHI_plus}}) will used.}
 
 \item{allow_aqhi_plus_override}{(Optional).

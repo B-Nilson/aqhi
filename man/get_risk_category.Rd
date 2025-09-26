@@ -7,7 +7,9 @@
 get_risk_category(aqhi_levels = c(1:10, "+"), language = "en")
 }
 \arguments{
-\item{aqhi_levels}{A vector of AQHI levels (1-10 or "+").}
+\item{aqhi_levels}{(Optional).
+A vector of AQHI levels (1-10, "+", or NA).
+Default is all unique levels.}
 
 \item{language}{(Optional).
 A single character value indicating the language to use for risk levels and health messaging.
@@ -15,7 +17,7 @@ Must be either "en" (English) or "fr" (French). Not case sensitive.
 Default is "en".}
 }
 \value{
-A factor of risk categories (Low, Moderate, High, Very High) representing each AQHI level.
+A factor of risk categories (Low, Moderate, High, Very High) representing each level of \code{aqhi_levels}.
 }
 \description{
 AQHI levels are broken down into categories for easier communication of health risks:

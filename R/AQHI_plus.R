@@ -1,11 +1,5 @@
 #' Calculate the Canadian AQHI+ from hourly \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} concentrations
 #'
-#' @inheritParams AQHI
-#' @param min_allowed_pm25 (Optional).
-#'   A single numeric value indicating the minimum allowed concentration.
-#'   All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
-#'   Default is 0 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}.
-#'
 #' @description
 #' The Canadian AQHI+ is a modification of the Canadian Air Quality Health Index (\code{\link{AQHI}}).
 #' AQHI+ only uses fine particulate matter (\ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}}) instead of the combination of
@@ -24,8 +18,8 @@
 #' - Very High: AQHI+ of +, or a concentration above 100 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}
 #'
 #' The AQHI+ was originally published by Yao et al (2019): \doi{doi:10.17269/s41997-019-00237-w},
-#' and has been adopted by all\* Canadian provinces/territories as of 2024.
-#' (\*except Québec where they use the AQI instead of the AQHI/AQHI+).
+#' and has been adopted by all* Canadian provinces/territories as of 2024.
+#' (*except Québec where they use the AQI instead of the AQHI/AQHI+).
 #'
 #' Quote from Yao et al (2019):
 #'
@@ -47,6 +41,12 @@
 #' during high-intensity fire periods, particularly for people with asthma.
 #' This is consistent with the rationale behind the AQHI formulation
 #' and with existing health evidence related to the effects of wildfire smoke.
+#' 
+#' @inheritParams AQHI
+#' @param min_allowed_pm25 (Optional).
+#'   A single numeric value indicating the minimum allowed concentration.
+#'   All values in `pm25_1hr_ugm3` less than this will be replaced with NA.
+#'   Default is 0 \ifelse{html}{\out{&mu;g m<sup>-3</sup>}}{\eqn{ug m^{-3}}}.
 #'
 #' @references Yao et al (2019): \doi{doi:10.17269/s41997-019-00237-w}
 #'
