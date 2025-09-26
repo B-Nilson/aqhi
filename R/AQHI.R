@@ -35,7 +35,7 @@
 #'   <sup>10</sup>&frasl;<sub>10.4</sub> &times; 100 &times;
 #'   (e<sup>0.000537 * O<sub>3</sub></sup> - 1) +
 #'   (e<sup>0.000871 * NO<sub>2</sub></sup> - 1) +
-#'   (e<sup>0.000487 * PM<sub>2.5</sub></sup> - 1))
+#'   (e<sup>0.000487 * PM<sub>2.5</sub></sup> - 1)
 #'
 #' The AQHI was originally published by Stieb et al. (2008): \doi{doi:10.3155/1047-3289.58.3.435},
 #' and is used by all Canadian provinces and territories except for Québec, which uses the AQI instead.
