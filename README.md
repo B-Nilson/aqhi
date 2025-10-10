@@ -1,4 +1,5 @@
-# aqhi: An R package for the Canadian Air Quality Health Index
+# aqhi <img src="man/figures/logo.svg" align="right" height="139" alt="" />
+
 
 <!-- badges: start -->
 
