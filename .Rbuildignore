@@ -6,3 +6,7 @@
 ^CODE_OF_CONDUCT\.md$
 ^CONTRIBUTING\.md$
 ^cran-comments\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
