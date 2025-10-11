@@ -1,13 +1,14 @@
 # aqhi <img src="man/figures/logo.svg" align="right" height="139" alt="" />
 
-
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The aqhi R package provides the ability to calculate the Canadian Air Quality Health Index (both AQHI and AQHI+), with French translations where possible.
+The aqhi R package provides the ability to calculate the Canadian Air Quality Health Index (both AQHI and AQHI+), with French translations where possible. Helper functions are provided to get AQHI colours, risk categories, and health messaging.
 
 ## Installation
+
+You cannot (yet!) install aqhi from CRAN, so proceed to the development version section below
 
 ``` r
 install.packages("aqhi")
@@ -15,7 +16,7 @@ install.packages("aqhi")
 
 ### Development version 
 
-You can install the development version of aqhi from [GitHub](https://github.com/) with:
+You can install the development version of aqhi from GitHub with:
 
 ``` r
 # install.packages("pak")
