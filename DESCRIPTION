@@ -27,3 +27,4 @@ URL: https://github.com/B-Nilson/aqhi, https://b-nilson.github.io/aqhi/
 BugReports: https://github.com/B-Nilson/aqhi/issues
 Depends: 
     R (>= 4.1.0)
+LazyData: true
