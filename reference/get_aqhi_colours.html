@@ -59,17 +59,25 @@ Missing AQHI (NA) is light grey
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_aqhi_colours</span><span class="op">(</span>aqhi_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"+"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_aqhi_colours</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"+"</span>, <span class="cn">NA</span><span class="op">)</span>, types <span class="op">=</span> <span class="st">"aqhi"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-aqhi-levels">aqhi_levels<a class="anchor" aria-label="anchor" href="#arg-aqhi-levels"></a></dt>
+<dl><dt id="arg-values">values<a class="anchor" aria-label="anchor" href="#arg-values"></a></dt>
 <dd><p>(Optional).
-A vector of AQHI levels (1-10, "+", or NA).
-Default is all unique levels.</p></dd>
+A vector of AQHI levels (1-10, "+", or NA) if <code>type</code> is "aqhi" OR
+A vector of hourly PM2.5 concentrations (ug/m3) if <code>type</code> is "pm25_1hr".
+Default is all AQHI levels.</p></dd>
+
+
+<dt id="arg-types">types<a class="anchor" aria-label="anchor" href="#arg-types"></a></dt>
+<dd><p>(Optional).
+A single character value, or a vector the same length as <code>values</code>, indicating the type(s) of values in <code>values</code>.
+Must all be within either "aqhi" or "pm25_1hr".
+Default is "aqhi".</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -85,12 +93,13 @@ Default is all unique levels.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Get AQHI colours for all AQHI levels</span></span></span>
 <span class="r-in"><span><span class="fu">get_aqhi_colours</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#21C6F5" "#189ACA" "#0D6797" "#FFFD37" "#FFCC2E" "#FE9A3F" "#FD6769"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#FF3B3B" "#FF0101" "#CB0713" "#650205" "#bbbbbb"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#FF3B3B" "#FF0101" "#CB0713" "#bbbbbb" "#bbbbbb"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Get AQHI colours for obervation data</span></span></span>
+<span class="r-in"><span><span class="co"># Get AQHI colours for observation data</span></span></span>
 <span class="r-in"><span><span class="va">hourly_pm25_ugm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="fl">50</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">aqhi_levels</span> <span class="op">&lt;-</span> <span class="va">hourly_pm25_ugm3</span> <span class="op">|&gt;</span> </span></span>
+<span class="r-in"><span><span class="va">aqhi_levels</span> <span class="op">&lt;-</span> <span class="va">hourly_pm25_ugm3</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="AQHI_plus.html">AQHI_plus</a></span><span class="op">(</span>detailed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">aqhi_levels</span> <span class="op">|&gt;</span> <span class="fu">get_aqhi_colours</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#FE9A3F" "#FFFD37" "#FE9A3F" "#21C6F5" "#FE9A3F" "#CB0713" "#189ACA"</span>
@@ -101,6 +110,40 @@ Default is all unique levels.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [36] "#FE9A3F" "#FD6769" "#FE9A3F" "#FD6769" "#FD6769" "#FFFD37" "#FFCC2E"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [43] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#CB0713" "#FF3B3B" "#CB0713"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [50] "#21C6F5"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The same but with PM2.5 provided</span></span></span>
+<span class="r-in"><span><span class="va">hourly_pm25_ugm3</span> <span class="op">|&gt;</span> <span class="fu">get_aqhi_colours</span><span class="op">(</span>types <span class="op">=</span> <span class="st">"pm25_1hr"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#FE9A3F" "#FFFD37" "#FE9A3F" "#21C6F5" "#FE9A3F" "#CB0713" "#189ACA"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#21C6F5" "#189ACA" "#FF3B3B" "#189ACA" "#FD6769" "#FF3B3B" "#FF0101"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "#0D6797" "#FD6769" "#FFFD37" "#FF0101" "#21C6F5" "#FF3B3B" "#FE9A3F"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#189ACA" "#FFFD37" "#FF0101"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "#CB0713" "#FD6769" "#FE9A3F" "#0D6797" "#21C6F5" "#FFCC2E" "#CB0713"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [36] "#FE9A3F" "#FD6769" "#FE9A3F" "#FD6769" "#FD6769" "#FFFD37" "#FFCC2E"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#CB0713" "#FF3B3B" "#CB0713"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [50] "#21C6F5"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Or even a mix</span></span></span>
+<span class="r-in"><span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">aqhi_levels</span>, <span class="va">hourly_pm25_ugm3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">types</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"aqhi"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">aqhi_levels</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"pm25_1hr"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">hourly_pm25_ugm3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">values</span> <span class="op">|&gt;</span> <span class="fu">get_aqhi_colours</span><span class="op">(</span>types <span class="op">=</span> <span class="va">types</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "#FE9A3F" "#FFFD37" "#FE9A3F" "#21C6F5" "#FE9A3F" "#CB0713" "#189ACA"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [8] "#21C6F5" "#189ACA" "#FF3B3B" "#189ACA" "#FD6769" "#FF3B3B" "#FF0101"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [15] "#0D6797" "#FD6769" "#FFFD37" "#FF0101" "#21C6F5" "#FF3B3B" "#FE9A3F"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [22] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#189ACA" "#FFFD37" "#FF0101"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [29] "#CB0713" "#FD6769" "#FE9A3F" "#0D6797" "#21C6F5" "#FFCC2E" "#CB0713"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "#FE9A3F" "#FD6769" "#FE9A3F" "#FD6769" "#FD6769" "#FFFD37" "#FFCC2E"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [43] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#CB0713" "#FF3B3B" "#CB0713"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [50] "#21C6F5" "#FE9A3F" "#FFFD37" "#FE9A3F" "#21C6F5" "#FE9A3F" "#CB0713"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] "#189ACA" "#21C6F5" "#189ACA" "#FF3B3B" "#189ACA" "#FD6769" "#FF3B3B"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [64] "#FF0101" "#0D6797" "#FD6769" "#FFFD37" "#FF0101" "#21C6F5" "#FF3B3B"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "#FE9A3F" "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#189ACA" "#FFFD37"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] "#FF0101" "#CB0713" "#FD6769" "#FE9A3F" "#0D6797" "#21C6F5" "#FFCC2E"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] "#CB0713" "#FE9A3F" "#FD6769" "#FE9A3F" "#FD6769" "#FD6769" "#FFFD37"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [92] "#FFCC2E" "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#CB0713" "#FF3B3B"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [99] "#CB0713" "#21C6F5"</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
