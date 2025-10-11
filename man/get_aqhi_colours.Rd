@@ -4,12 +4,18 @@
 \alias{get_aqhi_colours}
 \title{Get AQHI colours for each AQHI level}
 \usage{
-get_aqhi_colours(aqhi_levels = c(1:10, "+", NA))
+get_aqhi_colours(values = c(1:10, "+", NA), types = "aqhi")
 }
 \arguments{
-\item{aqhi_levels}{(Optional).
-A vector of AQHI levels (1-10, "+", or NA).
-Default is all unique levels.}
+\item{values}{(Optional).
+A vector of AQHI levels (1-10, "+", or NA) if \code{type} is "aqhi" OR
+A vector of hourly PM2.5 concentrations (ug/m3) if \code{type} is "pm25_1hr".
+Default is all AQHI levels.}
+
+\item{types}{(Optional).
+A single character value, or a vector the same length as \code{values}, indicating the type(s) of values in \code{values}.
+Must all be within either "aqhi" or "pm25_1hr".
+Default is "aqhi".}
 }
 \value{
 A character vector of hexidecimal codes correspoding to each level of \code{aqhi_levels}.
@@ -30,11 +36,22 @@ These colours are defined by \href{https://www.canada.ca/en/environment-climate-
 # Get AQHI colours for all AQHI levels
 get_aqhi_colours()
 
-# Get AQHI colours for obervation data
+# Get AQHI colours for observation data
 hourly_pm25_ugm3 <- sample(1:100, 50, replace = TRUE)
-aqhi_levels <- hourly_pm25_ugm3 |> 
+aqhi_levels <- hourly_pm25_ugm3 |>
   AQHI_plus(detailed = FALSE)
 aqhi_levels |> get_aqhi_colours()
+
+# The same but with PM2.5 provided
+hourly_pm25_ugm3 |> get_aqhi_colours(types = "pm25_1hr")
+
+# Or even a mix
+values <- c(aqhi_levels, hourly_pm25_ugm3)
+types <-  rep("aqhi", length(aqhi_levels)) |>
+  c(rep("pm25_1hr", length(hourly_pm25_ugm3)))
+
+values |> get_aqhi_colours(types = types)
+
 }
 \references{
 Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}
