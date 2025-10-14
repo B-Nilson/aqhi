@@ -68,3 +68,41 @@ test_that("AQHI returns expected output", {
   expect_snapshot(aqhi_plus_fr)
   expect_equal(names(aqhi_fr), names(aqhi_plus_fr))
 })
+
+# TODO: add a `groups` argument that handles this cleanly
+test_that("group_by works", {
+  example_obs |>
+    dplyr::group_by(site_id) |>
+    dplyr::mutate(
+      AQHI = AQHI(
+        dates = .data$date_utc,
+        pm25_1hr_ugm3 = .data$pm25_1hr,
+        o3_1hr_ppb = .data$o3_1hr,
+        no2_1hr_ppb = .data$no2_1hr,
+        allow_aqhi_plus_override = TRUE,
+        detailed = FALSE
+      )
+    ) |>
+    expect_no_warning() |>
+    expect_snapshot()
+
+  example_obs |>
+    dplyr::group_by(site_id) |>
+    dplyr::group_split() |>
+    lapply(\(site_data) {
+      site_data |>
+        dplyr::mutate(
+          AQHI = AQHI(
+            dates = .data$date_utc,
+            pm25_1hr_ugm3 = .data$pm25_1hr,
+            o3_1hr_ppb = .data$o3_1hr,
+            no2_1hr_ppb = .data$no2_1hr,
+            allow_aqhi_plus_override = TRUE,
+            detailed = TRUE
+          )
+        )
+    }) |>
+    dplyr::bind_rows() |>
+    expect_no_warning() |>
+    expect_snapshot()
+})

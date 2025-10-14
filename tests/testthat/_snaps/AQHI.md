@@ -123,3 +123,21 @@
       #   colour <chr>, risk <fct>, high_risk_pop_message <chr>,
       #   general_pop_message <chr>
 
+# group_by works
+
+    Code
+      expect_no_warning(dplyr::mutate(dplyr::group_by(example_obs, site_id), AQHI = AQHI(
+        dates = .data$date_utc, pm25_1hr_ugm3 = .data$pm25_1hr, o3_1hr_ppb = .data$
+          o3_1hr, no2_1hr_ppb = .data$no2_1hr, allow_aqhi_plus_override = TRUE,
+        detailed = FALSE)))
+
+---
+
+    Code
+      expect_no_warning(dplyr::bind_rows(lapply(dplyr::group_split(dplyr::group_by(
+        example_obs, site_id)), function(site_data) {
+        dplyr::mutate(site_data, AQHI = AQHI(dates = .data$date_utc, pm25_1hr_ugm3 = .data$
+          pm25_1hr, o3_1hr_ppb = .data$o3_1hr, no2_1hr_ppb = .data$no2_1hr,
+        allow_aqhi_plus_override = TRUE, detailed = TRUE))
+      })))
+
