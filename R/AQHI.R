@@ -143,7 +143,10 @@ AQHI <- function(
     pm25_1hr_ugm3,
     o3_1hr_ppb,
     no2_1hr_ppb
-  )
+  ) |>
+    # Fill in missing hours
+    tidyr::complete(date = seq(min(date), max(date), "1 hours")) |>
+    dplyr::arrange(date)
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
   if (allow_aqhi_plus_override) {
@@ -182,6 +185,8 @@ AQHI <- function(
       )
     }
     if (!detailed) {
+      aqhi_plus <- aqhi_plus |> 
+        dplyr::filter(.data$date %in% dates) # drop infilled missing hours
       return(aqhi_plus$level)
     }
     return(aqhi_plus)
@@ -193,9 +198,6 @@ AQHI <- function(
       names(obs)[2:4] |> sub(pattern = "_1hr_", replacement = "_3hr_")
     )
   obs <- obs |>
-    # Fill in missing hours
-    tidyr::complete(date = seq(min(date), max(date), "1 hours")) |>
-    dplyr::arrange(date) |>
     # get rolling averages
     dplyr::mutate(
       dplyr::across(
