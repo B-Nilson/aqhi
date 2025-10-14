@@ -43,7 +43,7 @@
     Code
       AQHI_plus(example_obs$pm25_1hr, detailed = TRUE)
     Output
-      # A tibble: 307,586 x 6
+      # A tibble: 296,679 x 6
          pm25_1hr_ugm3 level colour  risk  high_risk_pop_message   general_pop_message
          <units>       <fct> <chr>   <fct> <chr>                   <chr>              
        1  9.2          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
@@ -56,5 +56,5 @@
        8  6.1          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
        9  7.1          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
       10  7.9          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
-      # i 307,576 more rows
+      # i 296,669 more rows
 

@@ -18,6 +18,7 @@ desired_cols <- c(
 example_obs <- raw_obs |>
   dplyr::select(dplyr::all_of(desired_cols)) |>
   na.omit() |>
+  dplyr::filter(length(.data$date_utc) > (365 * 0.8 * 24), .by = "site_id") |>
   dplyr::mutate(
     site_id = .data$site_id |>
       factor() |>
