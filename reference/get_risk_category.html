@@ -102,13 +102,13 @@ Default is "en".</p></dd>
 <span class="r-in"><span><span class="co"># Get risk categories for obervations</span></span></span>
 <span class="r-in"><span><span class="va">aqhi_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"+"</span><span class="op">)</span>, <span class="fl">50</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">get_risk_category</span><span class="op">(</span><span class="va">aqhi_levels</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] Moderate  Moderate  Low       Moderate  High      Moderate  Moderate </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] High      High      High      Moderate  Moderate  High      Very High</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] Very High Low       High      Very High High      Low       Moderate </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] Moderate  Low       Moderate  Moderate  Moderate  High      Low      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] Low       High      Moderate  Low       High      High      High     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [36] Very High High      High      Moderate  Moderate  High      High     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] Moderate  High      Low       High      High      Very High Low      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] Low       High      Very High Moderate  High      Moderate  Low      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] Low       High      Moderate  Very High Moderate  Low       High     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] Low       Low       Low       Low       High      High      Moderate </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] Moderate  Low       Low       High      Low       Moderate  Very High</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] High      Very High High      High      Moderate  Low       Moderate </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [36] Low       Moderate  Moderate  High      High      Low       Moderate </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] Moderate  Low       High      Moderate  Low       Low       Moderate </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [50] High     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: Low Moderate High Very High</span>
 </code></pre></div>

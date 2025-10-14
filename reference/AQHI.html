@@ -159,35 +159,30 @@ Default is FALSE.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2024-01-01 00:00:00"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2024-01-01 23:00:00"</span><span class="op">)</span>, <span class="st">"1 hours"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  pm25 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span>, <span class="fl">24</span><span class="op">)</span>, o3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span>, <span class="fl">24</span><span class="op">)</span>, no2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span>, <span class="fl">24</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="va">example_obs</span><span class="op">[</span><span class="va">example_obs</span><span class="op">$</span><span class="va">site_id</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate the AQHI</span></span></span>
-<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date_utc</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">AQHI</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25</span>,</span></span>
-<span class="r-in"><span>    o3_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">o3</span>,</span></span>
-<span class="r-in"><span>    no2_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">no2</span></span></span>
+<span class="r-in"><span>    pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25_1hr</span>,</span></span>
+<span class="r-in"><span>    o3_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">o3_1hr</span>,</span></span>
+<span class="r-in"><span>    no2_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">no2_1hr</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8,571 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-01-01 <span style="color: #949494;">00:00:00</span>            63         17          12          <span style="color: #BB0000;">NA</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-01-01 <span style="color: #949494;">01:00:00</span>           102         22          41          <span style="color: #BB0000;">NA</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-01-01 <span style="color: #949494;">02:00:00</span>           111         95          42          92  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-01-01 <span style="color: #949494;">03:00:00</span>            47        129          66          86.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-01-01 <span style="color: #949494;">04:00:00</span>             5         70         102          54.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-01-01 <span style="color: #949494;">05:00:00</span>            24         65         103          25.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-01-01 <span style="color: #949494;">06:00:00</span>            79         25          26          36  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-01-01 <span style="color: #949494;">07:00:00</span>            77          8          60          60  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-01-01 <span style="color: #949494;">08:00:00</span>           130        108          14          95.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-01-01 <span style="color: #949494;">09:00:00</span>            55         83           5          87.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2018-01-01 <span style="color: #949494;">09:00:00</span>           9.2        0.7        18.1          <span style="color: #BB0000;">NA</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2018-01-01 <span style="color: #949494;">10:00:00</span>          12.1        0.3        17.5          <span style="color: #BB0000;">NA</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2018-01-01 <span style="color: #949494;">11:00:00</span>          10.7        0.2        17.8          10.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2018-01-01 <span style="color: #949494;">12:00:00</span>           9.3        0.2        18.1          10.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2018-01-01 <span style="color: #949494;">13:00:00</span>           8          1.1        16.6           9.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2018-01-01 <span style="color: #949494;">14:00:00</span>           6.6        1.4        15.6           8  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2018-01-01 <span style="color: #949494;">15:00:00</span>           6          1.9        13.8           6.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2018-01-01 <span style="color: #949494;">16:00:00</span>           6.1        0.3        16.9           6.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2018-01-01 <span style="color: #949494;">17:00:00</span>           7.1        1          18.1           6.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2018-01-01 <span style="color: #949494;">18:00:00</span>           7.9        2.5        16.9           7  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8,561 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: o3_3hr_ppb &lt;dbl&gt;, no2_3hr_ppb &lt;dbl&gt;, level &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI &lt;fct&gt;, AQHI_plus &lt;fct&gt;, AQHI_plus_exceeds_AQHI &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI_pm25_ratio &lt;dbl&gt;, AQHI_o3_ratio &lt;dbl&gt;, AQHI_no2_ratio &lt;dbl&gt;,</span></span>
@@ -195,53 +190,410 @@ Default is FALSE.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   general_pop_message &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Return just the AQHI levels</span></span></span>
-<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date_utc</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">AQHI</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25</span>,</span></span>
-<span class="r-in"><span>    o3_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">o3</span>,</span></span>
-<span class="r-in"><span>    no2_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">no2</span>,</span></span>
+<span class="r-in"><span>    pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25_1hr</span>,</span></span>
+<span class="r-in"><span>    o3_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">o3_1hr</span>,</span></span>
+<span class="r-in"><span>    no2_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">no2_1hr</span>,</span></span>
 <span class="r-in"><span>    detailed <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 7  +  +  +  +  +  +  10 +  10 +  +  +  10 10 +  +  +  +  +  10 8  +  + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [1] 1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25] 2  2  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [49] 1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [73] 1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [97] 1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [121] 2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [145] 2  2  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [169] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [193] 2  2  2  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [217] 2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  2  2  2  2  2  2  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [241] 1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [265] 3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [289] 2  2  2  2  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [313] 1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [337] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [361] 1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [385] 1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [409] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [433] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [457] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [481] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [505] 2  2  2  2  2  2  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [529] 1  2  2  2  2  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [553] 2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [577] 2  2  2  2  2  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [601] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [625] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [649] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  2  2  2  2  1  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [673] 3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  1  2  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [697] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [721] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [745] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [769] 2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [793] 1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [817] 2  2  2  2  3  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [841] 1  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [865] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [889] 2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [913] 2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [937] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [961] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [985] 2  3  3  3  3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1009] 2  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1033] 2  2  3  3  2  2  2  3  3  3  3  3  2  2  2  2  2  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1057] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1081] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1105] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1129] 2  2  2  2  2  2  2  2  3  3  3  2  2  2  2  2  2  2  3  3  3  3  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1153] 2  2  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  3  3  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1177] 2  2  2  2  3  3  3  3  3  3  3  3  2  2  2  2  2  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1201] 2  2  2  2  2  2  3  3  3  2  2  3  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1225] 2  3  3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  3  3  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1249] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1273] 2  2  2  2  2  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1297] 2  2  2  2  2  2  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1321] 3  3  3  3  3  4  3  3  3  3  3  2  2  2  2  2  2  2  2  2  3  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1345] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1369] 2  2  2  2  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1393] 3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1417] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1441] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1465] 2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2  4  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1489] 3  3  3  3  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1513] 2  2  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1537] 2  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1561] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  2  2  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1585] 3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1609] 3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1633] 3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1657] 2  2  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1681] 3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1705] 3  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1729] 2  2  2  2  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1753] 3  3  2  3  3  3  3  3  2  2  2  2  2  2  1  1  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1777] 2  2  2  3  3  3  3  3  3  3  2  2  2  1  1  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1801] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1825] 3  3  3  3  3  3  2  2  2  2  2  2  2  1  1  1  1  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1849] 2  2  2  2  2  2  3  3  3  3  2  2  1  1  1  1  1  1  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1873] 2  2  2  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1897] 3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1921] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1945] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1969] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1993] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2017] 2  2  2  2  2  2  2  2  1  1  1  1  2  1  1  1  2  2  2  2  3  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2041] 2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2065] 2  2  2  3  2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2089] 2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2113] 2  2  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2137] 3  3  3  3  3  3  3  2  2  3  2  2  2  2  2  2  2  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2161] 3  3  2  3  3  3  3  3  3  3  3  3  3  2  2  2  1  3  3  2  2  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2185] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2209] 2  2  2  1  1  1  1  2  2  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2233] 2  2  2  2  2  2  2  2  1  2  2  1  1  1  1  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2257] 2  2  2  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2281] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2305] 2  2  2  2  1  2  2  2  3  2  2  2  1  1  1  1  1  1  1  2  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2329] 3  3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2353] 2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  2  2  2  2  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2377] 3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  3  3  3  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2401] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2425] 3  3  3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2449] 3  3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2473] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2497] 2  2  2  2  3  3  3  3  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2521] 2  2  2  2  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  1  1  3  1  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2545] 3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2569] 3  3  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2593] 3  3  3  3  3  3  2  2  2  2  2  2  1  1  1  2  2  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2617] 3  3  3  2  2  2  2  2  1  1  1  2  2  2  2  2  2  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2641] 3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2665] 3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  3  3  4  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2689] 3  3  4  4  3  3  3  3  3  3  2  2  2  3  3  2  3  3  3  4  4  4  4  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2713] 4  4  4  4  3  3  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2737] 3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2761] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2785] 2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2809] 2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2833] 3  3  2  2  2  2  2  2  2  1  1  1  1  1  2  2  2  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2857] 3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2881] 3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2905] 3  3  3  3  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2  2  2  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2929] 3  3  3  2  2  2  2  2  2  1  1  1  1  2  2  3  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2953] 3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2977] 3  3  3  2  2  2  2  2  2  1  1  1  1  2  2  2  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3001] 3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3025] 3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3049] 3  3  2  2  2  2  1  1  1  1  1  1  1  1  2  2  2  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3073] 3  3  2  2  2  2  2  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3097] 3  3  3  2  2  2  2  2  2  1  1  1  1  1  2  2  3  3  3  3  3  3  4  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3121] 4  4  3  3  2  2  2  2  2  2  2  2  2  2  2  3  3  4  4  4  4  4  4  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3145] 4  4  4  3  3  3  2  2  2  2  2  2  2  3  3  4  4  3  3  3  4  4  4  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3169] 4  4  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3193] 3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3217] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3241] 3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3265] 3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3289] 2  3  2  2  2  2  2  2  4  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3313] 3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3337] 3  3  3  3  2  2  2  2  2  2  2  2  2  2  3  3  4  4  4  4  4  4  4  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3361] 4  4  3  3  2  2  2  2  2  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3385] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3409] 3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3433] 3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3457] 3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3481] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3505] 3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3529] 3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3553] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3577] 2  2  2  2  2  2  2  2  2  2  1  1  1  1  2  2  2  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3601] 3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3625] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3649] 2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3673] 2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3697] 3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3721] 3  2  2  2  2  2  2  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3745] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3769] 2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3793] 2  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3817] 2  2  2  1  1  1  1  1  1  1  1  2  2  1  3  2  2  2  2  2  2  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3841] 1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3865] 1  1  1  1  1  1  1  1  1  2  1  1  1  1  2  2  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3889] 1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3913] 1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3937] 2  1  1  1  1  1  1  1  1  2  3  3  4  3  3  3  3  3  3  3  3  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3961] 2  1  1  1  1  1  1  2  2  2  3  3  4  4  4  4  4  3  3  3  3  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3985] 2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4009] 2  2  2  2  2  2  2  2  2  2  3  3  3  3  4  4  4  4  4  4  4  4  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4033] 2  2  2  2  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4057] 2  2  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4081] 2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4105] 3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4129] 2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2  2  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4153] 2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4177] 2  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4201] 2  2  2  2  2  2  2  2  1  1  1  1  1  2  2  2  1  1  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4225] 2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4249] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4273] 2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4297] 2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4321] 2  2  2  3  3  2  2  2  2  2  1  1  1  1  1  1  2  2  2  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4345] 3  4  4  3  2  2  2  2  1  1  1  1  1  1  2  1  3  3  3  2  2  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4369] 2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4393] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4417] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4441] 2  2  2  2  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4465] 2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  2  1  2  2  2  2  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4489] 1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4513] 2  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  3  3  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4537] 2  2  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4561] 2  2  2  2  2  2  2  1  1  1  2  2  2  2  2  2  2  2  2  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4585] 2  2  2  2  2  2  1  1  1  1  2  2  2  3  3  3  3  3  3  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4609] 2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4633] 2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  3  3  3  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4657] 2  2  2  2  2  1  1  1  2  2  1  1  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4681] 1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4705] 2  2  2  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4729] 2  2  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  6  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4753] 2  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  3  4  3  3  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4777] 2  2  1  1  1  1  2  2  2  2  3  3  3  3  3  3  3  3  3  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4801] 2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  4  4  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4825] 2  2  2  2  2  2  2  3  3  4  4  4  4  4  4  4  3  3  3  3  3  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4849] 2  2  2  2  2  2  2  2  2  3  1  4  4  4  4  4  4  4  3  3  3  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4873] 2  2  2  3  3  3  3  3  4  4  4  4  4  4  4  4  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4897] 3  3  3  2  2  2  3  3  3  3  4  4  4  4  4  4  3  3  3  3  3  3  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4921] 2  2  2  2  3  3  4  4  4  5  5  5  5  5  5  5  5  4  4  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4945] 3  3  3  3  3  4  2  3  3  4  4  4  3  3  3  3  3  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4969] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4993] 1  1  1  1  1  1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5017] 1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5041] 1  1  1  1  2  2  2  2  2  3  3  3  3  3  3  3  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5065] 1  1  2  2  3  3  3  3  3  4  4  4  4  4  4  3  3  3  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5089] 2  2  2  2  3  3  4  4  4  4  4  4  4  4  4  4  3  3  2  2  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5113] 2  2  2  3  3  4  4  4  4  4  4  4  4  4  4  3  3  3  3  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5137] 2  3  3  3  4  4  5  5  5  5  5  5  5  5  5  4  3  3  3  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5161] 2  2  2  2  3  3  3  3  3  3  4  4  4  4  4  4  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5185] 3  3  3  4  5  5  5  4  4  4  4  4  4  4  3  3  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5209] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5233] 1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5257] 3  4  4  5  5  5  5  5  5  6  4  4  4  4  4  8  9  8  7  7  7  7  7  7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5281] 7  8  8  8  8  8  7  7  7  7  8  8  8  7  7  7  7  7  6  6  6  5  5  6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5305] 6  7  6  5  6  6  5  5  5  5  4  4  5  4  4  3  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5329] 3  3  3  3  3  3  3  4  4  4  4  4  4  4  3  3  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5353] 3  2  2  2  3  3  3  3  3  3  4  3  3  3  3  3  3  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5377] 2  2  2  3  3  3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5401] 2  2  3  5  3  4  3  4  6  6  6  6  5  5  6  6  5  4  5  7  8  8  9  + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5425] +  +  +  +  +  10 10 9  9  9  8  8  8  7  6  6  6  5  4  4  4  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5449] 4  4  4  6  9  10 10 9  8  8  8  9  8  7  6  6  6  6  7  6  6  5  6  6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5473] 6  6  6  9  10 10 +  +  +  +  +  +  +  +  +  +  +  +  +  9  6  4  3  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5497] 5  5  6  5  4  4  3  3  3  3  3  3  3  2  2  2  2  3  3  3  3  4  4  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5521] 3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5545] 3  3  3  4  4  4  4  3  4  4  4  4  4  5  5  4  4  5  4  4  4  4  4  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5569] 3  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  2  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5593] 1  1  2  2  2  3  3  3  3  3  2  2  2  2  2  2  2  2  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5617] 2  2  2  2  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5641] 3  3  3  3  2  3  3  3  3  3  3  3  3  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5665] 1  1  1  2  2  2  2  2  3  3  2  2  2  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5689] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5713] 1  2  2  2  2  2  3  3  3  3  3  3  3  2  2  2  2  2  2  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5737] 2  2  2  2  2  2  2  3  3  3  3  3  3  2  2  3  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5761] 2  2  2  2  2  2  2  2  2  2  2  3  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5785] 2  2  3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5809] 3  3  4  4  4  3  4  4  4  4  3  3  3  3  3  3  3  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5833] 3  4  4  5  5  5  5  5  4  4  4  4  3  3  3  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5857] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  2  2  2  2  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5881] 1  1  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5905] 1  1  1  1  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5929] 2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  2  2  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5953] 2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5977] 2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  2  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6001] 2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6025] 1  1  1  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6049] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6073] 2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6097] 1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  3  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6121] 1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6145] 1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6169] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6193] 1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6217] 1  1  1  1  1  1  1  1  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6241] 1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6265] 1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6289] 1  1  1  1  1  1  1  1  2  2  3  3  3  2  2  2  2  2  2  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6313] 1  1  1  1  1  1  2  2  2  2  3  3  3  3  3  3  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6337] 1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6361] 1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6385] 1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6409] 1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6433] 1  1  1  1  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6457] 1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6481] 1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6505] 1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6529] 1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6553] 1  1  1  1  1  1  2  1  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6577] 1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6601] 1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6625] 1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6649] 1  1  1  1  1  1  2  2  3  3  3  3  3  3  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6673] 2  2  2  2  2  2  3  3  3  3  3  2  2  2  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6697] 1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6721] 1  1  1  1  1  2  2  2  2  2  2  2  3  3  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6745] 1  1  2  2  2  2  2  2  3  3  3  3  3  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6769] 1  2  2  2  2  3  3  4  4  4  3  3  3  3  2  2  2  2  2  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6793] 2  2  2  3  3  3  3  4  4  5  4  4  4  3  3  2  2  2  2  2  2  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6817] 2  2  2  2  2  3  4  4  4  4  4  4  3  3  3  3  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6841] 2  2  3  3  4  5  5  5  4  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6865] 2  2  3  3  3  3  3  3  3  3  2  2  2  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6889] 2  2  3  4  4  4  4  3  3  3  2  2  2  2  2  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6913] 2  2  2  3  4  4  4  3  3  3  3  2  2  2  2  2  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6937] 3  3  3  3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6961] 2  2  2  2  2  3  3  3  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6985] 2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7009] 2  2  2  2  3  3  3  3  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7033] 1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7057] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7081] 2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7105] 2  2  2  2  2  2  2  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7129] 2  2  2  2  2  2  2  2  2  2  2  2  3  2  2  3  3  2  2  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7153] 1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7177] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7201] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7225] 2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7249] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7273] 2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7297] 2  1  2  2  3  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7321] 2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7345] 2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7369] 2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7393] 2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7417] 3  3  2  2  3  3  3  2  2  4  4  4  5  5  4  4  4  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7441] 3  2  2  2  2  2  2  2  2  2  1  2  1  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7465] 2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7489] 2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7513] 2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7537] 2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7561] 2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2  2  2  2  2  3  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7585] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7609] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7633] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7657] 2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7681] 2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7705] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7729] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7753] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7777] 2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7801] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7825] 2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7849] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7873] 2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7897] 2  2  2  2  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7921] 2  2  2  2  2  2  1  1  1  1  1  2  2  2  2  2  2  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7945] 2  3  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7969] 3  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7993] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8017] 2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8041] 2  2  2  2  2  2  2  2  2  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8065] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8089] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8113] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8137] 2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2  2  2  2  2  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8161] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8185] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8209] 2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8233] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8257] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8281] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8305] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8329] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8353] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8377] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8401] 1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8425] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8449] 2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8473] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8497] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8521] 2  2  2  2  2  1  2  2  2  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8545] 1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8569] 2  2  2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 1 2 3 4 5 6 7 8 9 10 +</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate just the AQHI+</span></span></span>
-<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date</span> <span class="op">|&gt;</span> <span class="fu">AQHI</span><span class="op">(</span>pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date_utc</span> <span class="op">|&gt;</span> <span class="fu">AQHI</span><span class="op">(</span>pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25_1hr</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No non-missing NO2 / O3 data provided. Returning AQHI+ (PM2.5 only) instead of AQHI.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8,759 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-01-01 <span style="color: #949494;">00:00:00</span>            63         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-01-01 <span style="color: #949494;">01:00:00</span>           102         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-01-01 <span style="color: #949494;">02:00:00</span>           111         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-01-01 <span style="color: #949494;">03:00:00</span>            47         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-01-01 <span style="color: #949494;">04:00:00</span>             5         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-01-01 <span style="color: #949494;">05:00:00</span>            24         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-01-01 <span style="color: #949494;">06:00:00</span>            79         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-01-01 <span style="color: #949494;">07:00:00</span>            77         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-01-01 <span style="color: #949494;">08:00:00</span>           130         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-01-01 <span style="color: #949494;">09:00:00</span>            55         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2018-01-01 <span style="color: #949494;">09:00:00</span>           9.2         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2018-01-01 <span style="color: #949494;">10:00:00</span>          12.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2018-01-01 <span style="color: #949494;">11:00:00</span>          10.7         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2018-01-01 <span style="color: #949494;">12:00:00</span>           9.3         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2018-01-01 <span style="color: #949494;">13:00:00</span>           8           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2018-01-01 <span style="color: #949494;">14:00:00</span>           6.6         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2018-01-01 <span style="color: #949494;">15:00:00</span>           6           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2018-01-01 <span style="color: #949494;">16:00:00</span>           6.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2018-01-01 <span style="color: #949494;">17:00:00</span>           7.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2018-01-01 <span style="color: #949494;">18:00:00</span>           7.9         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8,749 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: o3_3hr_ppb &lt;dbl&gt;, no2_3hr_ppb &lt;dbl&gt;, level &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI &lt;fct&gt;, AQHI_plus &lt;fct&gt;, AQHI_plus_exceeds_AQHI &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI_pm25_ratio &lt;dbl&gt;, AQHI_o3_ratio &lt;dbl&gt;, AQHI_no2_ratio &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   colour &lt;chr&gt;, risk &lt;fct&gt;, high_risk_pop_message &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   general_pop_message &lt;chr&gt;</span></span>
-<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date</span> <span class="op">|&gt;</span> <span class="fu">AQHI</span><span class="op">(</span>pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># silence warning</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 18</span></span>
+<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date_utc</span> <span class="op">|&gt;</span> <span class="fu">AQHI</span><span class="op">(</span>pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25_1hr</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># silence warning</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8,759 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-01-01 <span style="color: #949494;">00:00:00</span>            63         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-01-01 <span style="color: #949494;">01:00:00</span>           102         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-01-01 <span style="color: #949494;">02:00:00</span>           111         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-01-01 <span style="color: #949494;">03:00:00</span>            47         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-01-01 <span style="color: #949494;">04:00:00</span>             5         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-01-01 <span style="color: #949494;">05:00:00</span>            24         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-01-01 <span style="color: #949494;">06:00:00</span>            79         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-01-01 <span style="color: #949494;">07:00:00</span>            77         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-01-01 <span style="color: #949494;">08:00:00</span>           130         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-01-01 <span style="color: #949494;">09:00:00</span>            55         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2018-01-01 <span style="color: #949494;">09:00:00</span>           9.2         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2018-01-01 <span style="color: #949494;">10:00:00</span>          12.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2018-01-01 <span style="color: #949494;">11:00:00</span>          10.7         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2018-01-01 <span style="color: #949494;">12:00:00</span>           9.3         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2018-01-01 <span style="color: #949494;">13:00:00</span>           8           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2018-01-01 <span style="color: #949494;">14:00:00</span>           6.6         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2018-01-01 <span style="color: #949494;">15:00:00</span>           6           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2018-01-01 <span style="color: #949494;">16:00:00</span>           6.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2018-01-01 <span style="color: #949494;">17:00:00</span>           7.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2018-01-01 <span style="color: #949494;">18:00:00</span>           7.9         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8,749 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: o3_3hr_ppb &lt;dbl&gt;, no2_3hr_ppb &lt;dbl&gt;, level &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI &lt;fct&gt;, AQHI_plus &lt;fct&gt;, AQHI_plus_exceeds_AQHI &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI_pm25_ratio &lt;dbl&gt;, AQHI_o3_ratio &lt;dbl&gt;, AQHI_no2_ratio &lt;dbl&gt;,</span></span>
@@ -249,48 +601,48 @@ Default is FALSE.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   general_pop_message &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Return French version</span></span></span>
-<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date_utc</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">AQHI</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25</span>,</span></span>
-<span class="r-in"><span>    o3_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">o3</span>,</span></span>
-<span class="r-in"><span>    no2_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">no2</span>,</span></span>
+<span class="r-in"><span>    pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25_1hr</span>,</span></span>
+<span class="r-in"><span>    o3_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">o3_1hr</span>,</span></span>
+<span class="r-in"><span>    no2_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">no2_1hr</span>,</span></span>
 <span class="r-in"><span>    language <span class="op">=</span> <span class="st">"fr"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8,571 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-01-01 <span style="color: #949494;">00:00:00</span>            63         17          12          <span style="color: #BB0000;">NA</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-01-01 <span style="color: #949494;">01:00:00</span>           102         22          41          <span style="color: #BB0000;">NA</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-01-01 <span style="color: #949494;">02:00:00</span>           111         95          42          92  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-01-01 <span style="color: #949494;">03:00:00</span>            47        129          66          86.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-01-01 <span style="color: #949494;">04:00:00</span>             5         70         102          54.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-01-01 <span style="color: #949494;">05:00:00</span>            24         65         103          25.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-01-01 <span style="color: #949494;">06:00:00</span>            79         25          26          36  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-01-01 <span style="color: #949494;">07:00:00</span>            77          8          60          60  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-01-01 <span style="color: #949494;">08:00:00</span>           130        108          14          95.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-01-01 <span style="color: #949494;">09:00:00</span>            55         83           5          87.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2018-01-01 <span style="color: #949494;">09:00:00</span>           9.2        0.7        18.1          <span style="color: #BB0000;">NA</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2018-01-01 <span style="color: #949494;">10:00:00</span>          12.1        0.3        17.5          <span style="color: #BB0000;">NA</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2018-01-01 <span style="color: #949494;">11:00:00</span>          10.7        0.2        17.8          10.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2018-01-01 <span style="color: #949494;">12:00:00</span>           9.3        0.2        18.1          10.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2018-01-01 <span style="color: #949494;">13:00:00</span>           8          1.1        16.6           9.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2018-01-01 <span style="color: #949494;">14:00:00</span>           6.6        1.4        15.6           8  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2018-01-01 <span style="color: #949494;">15:00:00</span>           6          1.9        13.8           6.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2018-01-01 <span style="color: #949494;">16:00:00</span>           6.1        0.3        16.9           6.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2018-01-01 <span style="color: #949494;">17:00:00</span>           7.1        1          18.1           6.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2018-01-01 <span style="color: #949494;">18:00:00</span>           7.9        2.5        16.9           7  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8,561 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: o3_3hr_ppb &lt;dbl&gt;, no2_3hr_ppb &lt;dbl&gt;, level &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI &lt;fct&gt;, AQHI_plus &lt;fct&gt;, AQHI_plus_exceeds_AQHI &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI_pm25_ratio &lt;dbl&gt;, AQHI_o3_ratio &lt;dbl&gt;, AQHI_no2_ratio &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   colour &lt;chr&gt;, risk &lt;fct&gt;, high_risk_pop_message &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   general_pop_message &lt;chr&gt;</span></span>
-<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date</span> <span class="op">|&gt;</span> <span class="fu">AQHI</span><span class="op">(</span>pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25</span>, language <span class="op">=</span> <span class="st">"fr"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date_utc</span> <span class="op">|&gt;</span> <span class="fu">AQHI</span><span class="op">(</span>pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25_1hr</span>, language <span class="op">=</span> <span class="st">"fr"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No non-missing NO2 / O3 data provided. Returning AQHI+ (PM2.5 only) instead of AQHI.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8,759 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-01-01 <span style="color: #949494;">00:00:00</span>            63         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-01-01 <span style="color: #949494;">01:00:00</span>           102         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-01-01 <span style="color: #949494;">02:00:00</span>           111         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-01-01 <span style="color: #949494;">03:00:00</span>            47         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-01-01 <span style="color: #949494;">04:00:00</span>             5         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-01-01 <span style="color: #949494;">05:00:00</span>            24         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-01-01 <span style="color: #949494;">06:00:00</span>            79         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-01-01 <span style="color: #949494;">07:00:00</span>            77         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-01-01 <span style="color: #949494;">08:00:00</span>           130         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-01-01 <span style="color: #949494;">09:00:00</span>            55         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2018-01-01 <span style="color: #949494;">09:00:00</span>           9.2         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2018-01-01 <span style="color: #949494;">10:00:00</span>          12.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2018-01-01 <span style="color: #949494;">11:00:00</span>          10.7         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2018-01-01 <span style="color: #949494;">12:00:00</span>           9.3         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2018-01-01 <span style="color: #949494;">13:00:00</span>           8           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2018-01-01 <span style="color: #949494;">14:00:00</span>           6.6         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2018-01-01 <span style="color: #949494;">15:00:00</span>           6           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2018-01-01 <span style="color: #949494;">16:00:00</span>           6.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2018-01-01 <span style="color: #949494;">17:00:00</span>           7.1         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2018-01-01 <span style="color: #949494;">18:00:00</span>           7.9         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8,749 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: o3_3hr_ppb &lt;dbl&gt;, no2_3hr_ppb &lt;dbl&gt;, level &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI &lt;fct&gt;, AQHI_plus &lt;fct&gt;, AQHI_plus_exceeds_AQHI &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI_pm25_ratio &lt;dbl&gt;, AQHI_o3_ratio &lt;dbl&gt;, AQHI_no2_ratio &lt;dbl&gt;,</span></span>
@@ -298,27 +650,27 @@ Default is FALSE.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   general_pop_message &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Don't allow AQHI+ override (not recommended)</span></span></span>
-<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="va">obs</span><span class="op">$</span><span class="va">date_utc</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">AQHI</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25</span>,</span></span>
-<span class="r-in"><span>    o3_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">o3</span>,</span></span>
-<span class="r-in"><span>    no2_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">no2</span>,</span></span>
+<span class="r-in"><span>    pm25_1hr_ugm3 <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">pm25_1hr</span>,</span></span>
+<span class="r-in"><span>    o3_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">o3_1hr</span>,</span></span>
+<span class="r-in"><span>    no2_1hr_ppb <span class="op">=</span> <span class="va">obs</span><span class="op">$</span><span class="va">no2_1hr</span>,</span></span>
 <span class="r-in"><span>    allow_aqhi_plus_override <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8,571 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2024-01-01 <span style="color: #949494;">00:00:00</span>            63         17          12          <span style="color: #BB0000;">NA</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2024-01-01 <span style="color: #949494;">01:00:00</span>           102         22          41          <span style="color: #BB0000;">NA</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2024-01-01 <span style="color: #949494;">02:00:00</span>           111         95          42          92  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2024-01-01 <span style="color: #949494;">03:00:00</span>            47        129          66          86.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2024-01-01 <span style="color: #949494;">04:00:00</span>             5         70         102          54.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2024-01-01 <span style="color: #949494;">05:00:00</span>            24         65         103          25.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2024-01-01 <span style="color: #949494;">06:00:00</span>            79         25          26          36  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2024-01-01 <span style="color: #949494;">07:00:00</span>            77          8          60          60  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2024-01-01 <span style="color: #949494;">08:00:00</span>           130        108          14          95.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2024-01-01 <span style="color: #949494;">09:00:00</span>            55         83           5          87.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2018-01-01 <span style="color: #949494;">09:00:00</span>           9.2        0.7        18.1          <span style="color: #BB0000;">NA</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2018-01-01 <span style="color: #949494;">10:00:00</span>          12.1        0.3        17.5          <span style="color: #BB0000;">NA</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2018-01-01 <span style="color: #949494;">11:00:00</span>          10.7        0.2        17.8          10.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2018-01-01 <span style="color: #949494;">12:00:00</span>           9.3        0.2        18.1          10.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2018-01-01 <span style="color: #949494;">13:00:00</span>           8          1.1        16.6           9.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2018-01-01 <span style="color: #949494;">14:00:00</span>           6.6        1.4        15.6           8  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2018-01-01 <span style="color: #949494;">15:00:00</span>           6          1.9        13.8           6.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2018-01-01 <span style="color: #949494;">16:00:00</span>           6.1        0.3        16.9           6.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2018-01-01 <span style="color: #949494;">17:00:00</span>           7.1        1          18.1           6.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2018-01-01 <span style="color: #949494;">18:00:00</span>           7.9        2.5        16.9           7  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8,561 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: o3_3hr_ppb &lt;dbl&gt;, no2_3hr_ppb &lt;dbl&gt;, level &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI &lt;fct&gt;, AQHI_plus &lt;fct&gt;, AQHI_plus_exceeds_AQHI &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AQHI_pm25_ratio &lt;dbl&gt;, AQHI_o3_ratio &lt;dbl&gt;, AQHI_no2_ratio &lt;dbl&gt;,</span></span>

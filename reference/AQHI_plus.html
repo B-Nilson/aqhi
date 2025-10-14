@@ -201,46 +201,384 @@ Default is "en".</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Hourly pm2.5 concentrations</span></span></span>
-<span class="r-in"><span><span class="va">pm25</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span>, <span class="fl">24</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pm25</span> <span class="op">&lt;-</span> <span class="va">example_obs</span><span class="op">$</span><span class="va">pm25_1hr</span><span class="op">[</span><span class="va">example_obs</span><span class="op">$</span><span class="va">site_id</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="co"># Calculate the detailed AQHI+ (tibble with risk levels etc)</span></span></span>
 <span class="r-in"><span><span class="fu">AQHI_plus</span><span class="op">(</span><span class="va">pm25</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    pm25_1hr_ugm3 level colour  risk    high_risk_pop_message general_pop_message</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>           109 +     #650205 Very H… Avoid strenuous acti… Reduce or reschedu…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>            25 3     #0D6797 Low     Enjoy your usual act… Ideal air quality …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>            53 6     #FE9A3F Modera… Consider reducing or… No need to modify …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>            45 5     #FFCC2E Modera… Consider reducing or… No need to modify …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>             4 1     #21C6F5 Low     Enjoy your usual act… Ideal air quality …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>            41 5     #FFCC2E Modera… Consider reducing or… No need to modify …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>            82 9     #FF0101 High    Reduce or reschedule… Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>            94 10    #CB0713 High    Reduce or reschedule… Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>            51 6     #FE9A3F Modera… Consider reducing or… No need to modify …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>           128 +     #650205 Very H… Avoid strenuous acti… Reduce or reschedu…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8,571 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pm25_1hr_ugm3 level colour  risk  high_risk_pop_message   general_pop_message</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>           9.2 1     #21C6F5 Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          12.1 2     #189ACA Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          10.7 2     #189ACA Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>           9.3 1     #21C6F5 Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>           8   1     #21C6F5 Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>           6.6 1     #21C6F5 Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>           6   1     #21C6F5 Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>           6.1 1     #21C6F5 Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>           7.1 1     #21C6F5 Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>           7.9 1     #21C6F5 Low   Enjoy your usual activ… Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8,561 more rows</span></span>
 <span class="r-in"><span><span class="co"># Or just the AQHI+ (returned as a factor)</span></span></span>
 <span class="r-in"><span><span class="fu">AQHI_plus</span><span class="op">(</span><span class="va">pm25</span>, detailed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] +  3  6  5  1  5  9  10 6  +  2  4  1  1  2  +  5  4  +  2  5  9  6  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [1] 1  2  2  1  1  1  1  1  1  1  1  1  2  2  2  2  3  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25] 1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  2  2  2  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [49] 1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [73] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [97] 1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [121] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [145] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [169] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [193] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [217] 1  1  1  1  1  1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [241] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [265] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [289] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [313] 1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [337] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [361] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [385] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [409] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [433] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [457] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [481] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [505] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [529] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [553] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [577] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [601] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [625] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [649] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [673] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [697] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [721] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [745] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [769] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [793] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [817] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [841] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [865] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [889] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [913] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [937] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [961] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [985] 1  1  1  1  1  1  1  2  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1009] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1033] 1  2  1  1  1  1  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1057] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1081] 1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1105] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1129] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1153] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1177] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1201] 1  1  1  1  1  1  1  1  1  1  1  3  2  1  1  1  1  1  1  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1225] 1  1  1  1  1  1  2  2  2  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1249] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1273] 1  1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1297] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1321] 2  2  1  2  2  2  1  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1345] 1  1  1  1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1369] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1393] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1417] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1441] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1465] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  4  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1489] 2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1513] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1537] 1  1  1  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1561] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1585] 1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1609] 1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1633] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1657] 1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1681] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1705] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1729] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1753] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1777] 1  1  1  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1801] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1825] 2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1849] 1  1  1  1  1  1  2  2  2  2  1  1  1  1  1  1  1  1  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1873] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1897] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1921] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1945] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1969] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1993] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2017] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2041] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2065] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2089] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2113] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2137] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2161] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2185] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2209] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2233] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2257] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2281] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2305] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2329] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2353] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2377] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2401] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2425] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2449] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2473] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2497] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2521] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2545] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2569] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2593] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2617] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2641] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2665] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2689] 1  1  2  2  2  2  1  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2713] 1  1  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2737] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2761] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2785] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2809] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2833] 2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2857] 1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2881] 2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2905] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2929] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2953] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2977] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3001] 2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3025] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3049] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3073] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3097] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3121] 2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3145] 2  2  2  2  2  1  1  1  1  1  1  1  1  2  2  2  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3169] 2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3193] 1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3217] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3241] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3265] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3289] 1  1  1  1  1  1  1  1  4  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3313] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3337] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3361] 1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3385] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3409] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3433] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3457] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3481] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3505] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3529] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3553] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3577] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3601] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3625] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3649] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3673] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3697] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3721] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3745] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3769] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3793] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3817] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3841] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3865] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3889] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3913] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3937] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3961] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  2  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3985] 1  1  1  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4009] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4033] 2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4057] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4081] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4105] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4129] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4153] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4177] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4201] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4225] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4249] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4273] 1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4297] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4321] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4345] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4369] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4393] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4417] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4441] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4465] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4489] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4513] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4537] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4561] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4585] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4609] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4633] 1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4657] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4681] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4705] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4729] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  6  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4753] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  4  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4777] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4801] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4825] 1  1  1  1  1  1  1  1  2  2  2  1  2  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4849] 2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  2  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4873] 2  2  2  2  2  2  2  2  2  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4897] 2  2  2  1  1  1  1  1  1  1  2  2  2  2  1  1  1  1  1  2  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4921] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4945] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4969] 1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4993] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5017] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5041] 1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5065] 1  1  1  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5089] 1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  1  1  1  2  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5113] 1  1  1  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5137] 1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  2  2  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5161] 2  1  1  1  1  2  2  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5185] 2  3  2  3  5  4  3  2  1  2  3  2  2  2  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5209] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5233] 1  1  1  1  1  1  1  1  1  2  2  2  2  1  1  1  1  2  2  2  2  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5257] 3  4  4  5  5  5  5  5  5  6  4  4  4  4  4  8  9  8  7  7  7  7  7  7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5281] 7  8  8  8  8  8  7  6  7  7  8  8  8  7  7  7  7  7  6  6  6  5  5  6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5305] 6  7  6  5  6  6  5  4  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5329] 3  3  3  3  3  3  3  3  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5353] 2  2  2  2  2  3  2  3  2  2  2  2  1  2  2  2  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5377] 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5401] 2  2  3  5  3  4  3  4  6  6  6  6  5  5  6  6  5  4  5  7  8  8  9  + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5425] +  +  +  +  +  10 10 9  9  9  8  8  8  7  6  6  6  5  4  4  4  3  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5449] 4  3  4  6  9  10 8  6  6  7  8  9  8  6  6  6  6  6  7  6  6  5  6  6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5473] 6  6  6  9  10 10 +  +  +  +  +  +  +  +  +  +  +  +  +  9  5  4  3  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5497] 5  5  6  5  4  4  3  3  3  3  2  2  2  2  2  2  2  3  3  3  3  4  4  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5521] 3  3  3  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  3  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5545] 3  3  3  4  4  4  4  3  4  4  4  4  4  5  5  4  4  5  4  4  4  4  4  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5569] 3  2  2  1  2  2  2  2  2  2  2  2  2  1  1  1  2  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5593] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5617] 1  1  1  1  2  2  2  2  2  2  2  1  1  1  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5641] 3  3  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5665] 1  1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5689] 1  1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5713] 1  1  1  1  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5737] 1  1  1  2  1  1  1  2  2  1  1  1  1  1  2  3  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5761] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5785] 1  1  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5809] 2  2  2  2  2  2  4  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5833] 2  3  4  4  3  3  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5857] 1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5881] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5905] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5929] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5953] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5977] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6001] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6025] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6049] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6073] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6097] 1  1  1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6121] 1  1  1  1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6145] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6169] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6193] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6217] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6241] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6265] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6289] 1  1  1  1  1  1  1  1  2  2  3  2  2  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6313] 1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6337] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6361] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6385] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6409] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6433] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6457] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6481] 1  1  1  1  1  1  1  2  1  1  1  1  1  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6505] 1  1  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6529] 1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  1  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6553] 1  1  1  1  1  1  2  1  2  1  1  2  2  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6577] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6601] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6625] 1  1  1  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6649] 1  1  1  1  1  1  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6673] 2  2  2  2  2  2  3  3  3  2  1  1  1  2  2  2  2  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6697] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6721] 1  1  1  1  1  1  1  1  1  1  1  2  1  2  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6745] 1  1  1  1  2  1  1  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6769] 1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6793] 2  2  2  2  1  1  2  2  3  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6817] 1  1  1  1  1  2  2  3  3  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6841] 1  2  2  2  3  3  4  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6865] 1  2  3  3  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6889] 1  1  2  2  2  2  2  2  2  1  2  1  1  1  1  1  1  1  1  1  1  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6913] 1  1  2  2  3  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6937] 2  2  2  3  3  3  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6961] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6985] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7009] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7033] 1  1  1  1  1  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7057] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7081] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7105] 2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7129] 1  1  1  1  1  1  1  1  1  1  1  1  3  2  2  3  3  2  2  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7153] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7177] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7201] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7225] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7249] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7273] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7297] 1  1  1  2  2  2  2  2  2  2  1  2  2  2  2  1  1  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7321] 2  2  1  1  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7345] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7369] 2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7393] 2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7417] 2  2  2  2  3  3  3  2  2  4  4  4  5  5  4  4  3  2  1  1  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7441] 1  1  1  2  2  2  1  1  1  1  1  2  1  1  2  1  2  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7465] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7489] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7513] 2  2  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7537] 1  1  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7561] 2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7585] 2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  2  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7609] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7633] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7657] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7681] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7705] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7729] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7753] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7777] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7801] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7825] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7849] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7873] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7897] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7921] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  1  1  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7945] 1  3  1  1  1  1  1  1  1  1  1  1  2  2  2  2  1  1  2  2  2  2  2  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7969] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7993] 1  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  3  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8017] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8041] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8065] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8089] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8113] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8137] 1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8161] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8185] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8209] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8233] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8257] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8281] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8305] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8329] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8353] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8377] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8401] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8425] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8449] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8473] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8497] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8521] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8545] 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  1  3  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8569] 1  2  2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 1 2 3 4 5 6 7 8 9 10 +</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Hourly pm2.5 concentrations (with negative values)</span></span></span>
-<span class="r-in"><span><span class="va">pm25</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">0.1</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span>, <span class="fl">22</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># Calculate the AQHI+ for each hour, except for hours where pm2.5 is &lt; -0.5</span></span></span>
-<span class="r-in"><span><span class="fu">AQHI_plus</span><span class="op">(</span><span class="va">pm25</span>, min_allowed_pm25 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    pm25_1hr_ugm3 level colour  risk    high_risk_pop_message general_pop_message</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>          <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>    #bbbbbb <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>                    <span style="color: #BB0000;">NA</span>                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          -<span style="color: #BB0000;">0.1</span> 1     #21C6F5 Low     Enjoy your usual act… Ideal air quality …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          74   8     #FF3B3B High    Reduce or reschedule… Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>         102   +     #650205 Very H… Avoid strenuous acti… Reduce or reschedu…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>         142   +     #650205 Very H… Avoid strenuous acti… Reduce or reschedu…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>          66   7     #FD6769 High    Reduce or reschedule… Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>          37   4     #FFFD37 Modera… Consider reducing or… No need to modify …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>         108   +     #650205 Very H… Avoid strenuous acti… Reduce or reschedu…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>         132   +     #650205 Very H… Avoid strenuous acti… Reduce or reschedu…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>          83   9     #FF0101 High    Reduce or reschedule… Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

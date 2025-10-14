@@ -111,21 +111,21 @@ Default is "en".</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get health messages for some observations</span></span></span>
 <span class="r-in"><span><span class="va">hourly_pm25_ugm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="fl">50</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">risk_categories</span> <span class="op">&lt;-</span> <span class="va">hourly_pm25_ugm3</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="AQHI_plus.html">AQHI_plus</a></span><span class="op">(</span>detailed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
+<span class="r-in"><span><span class="va">risk_categories</span> <span class="op">&lt;-</span> <span class="va">hourly_pm25_ugm3</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="AQHI_plus.html">AQHI_plus</a></span><span class="op">(</span>detailed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="get_risk_category.html">get_risk_category</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">risk_categories</span> <span class="op">|&gt;</span> <span class="fu">get_health_messages</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    risk_category high_risk_pop_message                       general_pop_message</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> High          Reduce or reschedule activities outdoors.   Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Moderate      Consider reducing or rescheduling activiti… No need to modify …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> High          Reduce or reschedule activities outdoors.   Consider reducing …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> High          Reduce or reschedule activities outdoors.   Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> High          Reduce or reschedule activities outdoors.   Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> High          Reduce or reschedule activities outdoors.   Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Low           Enjoy your usual activities.                Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Low           Enjoy your usual activities.                Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Moderate      Consider reducing or rescheduling activiti… No need to modify …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> High          Reduce or reschedule activities outdoors.   Consider reducing …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> High          Reduce or reschedule activities outdoors.   Consider reducing …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Low           Enjoy your usual activities.                Ideal air quality …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Moderate      Consider reducing or rescheduling activiti… No need to modify …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Low           Enjoy your usual activities.                Ideal air quality …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> High          Reduce or reschedule activities outdoors.   Consider reducing …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>

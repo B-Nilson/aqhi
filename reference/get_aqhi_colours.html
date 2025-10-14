@@ -93,34 +93,33 @@ Default is "aqhi".</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Get AQHI colours for all AQHI levels</span></span></span>
 <span class="r-in"><span><span class="fu">get_aqhi_colours</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#21C6F5" "#189ACA" "#0D6797" "#FFFD37" "#FFCC2E" "#FE9A3F" "#FD6769"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#FF3B3B" "#FF0101" "#CB0713" "#bbbbbb" "#bbbbbb"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#FF3B3B" "#FF0101" "#CB0713" "#650205" "#bbbbbb"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get AQHI colours for observation data</span></span></span>
 <span class="r-in"><span><span class="va">hourly_pm25_ugm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="fl">50</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">aqhi_levels</span> <span class="op">&lt;-</span> <span class="va">hourly_pm25_ugm3</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="AQHI_plus.html">AQHI_plus</a></span><span class="op">(</span>detailed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">aqhi_levels</span> <span class="op">|&gt;</span> <span class="fu">get_aqhi_colours</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#FE9A3F" "#FFFD37" "#FE9A3F" "#21C6F5" "#FE9A3F" "#CB0713" "#189ACA"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#21C6F5" "#189ACA" "#FF3B3B" "#189ACA" "#FD6769" "#FF3B3B" "#FF0101"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "#0D6797" "#FD6769" "#FFFD37" "#FF0101" "#21C6F5" "#FF3B3B" "#FE9A3F"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#189ACA" "#FFFD37" "#FF0101"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "#CB0713" "#FD6769" "#FE9A3F" "#0D6797" "#21C6F5" "#FFCC2E" "#CB0713"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [36] "#FE9A3F" "#FD6769" "#FE9A3F" "#FD6769" "#FD6769" "#FFFD37" "#FFCC2E"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#CB0713" "#FF3B3B" "#CB0713"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [50] "#21C6F5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#FFCC2E" "#FFFD37" "#FD6769" "#FF3B3B" "#FD6769" "#21C6F5" "#0D6797"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#FF3B3B" "#FF3B3B" "#21C6F5" "#FD6769" "#FE9A3F" "#FFCC2E" "#FD6769"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "#FFCC2E" "#21C6F5" "#FF0101" "#FFCC2E" "#FD6769" "#FFFD37" "#FD6769"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "#FD6769" "#21C6F5" "#FFFD37" "#FFFD37" "#FF0101" "#FF0101" "#FFCC2E"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "#21C6F5" "#FFFD37" "#FE9A3F" "#FD6769" "#21C6F5" "#0D6797" "#21C6F5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [36] "#FFFD37" "#FFFD37" "#189ACA" "#FE9A3F" "#FE9A3F" "#0D6797" "#CB0713"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "#21C6F5" "#FD6769" "#FFFD37" "#FE9A3F" "#FFCC2E" "#FD6769" "#0D6797"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [50] "#FFFD37"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The same but with PM2.5 provided</span></span></span>
 <span class="r-in"><span><span class="va">hourly_pm25_ugm3</span> <span class="op">|&gt;</span> <span class="fu">get_aqhi_colours</span><span class="op">(</span>types <span class="op">=</span> <span class="st">"pm25_1hr"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#FE9A3F" "#FFFD37" "#FE9A3F" "#21C6F5" "#FE9A3F" "#CB0713" "#189ACA"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#21C6F5" "#189ACA" "#FF3B3B" "#189ACA" "#FD6769" "#FF3B3B" "#FF0101"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "#0D6797" "#FD6769" "#FFFD37" "#FF0101" "#21C6F5" "#FF3B3B" "#FE9A3F"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#189ACA" "#FFFD37" "#FF0101"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "#CB0713" "#FD6769" "#FE9A3F" "#0D6797" "#21C6F5" "#FFCC2E" "#CB0713"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [36] "#FE9A3F" "#FD6769" "#FE9A3F" "#FD6769" "#FD6769" "#FFFD37" "#FFCC2E"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#CB0713" "#FF3B3B" "#CB0713"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [50] "#21C6F5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#FFCC2E" "#FFFD37" "#FD6769" "#FF3B3B" "#FD6769" "#21C6F5" "#0D6797"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#FF3B3B" "#FF3B3B" "#21C6F5" "#FD6769" "#FE9A3F" "#FFCC2E" "#FD6769"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "#FFCC2E" "#21C6F5" "#FF0101" "#FFCC2E" "#FD6769" "#FFFD37" "#FD6769"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "#FD6769" "#21C6F5" "#FFFD37" "#FFFD37" "#FF0101" "#FF0101" "#FFCC2E"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "#21C6F5" "#FFFD37" "#FE9A3F" "#FD6769" "#21C6F5" "#0D6797" "#21C6F5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [36] "#FFFD37" "#FFFD37" "#189ACA" "#FE9A3F" "#FE9A3F" "#0D6797" "#CB0713"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "#21C6F5" "#FD6769" "#FFFD37" "#FE9A3F" "#FFCC2E" "#FD6769" "#0D6797"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [50] "#FFFD37"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or even a mix</span></span></span>
 <span class="r-in"><span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">aqhi_levels</span>, <span class="va">hourly_pm25_ugm3</span><span class="op">)</span></span></span>
@@ -128,21 +127,21 @@ Default is "aqhi".</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"pm25_1hr"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">hourly_pm25_ugm3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">values</span> <span class="op">|&gt;</span> <span class="fu">get_aqhi_colours</span><span class="op">(</span>types <span class="op">=</span> <span class="va">types</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "#FE9A3F" "#FFFD37" "#FE9A3F" "#21C6F5" "#FE9A3F" "#CB0713" "#189ACA"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8] "#21C6F5" "#189ACA" "#FF3B3B" "#189ACA" "#FD6769" "#FF3B3B" "#FF0101"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [15] "#0D6797" "#FD6769" "#FFFD37" "#FF0101" "#21C6F5" "#FF3B3B" "#FE9A3F"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [22] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#189ACA" "#FFFD37" "#FF0101"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [29] "#CB0713" "#FD6769" "#FE9A3F" "#0D6797" "#21C6F5" "#FFCC2E" "#CB0713"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "#FE9A3F" "#FD6769" "#FE9A3F" "#FD6769" "#FD6769" "#FFFD37" "#FFCC2E"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [43] "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#CB0713" "#FF3B3B" "#CB0713"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [50] "#21C6F5" "#FE9A3F" "#FFFD37" "#FE9A3F" "#21C6F5" "#FE9A3F" "#CB0713"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] "#189ACA" "#21C6F5" "#189ACA" "#FF3B3B" "#189ACA" "#FD6769" "#FF3B3B"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [64] "#FF0101" "#0D6797" "#FD6769" "#FFFD37" "#FF0101" "#21C6F5" "#FF3B3B"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "#FE9A3F" "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#189ACA" "#FFFD37"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] "#FF0101" "#CB0713" "#FD6769" "#FE9A3F" "#0D6797" "#21C6F5" "#FFCC2E"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] "#CB0713" "#FE9A3F" "#FD6769" "#FE9A3F" "#FD6769" "#FD6769" "#FFFD37"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [92] "#FFCC2E" "#FFCC2E" "#FFFD37" "#189ACA" "#FF0101" "#CB0713" "#FF3B3B"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [99] "#CB0713" "#21C6F5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "#FFCC2E" "#FFFD37" "#FD6769" "#FF3B3B" "#FD6769" "#21C6F5" "#0D6797"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [8] "#FF3B3B" "#FF3B3B" "#21C6F5" "#FD6769" "#FE9A3F" "#FFCC2E" "#FD6769"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [15] "#FFCC2E" "#21C6F5" "#FF0101" "#FFCC2E" "#FD6769" "#FFFD37" "#FD6769"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [22] "#FD6769" "#21C6F5" "#FFFD37" "#FFFD37" "#FF0101" "#FF0101" "#FFCC2E"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [29] "#21C6F5" "#FFFD37" "#FE9A3F" "#FD6769" "#21C6F5" "#0D6797" "#21C6F5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "#FFFD37" "#FFFD37" "#189ACA" "#FE9A3F" "#FE9A3F" "#0D6797" "#CB0713"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [43] "#21C6F5" "#FD6769" "#FFFD37" "#FE9A3F" "#FFCC2E" "#FD6769" "#0D6797"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [50] "#FFFD37" "#FFCC2E" "#FFFD37" "#FD6769" "#FF3B3B" "#FD6769" "#21C6F5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] "#0D6797" "#FF3B3B" "#FF3B3B" "#21C6F5" "#FD6769" "#FE9A3F" "#FFCC2E"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [64] "#FD6769" "#FFCC2E" "#21C6F5" "#FF0101" "#FFCC2E" "#FD6769" "#FFFD37"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "#FD6769" "#FD6769" "#21C6F5" "#FFFD37" "#FFFD37" "#FF0101" "#FF0101"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] "#FFCC2E" "#21C6F5" "#FFFD37" "#FE9A3F" "#FD6769" "#21C6F5" "#0D6797"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] "#21C6F5" "#FFFD37" "#FFFD37" "#189ACA" "#FE9A3F" "#FE9A3F" "#0D6797"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [92] "#CB0713" "#21C6F5" "#FD6769" "#FFFD37" "#FE9A3F" "#FFCC2E" "#FD6769"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [99] "#0D6797" "#FFFD37"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
