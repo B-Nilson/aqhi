@@ -145,7 +145,9 @@ AQHI <- function(
   ) |>
     # Fill in missing hours
     tidyr::complete(date = seq(min(date), max(date), "1 hours")) |>
-    dplyr::arrange(date)
+    dplyr::arrange(date) |> 
+    # Drop units if present
+    dplyr::mutate(dplyr::across(-1, as.numeric))
 
   # Calculate AQHI+ (PM2.5 Only) - AQHI+ overrides AQHI if higher
   if (allow_aqhi_plus_override) {
