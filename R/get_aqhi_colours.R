@@ -82,7 +82,7 @@ get_aqhi_colours <- function(values = c(1:10, "+", NA), types = "aqhi") {
   is_pm25 <- types %in% "pm25_1hr"
   if (any(is_pm25)) {
     values[is_pm25] <- values[is_pm25] |>
-      AQHI_plus(detailed = FALSE) |> 
+      AQHI_plus(detailed = FALSE) |>
       as.character()
   }
   values[!is_pm25 & values == "11"] <- "+"

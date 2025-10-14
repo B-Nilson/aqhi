@@ -41,7 +41,7 @@
 #' during high-intensity fire periods, particularly for people with asthma.
 #' This is consistent with the rationale behind the AQHI formulation
 #' and with existing health evidence related to the effects of wildfire smoke.
-#' 
+#'
 #' @inheritParams AQHI
 #' @param min_allowed_pm25 (Optional).
 #'   A single numeric value indicating the minimum allowed concentration.

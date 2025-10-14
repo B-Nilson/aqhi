@@ -43,8 +43,8 @@ get_health_messages(language = "fr")
 
 # Get health messages for some observations
 hourly_pm25_ugm3 <- sample(1:100, 50, replace = TRUE)
-risk_categories <- hourly_pm25_ugm3 |> 
-  AQHI_plus(detailed = FALSE) |> 
+risk_categories <- hourly_pm25_ugm3 |>
+  AQHI_plus(detailed = FALSE) |>
   get_risk_category()
 risk_categories |> get_health_messages()
 }

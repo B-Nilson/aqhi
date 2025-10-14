@@ -112,7 +112,11 @@ AQHI <- function(
   language = "en",
   quiet = FALSE
 ) {
-  stopifnot("POSIXct" %in% class(dates), length(dates) > 0, all(!duplicated(dates)))
+  stopifnot(
+    "POSIXct" %in% class(dates),
+    length(dates) > 0,
+    all(!duplicated(dates))
+  )
   stopifnot(is.numeric(pm25_1hr_ugm3), length(pm25_1hr_ugm3) > 0)
   stopifnot(is.numeric(o3_1hr_ppb), length(o3_1hr_ppb) > 0)
   stopifnot(is.numeric(no2_1hr_ppb) & length(no2_1hr_ppb) > 0)
@@ -180,7 +184,7 @@ AQHI <- function(
       )
     }
     if (!detailed) {
-      aqhi_plus <- aqhi_plus |> 
+      aqhi_plus <- aqhi_plus |>
         dplyr::filter(.data$date %in% dates) # drop infilled missing hours
       return(aqhi_plus$level)
     }

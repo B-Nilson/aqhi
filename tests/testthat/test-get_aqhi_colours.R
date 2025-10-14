@@ -50,6 +50,7 @@ test_that("types work", {
   types <- rep("aqhi", length(aqhi_levels)) |>
     c(rep("pm25_1hr", length(hourly_pm25_ugm3)))
 
-  values |> get_aqhi_colours(types = types) |>
+  values |>
+    get_aqhi_colours(types = types) |>
     expect_equal(c(expected, expected))
 })

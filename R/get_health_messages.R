@@ -1,18 +1,18 @@
 #' Get health messages for AQHI+ risk categories
-#' 
+#'
 #' @description
-#' 
+#'
 #' Health messages for at risk population and general population are available for each AQHI health risk category (see \code{\link{get_risk_category}}).
-#' 
+#'
 #' English messages:
-#' 
+#'
 #' | Risk | AQHI | At Risk Population | General Population |
 #' | --- | --- | --- | --- |
 #' | Low | 1 - 3 | Enjoy your usual outdoor activities. | Ideal air quality for outdoor activities. |
 #' | Moderate | 4 - 6 | Consider reducing or rescheduling strenuous activities outdoors if you are experiencing symptoms. | No need to modify your usual outdoor activities unless you experience symptoms such as coughing and throat irritation. |
 #' | High | 7 - 10 | Reduce or reschedule strenuous activities outdoors. Children and the elderly should also take it easy. | Consider reducing or rescheduling strenuous activities outdoors if you experience symptoms such as coughing and throat irritation. |
 #' | Very High | >10 | Avoid strenuous activities outdoors. Children and the elderly should also avoid outdoor physical exertion. | Reduce or reschedule strenuous activities outdoors, especially if you experience symptoms such as coughing and throat irritation. |
-#' 
+#'
 #' See \href{https://www.canada.ca/en/environment-climate-change/services/air-quality-health-index/about.html}{Environment and Climate Change Canada's website} for more information.
 #'
 #' @param risk_categories A factor or character vector of AQHI risk categories (Low, Moderate, High, Very High).
@@ -23,17 +23,20 @@
 #' @examples
 #' # Get health messages for all risk categories
 #' get_health_messages()
-#' 
+#'
 #' # The same, but en Francais
 #' get_health_messages(language = "fr")
-#' 
+#'
 #' # Get health messages for some observations
 #' hourly_pm25_ugm3 <- sample(1:100, 50, replace = TRUE)
-#' risk_categories <- hourly_pm25_ugm3 |> 
-#'   AQHI_plus(detailed = FALSE) |> 
+#' risk_categories <- hourly_pm25_ugm3 |>
+#'   AQHI_plus(detailed = FALSE) |>
 #'   get_risk_category()
 #' risk_categories |> get_health_messages()
-get_health_messages <- function(risk_categories = c("Low", "Moderate", "High", "Very High"), language = "en") {
+get_health_messages <- function(
+  risk_categories = c("Low", "Moderate", "High", "Very High"),
+  language = "en"
+) {
   stopifnot(
     is.factor(risk_categories) |
       is.character(risk_categories) |

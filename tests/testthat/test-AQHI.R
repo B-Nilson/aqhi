@@ -2,13 +2,13 @@ test_that("AQHI returns expected output", {
   # TODO: need to ensure AQHI levels are accurate
   # - this includes when AQHI+ should/shouldnt override AQHI
 
-  obs <- example_obs[example_obs$site_id == 1, ] |> 
+  obs <- example_obs[example_obs$site_id == 1, ] |>
     dplyr::select(
       date = "date_utc",
       pm25 = "pm25_1hr",
       o3 = "o3_1hr",
       no2 = "no2_1hr"
-    ) 
+    )
   # Throw some NAs in
   obs$pm25[c(1, 4, 5, 7)] <- NA
   obs$o3[c(2, 4, 5, 6)] <- NA
