@@ -80,51 +80,46 @@ However, the AQHI is overriden by the AQHI+ for a given hour if that AQHI+ level
 The AQHI+ is a modification of the AQHI that only uses \ifelse{html}{\out{PM<sub>2.5</sub>}}{\eqn{PM_{2.5}}} and is calculated using hourly means (see \code{\link{AQHI_plus}}).
 }
 \examples{
-obs <- data.frame(
-  date = seq(
-    as.POSIXct("2024-01-01 00:00:00"),
-    as.POSIXct("2024-01-01 23:00:00"), "1 hours"
-  ),
-  pm25 = sample(1:150, 24), o3 = sample(1:150, 24), no2 = sample(1:150, 24)
-)
+
+obs <- example_obs[example_obs$site_id == 1, ]
 
 # Calculate the AQHI
-obs$date |>
+obs$date_utc |>
   AQHI(
-    pm25_1hr_ugm3 = obs$pm25,
-    o3_1hr_ppb = obs$o3,
-    no2_1hr_ppb = obs$no2
+    pm25_1hr_ugm3 = obs$pm25_1hr,
+    o3_1hr_ppb = obs$o3_1hr,
+    no2_1hr_ppb = obs$no2_1hr
   )
 
 # Return just the AQHI levels
-obs$date |>
+obs$date_utc |>
   AQHI(
-    pm25_1hr_ugm3 = obs$pm25,
-    o3_1hr_ppb = obs$o3,
-    no2_1hr_ppb = obs$no2,
+    pm25_1hr_ugm3 = obs$pm25_1hr,
+    o3_1hr_ppb = obs$o3_1hr,
+    no2_1hr_ppb = obs$no2_1hr,
     detailed = FALSE
   )
 
 # Calculate just the AQHI+
-obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25)
-obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, quiet = TRUE) # silence warning
+obs$date_utc |> AQHI(pm25_1hr_ugm3 = obs$pm25_1hr)
+obs$date_utc |> AQHI(pm25_1hr_ugm3 = obs$pm25_1hr, quiet = TRUE) # silence warning
 
 # Return French version
-obs$date |>
+obs$date_utc |>
   AQHI(
-    pm25_1hr_ugm3 = obs$pm25,
-    o3_1hr_ppb = obs$o3,
-    no2_1hr_ppb = obs$no2,
+    pm25_1hr_ugm3 = obs$pm25_1hr,
+    o3_1hr_ppb = obs$o3_1hr,
+    no2_1hr_ppb = obs$no2_1hr,
     language = "fr"
   )
-obs$date |> AQHI(pm25_1hr_ugm3 = obs$pm25, language = "fr")
+obs$date_utc |> AQHI(pm25_1hr_ugm3 = obs$pm25_1hr, language = "fr")
 
 # Don't allow AQHI+ override (not recommended)
-obs$date |>
+obs$date_utc |>
   AQHI(
-    pm25_1hr_ugm3 = obs$pm25,
-    o3_1hr_ppb = obs$o3,
-    no2_1hr_ppb = obs$no2,
+    pm25_1hr_ugm3 = obs$pm25_1hr,
+    o3_1hr_ppb = obs$o3_1hr,
+    no2_1hr_ppb = obs$no2_1hr,
     allow_aqhi_plus_override = FALSE
   )
 }

@@ -11,6 +11,10 @@ test_that("AQHI+ returns expected output", {
     pm25_hourly |> AQHI_plus(detailed = TRUE, language = "fr")
   )
 
+  expect_snapshot(
+    example_obs$pm25_1hr |> AQHI_plus(detailed = TRUE)
+  )
+
   AQHI_plus(pm25_hourly, detailed = FALSE) |>
     expect_equal(expected_aqhi)
 })

@@ -38,3 +38,23 @@
       10          30.1 4     #FFFD37 Modéré Envisagez de réduire ~ Aucun besoin de mo~
       # i 14 more rows
 
+---
+
+    Code
+      AQHI_plus(example_obs$pm25_1hr, detailed = TRUE)
+    Output
+      # A tibble: 307,586 x 6
+         pm25_1hr_ugm3 level colour  risk  high_risk_pop_message   general_pop_message
+         <units>       <fct> <chr>   <fct> <chr>                   <chr>              
+       1  9.2          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
+       2 12.1          2     #189ACA Low   Enjoy your usual activ~ Ideal air quality ~
+       3 10.7          2     #189ACA Low   Enjoy your usual activ~ Ideal air quality ~
+       4  9.3          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
+       5  8.0          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
+       6  6.6          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
+       7  6.0          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
+       8  6.1          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
+       9  7.1          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
+      10  7.9          1     #21C6F5 Low   Enjoy your usual activ~ Ideal air quality ~
+      # i 307,576 more rows
+

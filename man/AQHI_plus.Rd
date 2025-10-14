@@ -89,16 +89,11 @@ and with existing health evidence related to the effects of wildfire smoke.
 }
 \examples{
 # Hourly pm2.5 concentrations
-pm25 <- sample(1:150, 24)
+pm25 <- example_obs$pm25_1hr[example_obs$site_id == 1]
 # Calculate the detailed AQHI+ (tibble with risk levels etc)
 AQHI_plus(pm25)
 # Or just the AQHI+ (returned as a factor)
 AQHI_plus(pm25, detailed = FALSE)
-
-# Hourly pm2.5 concentrations (with negative values)
-pm25 <- c(-2, -0.1, sample(1:150, 22))
-# Calculate the AQHI+ for each hour, except for hours where pm2.5 is < -0.5
-AQHI_plus(pm25, min_allowed_pm25 = -0.5)
 }
 \references{
 Yao et al (2019): \doi{doi:10.17269/s41997-019-00237-w}

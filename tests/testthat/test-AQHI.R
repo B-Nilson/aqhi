@@ -2,16 +2,17 @@ test_that("AQHI returns expected output", {
   # TODO: need to ensure AQHI levels are accurate
   # - this includes when AQHI+ should/shouldnt override AQHI
 
-  obs <- data.frame(
-    date = seq(
-      as.POSIXct("2024-01-01 00:00:00"),
-      as.POSIXct("2024-01-01 23:00:00"),
-      "1 hours"
-    ),
-    pm25 = 1:24,
-    o3 = 1:24,
-    no2 = 1:24
-  )
+  obs <- example_obs[example_obs$site_id == 1, ] |> 
+    dplyr::select(
+      date = "date_utc",
+      pm25 = "pm25_1hr",
+      o3 = "o3_1hr",
+      no2 = "no2_1hr"
+    ) 
+  # Throw some NAs in
+  obs$pm25[c(1, 4, 5, 7)] <- NA
+  obs$o3[c(2, 4, 5, 6)] <- NA
+  obs$no2[c(3, 4, 6, 7)] <- NA
 
   # All 3 pollutants (AQHI and AQHI+)
   aqhi_en <- obs$date |>

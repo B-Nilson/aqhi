@@ -3,20 +3,20 @@
     Code
       aqhi_en
     Output
-      # A tibble: 24 x 18
+      # A tibble: 8,571 x 18
          date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3
-         <dttm>                      <int>      <int>       <int>         <dbl>
-       1 2024-01-01 00:00:00             1          1           1            NA
-       2 2024-01-01 01:00:00             2          2           2            NA
-       3 2024-01-01 02:00:00             3          3           3             2
-       4 2024-01-01 03:00:00             4          4           4             3
-       5 2024-01-01 04:00:00             5          5           5             4
-       6 2024-01-01 05:00:00             6          6           6             5
-       7 2024-01-01 06:00:00             7          7           7             6
-       8 2024-01-01 07:00:00             8          8           8             7
-       9 2024-01-01 08:00:00             9          9           9             8
-      10 2024-01-01 09:00:00            10         10          10             9
-      # i 14 more rows
+         <dttm>              <units>       <units>    <units>             <dbl>
+       1 2018-01-01 09:00:00   NA          0.7        18.1                 NA  
+       2 2018-01-01 10:00:00 12.1           NA        17.5                 NA  
+       3 2018-01-01 11:00:00 10.7          0.2          NA                 11.4
+       4 2018-01-01 12:00:00   NA           NA          NA                 11.4
+       5 2018-01-01 13:00:00   NA           NA        16.6                 NA  
+       6 2018-01-01 14:00:00  6.6           NA          NA                 NA  
+       7 2018-01-01 15:00:00   NA          1.9          NA                 NA  
+       8 2018-01-01 16:00:00  6.1          0.3        16.9                  6.3
+       9 2018-01-01 17:00:00  7.1          1.0        18.1                  6.6
+      10 2018-01-01 18:00:00  7.9          2.5        16.9                  7  
+      # i 8,561 more rows
       # i 13 more variables: o3_3hr_ppb <dbl>, no2_3hr_ppb <dbl>, level <fct>,
       #   AQHI <fct>, AQHI_plus <fct>, AQHI_plus_exceeds_AQHI <lgl>,
       #   AQHI_pm25_ratio <dbl>, AQHI_o3_ratio <dbl>, AQHI_no2_ratio <dbl>,
@@ -28,20 +28,20 @@
     Code
       aqhi_fr
     Output
-      # A tibble: 24 x 18
+      # A tibble: 8,571 x 18
          date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3
-         <dttm>                      <int>      <int>       <int>         <dbl>
-       1 2024-01-01 00:00:00             1          1           1            NA
-       2 2024-01-01 01:00:00             2          2           2            NA
-       3 2024-01-01 02:00:00             3          3           3             2
-       4 2024-01-01 03:00:00             4          4           4             3
-       5 2024-01-01 04:00:00             5          5           5             4
-       6 2024-01-01 05:00:00             6          6           6             5
-       7 2024-01-01 06:00:00             7          7           7             6
-       8 2024-01-01 07:00:00             8          8           8             7
-       9 2024-01-01 08:00:00             9          9           9             8
-      10 2024-01-01 09:00:00            10         10          10             9
-      # i 14 more rows
+         <dttm>              <units>       <units>    <units>             <dbl>
+       1 2018-01-01 09:00:00   NA          0.7        18.1                 NA  
+       2 2018-01-01 10:00:00 12.1           NA        17.5                 NA  
+       3 2018-01-01 11:00:00 10.7          0.2          NA                 11.4
+       4 2018-01-01 12:00:00   NA           NA          NA                 11.4
+       5 2018-01-01 13:00:00   NA           NA        16.6                 NA  
+       6 2018-01-01 14:00:00  6.6           NA          NA                 NA  
+       7 2018-01-01 15:00:00   NA          1.9          NA                 NA  
+       8 2018-01-01 16:00:00  6.1          0.3        16.9                  6.3
+       9 2018-01-01 17:00:00  7.1          1.0        18.1                  6.6
+      10 2018-01-01 18:00:00  7.9          2.5        16.9                  7  
+      # i 8,561 more rows
       # i 13 more variables: o3_3hr_ppb <dbl>, no2_3hr_ppb <dbl>, level <fct>,
       #   AQHI <fct>, AQHI_plus <fct>, AQHI_plus_exceeds_AQHI <lgl>,
       #   AQHI_pm25_ratio <dbl>, AQHI_o3_ratio <dbl>, AQHI_no2_ratio <dbl>,
@@ -53,20 +53,20 @@
     Code
       aqhi_en_no_override
     Output
-      # A tibble: 24 x 18
+      # A tibble: 8,571 x 18
          date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3
-         <dttm>                      <int>      <int>       <int>         <dbl>
-       1 2024-01-01 00:00:00             1          1           1            NA
-       2 2024-01-01 01:00:00             2          2           2            NA
-       3 2024-01-01 02:00:00             3          3           3             2
-       4 2024-01-01 03:00:00             4          4           4             3
-       5 2024-01-01 04:00:00             5          5           5             4
-       6 2024-01-01 05:00:00             6          6           6             5
-       7 2024-01-01 06:00:00             7          7           7             6
-       8 2024-01-01 07:00:00             8          8           8             7
-       9 2024-01-01 08:00:00             9          9           9             8
-      10 2024-01-01 09:00:00            10         10          10             9
-      # i 14 more rows
+         <dttm>              <units>       <units>    <units>             <dbl>
+       1 2018-01-01 09:00:00   NA          0.7        18.1                 NA  
+       2 2018-01-01 10:00:00 12.1           NA        17.5                 NA  
+       3 2018-01-01 11:00:00 10.7          0.2          NA                 11.4
+       4 2018-01-01 12:00:00   NA           NA          NA                 11.4
+       5 2018-01-01 13:00:00   NA           NA        16.6                 NA  
+       6 2018-01-01 14:00:00  6.6           NA          NA                 NA  
+       7 2018-01-01 15:00:00   NA          1.9          NA                 NA  
+       8 2018-01-01 16:00:00  6.1          0.3        16.9                  6.3
+       9 2018-01-01 17:00:00  7.1          1.0        18.1                  6.6
+      10 2018-01-01 18:00:00  7.9          2.5        16.9                  7  
+      # i 8,561 more rows
       # i 13 more variables: o3_3hr_ppb <dbl>, no2_3hr_ppb <dbl>, level <fct>,
       #   AQHI <fct>, AQHI_plus <fct>, AQHI_plus_exceeds_AQHI <lgl>,
       #   AQHI_pm25_ratio <dbl>, AQHI_o3_ratio <dbl>, AQHI_no2_ratio <dbl>,
@@ -78,20 +78,20 @@
     Code
       aqhi_plus_en
     Output
-      # A tibble: 24 x 18
+      # A tibble: 8,759 x 18
          date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3
-         <dttm>                      <int>      <dbl>       <dbl>         <dbl>
-       1 2024-01-01 00:00:00             1         NA          NA            NA
-       2 2024-01-01 01:00:00             2         NA          NA            NA
-       3 2024-01-01 02:00:00             3         NA          NA            NA
-       4 2024-01-01 03:00:00             4         NA          NA            NA
-       5 2024-01-01 04:00:00             5         NA          NA            NA
-       6 2024-01-01 05:00:00             6         NA          NA            NA
-       7 2024-01-01 06:00:00             7         NA          NA            NA
-       8 2024-01-01 07:00:00             8         NA          NA            NA
-       9 2024-01-01 08:00:00             9         NA          NA            NA
-      10 2024-01-01 09:00:00            10         NA          NA            NA
-      # i 14 more rows
+         <dttm>              <units>            <dbl>       <dbl>         <dbl>
+       1 2018-01-01 09:00:00   NA                  NA          NA            NA
+       2 2018-01-01 10:00:00 12.1                  NA          NA            NA
+       3 2018-01-01 11:00:00 10.7                  NA          NA            NA
+       4 2018-01-01 12:00:00   NA                  NA          NA            NA
+       5 2018-01-01 13:00:00   NA                  NA          NA            NA
+       6 2018-01-01 14:00:00  6.6                  NA          NA            NA
+       7 2018-01-01 15:00:00   NA                  NA          NA            NA
+       8 2018-01-01 16:00:00  6.1                  NA          NA            NA
+       9 2018-01-01 17:00:00  7.1                  NA          NA            NA
+      10 2018-01-01 18:00:00  7.9                  NA          NA            NA
+      # i 8,749 more rows
       # i 13 more variables: o3_3hr_ppb <dbl>, no2_3hr_ppb <dbl>, level <fct>,
       #   AQHI <fct>, AQHI_plus <fct>, AQHI_plus_exceeds_AQHI <lgl>,
       #   AQHI_pm25_ratio <dbl>, AQHI_o3_ratio <dbl>, AQHI_no2_ratio <dbl>,
@@ -103,20 +103,20 @@
     Code
       aqhi_plus_fr
     Output
-      # A tibble: 24 x 18
+      # A tibble: 8,759 x 18
          date                pm25_1hr_ugm3 o3_1hr_ppb no2_1hr_ppb pm25_3hr_ugm3
-         <dttm>                      <int>      <dbl>       <dbl>         <dbl>
-       1 2024-01-01 00:00:00             1         NA          NA            NA
-       2 2024-01-01 01:00:00             2         NA          NA            NA
-       3 2024-01-01 02:00:00             3         NA          NA            NA
-       4 2024-01-01 03:00:00             4         NA          NA            NA
-       5 2024-01-01 04:00:00             5         NA          NA            NA
-       6 2024-01-01 05:00:00             6         NA          NA            NA
-       7 2024-01-01 06:00:00             7         NA          NA            NA
-       8 2024-01-01 07:00:00             8         NA          NA            NA
-       9 2024-01-01 08:00:00             9         NA          NA            NA
-      10 2024-01-01 09:00:00            10         NA          NA            NA
-      # i 14 more rows
+         <dttm>              <units>            <dbl>       <dbl>         <dbl>
+       1 2018-01-01 09:00:00   NA                  NA          NA            NA
+       2 2018-01-01 10:00:00 12.1                  NA          NA            NA
+       3 2018-01-01 11:00:00 10.7                  NA          NA            NA
+       4 2018-01-01 12:00:00   NA                  NA          NA            NA
+       5 2018-01-01 13:00:00   NA                  NA          NA            NA
+       6 2018-01-01 14:00:00  6.6                  NA          NA            NA
+       7 2018-01-01 15:00:00   NA                  NA          NA            NA
+       8 2018-01-01 16:00:00  6.1                  NA          NA            NA
+       9 2018-01-01 17:00:00  7.1                  NA          NA            NA
+      10 2018-01-01 18:00:00  7.9                  NA          NA            NA
+      # i 8,749 more rows
       # i 13 more variables: o3_3hr_ppb <dbl>, no2_3hr_ppb <dbl>, level <fct>,
       #   AQHI <fct>, AQHI_plus <fct>, AQHI_plus_exceeds_AQHI <lgl>,
       #   AQHI_pm25_ratio <dbl>, AQHI_o3_ratio <dbl>, AQHI_no2_ratio <dbl>,
